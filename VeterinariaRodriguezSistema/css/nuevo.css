@@ -1,0 +1,161 @@
+/* Estilo para el contenedor de resultados */
+#resultadosBusqueda {
+  margin-top: 20px !important;
+  padding: 20px 30px !important;
+  width: 1500px !important; /* Usar 100% para llenar el contenedor padre */
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  border: 1px solid #ddd !important;
+  border-radius: 8px !important;
+  background-color: #fff !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15) !important;
+  box-sizing: border-box !important;
+}
+
+/* Estilo para las tarjetas que contienen los resultados */
+#resultadosBusqueda .card {
+  font-size: 1.1rem !important;
+  padding: 25px 40px !important;
+  margin-bottom: 20px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  border: 1px solid #ddd !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1) !important;
+  background-color: #fff !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Estilo para la tabla de resultados */
+#resultadosBusqueda table {
+  font-size: 1.1rem !important;
+  width: 100% !important;
+  table-layout: auto !important; /* Permitir ajuste automático de columnas */
+  border-collapse: collapse !important; /* No separar filas */
+  border-spacing: 0 !important;
+  border: 1px solid #ddd !important;
+  border-radius: 8px !important;
+}
+
+#resultadosBusqueda table thead tr th {
+  background-color: #f5f5f5 !important;
+  padding: 10px !important;
+  text-align: left !important;
+  border-bottom: 2px solid #ddd !important;
+}
+
+#resultadosBusqueda table tbody tr {
+  background-color: #fff !important;
+  border-bottom: 1px solid #eee !important;
+}
+
+#resultadosBusqueda table tbody tr:last-child {
+  border-bottom: none !important;
+}
+
+#resultadosBusqueda table tbody tr td {
+  padding: 10px !important;
+  vertical-align: middle !important;
+  word-wrap: break-word !important;
+}
+
+/* Contenedor principal */
+.container {
+  max-width: 1600px !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  padding: 30px !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15) !important;
+  color: #222 !important;
+  box-sizing: border-box !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Estilo para el botón del menú principal */
+a.btn.btn-secondary {
+  padding: 10px 20px !important;
+  font-size: 1.1rem !important;
+  height: auto !important;
+  width: auto !important;
+  min-width: 200px !important;
+  line-height: 1.3 !important;
+  margin-right: 10px !important;
+  border-radius: 6px !important;
+  transition: background-color 0.3s ease !important;
+}
+
+a.btn.btn-secondary:hover {
+  background-color: #444 !important;
+  color: #fff !important;
+}
+
+/* Estilo para la fila de los formularios */
+.form-row {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  overflow-x: auto;
+  align-items: center;
+}
+
+.form-row .form-group {
+  flex: 1 1 auto;
+  min-width: 150px;
+  max-width: 230px;
+}
+
+.form-row button {
+  flex: 0 0 auto;
+  margin-top: 0 !important;
+  height: 38px;
+}
+
+
+/* Estilo para el botón de agregar más mascotas */
+.btn-info {
+  font-size: 1.25rem;  /* Tamaño de texto más grande */
+  padding: 12px 24px;  /* Relleno más grande para hacer el botón más grande */
+  width: 200px;    /* Ancho mínimo del botón */
+  height: auto;        /* Deja que el botón ajuste su tamaño según el contenido */
+  border-radius: 6px;  /* Bordes redondeados */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Sombra sutil para un efecto de profundidad */
+  transition: all 0.3s ease; /* Transición suave para cambios de estilo */
+}
+
+.btn-info:hover {
+  background-color: #17a2b8;  /* Color al pasar el cursor */
+  color: white;  /* Cambiar el color del texto al pasar el cursor */
+}
+
+
+
+
+/* Estilo adicional para las tablas de resultados de mascotas */
+.table thead {
+  background-color: #f8f9fa;
+}
+
+.table td, .table th {
+  vertical-align: middle !important;
+  padding: 12px;
+}
+
+/* Asegurarse de que las columnas estén alineadas correctamente */
+.card-body .row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-body .col-md-5 {
+  flex: 1; /* Esto asegura que las columnas se distribuyan bien */
+}
+
+/* Asegurarse de que la tabla también esté bien alineada */
+.table-mascotas th, .table-mascotas td {
+  vertical-align: middle !important;
+  padding: 10px 15px;
+}
+
