@@ -40,12 +40,10 @@ const textosRecordatorios = {
   "Leucemia": "Vac. Leucemia - 30 días",
 };
 
-// --- PACIENTES ---
-// Obtener pacientes
-function obtenerPacientes() {
+
+function getRegistrosMascotas() {
   return JSON.parse(localStorage.getItem('salaEspera') || '[]');
 }
-
 
 $(document).ready(function() {
   // Inicializa todos los tooltips cuando la página esté lista
@@ -80,7 +78,7 @@ function cargarPacientes() {
       <td>${p.estado || '––'}</td>  <!-- Asegúrate de mostrar el estado -->
       <td>
         <div class="btn-group">
-          ${p.estado === "En espera" ? `
+          ${p.estado === "En espera" ?` 
             <button class="btn btn-sm btn-info" onclick="abrirModalAtencion('${p.codAlt}')">Atender</button>
             <button class="btn btn-sm btn-warning" onclick="abrirModalRecordatorios('${p.codAlt}')">⏰</button>
             <button class="btn btn-sm btn-primary" onclick="mostrarObservacion('${p.codAlt}')">OBS.</button>
@@ -126,6 +124,7 @@ function abrirModalAtencion(codAlt) {
   // Mostrar el modal para la atención
   $('#modalAtencion').modal('show');
 }
+
 
 
 
@@ -246,7 +245,7 @@ function guardarAtencion() {
   };
 
   // Guardar en localStorage bajo una clave única para ese paciente
-  localStorage.setItem(`atencion_${cod}`, JSON.stringify(registro));
+  localStorage.setItem(`atencion_${cod}, JSON.stringify(registro)`);
 
   // Limpiar los campos del formulario después de guardar temporalmente
   document.getElementById('inputAnamnesis').value = '';  // Limpiar campo Anamnesis
@@ -441,7 +440,7 @@ function eliminarPaciente(codAlt) {
     historial.push(registro);
 
     // Guardar el historial actualizado en localStorage
-    localStorage.setItem(`historial_${codAlt}`, JSON.stringify(historial));
+    localStorage.setItem(`historial_${codAlt}, JSON.stringify(historial)`);
 
     
     // Guardar los recordatorios en localStorage solo cuando se elimina el paciente
@@ -518,7 +517,7 @@ function abrirModalHistorialClinico(codAlt) {
       <th>Anamnesis</th>
       <th>Tratamiento</th>
       <th>Archivos</th>
-    `;
+   ` ;
     thead.appendChild(encabezado);
     tabla.appendChild(thead);
   
@@ -549,9 +548,9 @@ function abrirModalHistorialClinico(codAlt) {
               <img src="${archivo.dataUrl}" alt="${archivo.name}" class="img-fluid small-img" style="max-width: 100px; margin-right: 5px; cursor: pointer;" onclick="abrirImagenGrande('${archivo.dataUrl}')">
             `;
           } else if (archivo.type === 'application/pdf') {
-            return `<div>PDF: ${archivo.name}</div>`;
+            return <div>PDF: ${archivo.name}</div>;
           } else {
-            return `<div>${archivo.name}</div>`;
+            return <div>${archivo.name}</div>;
           }
         }).join('');
       } else {

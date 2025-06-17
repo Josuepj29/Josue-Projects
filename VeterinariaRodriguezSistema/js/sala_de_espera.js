@@ -100,8 +100,13 @@ function buscar() {
 function agregarSalaEspera(mascota, dueño, codAlt, direccion, telefono) {
   // Verificar si el paciente ya está en la sala de espera
   let sala = JSON.parse(localStorage.getItem('salaEspera') || '[]');
+  
+  console.log('Sala actual:', sala);  // Verificar el contenido actual de la sala
+  
+  // Comprobar si el paciente ya está en la sala de espera por el codAlt
   if (sala.some(p => p.codAlt === codAlt)) {
     alert('Este paciente ya está en la sala de espera');
+    console.log('Paciente ya en la sala:', codAlt);  // Verifica si la mascota ya existe en la sala
     return;  // No agregar si ya existe
   }
 
@@ -121,6 +126,7 @@ function agregarSalaEspera(mascota, dueño, codAlt, direccion, telefono) {
 
   // Añadir la mascota a la sala de espera
   sala.push(paciente);
+  console.log('Sala actualizada:', sala);  // Verifica que la mascota se haya añadido correctamente
 
   // Guardar los registros actualizados en localStorage
   localStorage.setItem('salaEspera', JSON.stringify(sala));
@@ -133,12 +139,32 @@ function agregarSalaEspera(mascota, dueño, codAlt, direccion, telefono) {
 
 // Función para renderizar la tabla de sala de espera
 function renderizarSala() {
-  const tabla = document.querySelector('#tablaSalaEspera tbody');
+ const tabla = document.querySelector('#tablaSalaEspera tbody');
   tabla.innerHTML = "";
 
   const sala = JSON.parse(localStorage.getItem('salaEspera') || '[]');
   sala.forEach((p, index) => {
     const fila = document.createElement('tr');
+
+// Verificar si el historial clínico está definido
+    const historialClinico = p.historialClinico || {  // Si no existe historialClinico, crear un objeto vacío
+      peluqueria: [],
+      atencionMVet: [],
+      recordatorios: [],
+      fotos: [],
+      videos: [],
+      anotaciones: []
+    };
+
+    // Obtener la última atención de peluquería (o cualquier otro dato del historial clínico)
+    const ultimaPeluqueria = historialClinico.peluqueria.length > 0 
+      ? historialClinico.peluqueria[historialClinico.peluqueria.length - 1] 
+      : { servicio: 'No disponible' };
+
+    const ultimaAtencionMVet = historialClinico.atencionMVet.length > 0 
+      ? historialClinico.atencionMVet[historialClinico.atencionMVet.length - 1] 
+      : { tratamiento: 'No disponible' };
+
     fila.innerHTML = `
       <td>${p.dueño}</td>
       <td>${p.mascota}</td>
@@ -152,10 +178,99 @@ function renderizarSala() {
           ? `<button class="btn btn-sm btn-danger" onclick="marcarAtendido(${index})">Atendido</button>` 
           : `<button class="btn btn-sm btn-secondary" onclick="eliminarPaciente(${index})">Eliminar</button>`}
       </td>
+      <td>
+        <button class="btn btn-sm btn-info" onclick="verHistorial('${p.codAlt}')">Ver Historial</button> <!-- Botón para ver historial -->
+      </td>
     `;
     tabla.appendChild(fila);
   });
 }
+
+
+
+
+
+
+function verHistorial(codAlt) {
+  // Obtener los registros completos de las mascotas
+  const registros = getRegistrosMascotas();
+
+  // Buscar la mascota usando su NHC (codAlt)
+  const mascota = registros.flatMap(dueño => dueño.mascotas).find(m => m.codAlt === codAlt);
+
+  if (!mascota) {
+    alert('Mascota no encontrada');
+    return;
+  }
+
+// Mostrar el historial clínico en un modal o en una sección específica
+  const historialModal = document.getElementById('historialModal'); // Modal donde se mostrará el historial
+  const contenido = historialModal.querySelector('.modal-body'); // Donde se insertará la información
+
+  contenido.innerHTML = `
+    <div class="row">
+      <!-- Columna 1: Historial de Baños -->
+      <div class="col-md-3">
+        <h6><strong>Historial de Peluquería:</strong></h6>
+        ${mascota.historialClinico.peluqueria.length > 0 ? mascota.historialClinico.peluqueria.map(bano => `
+          <div class="card mb-3">
+            <div class="card-body">
+              <p><strong>Fecha:</strong> ${bano.fecha}</p>
+              <p><strong>Servicio:</strong> ${bano.servicio}</p>
+              <p><strong>Observaciones:</strong> ${bano.observaciones || 'No disponibles'}</p>
+              <p><strong>Fotos:</strong> ${bano.fotos.length > 0 ? bano.fotos.join(', ') : 'No disponibles'}</p>
+              <p><strong>Videos:</strong> ${bano.videos.length > 0 ? bano.videos.join(', ') : 'No disponibles'}</p>
+            </div>
+          </div>
+        `).join('') : '<p>No hay historial de peluquería.</p>'}
+      </div>
+
+      <!-- Columna 2: Historial de Atenciones Médicas -->
+      <div class="col-md-3">
+        <h6><strong>Historial de Atención Médica:</strong></h6>
+        ${mascota.historialClinico.atencionMVet.length > 0 ? mascota.historialClinico.atencionMVet.map(atencion => `
+          <div class="card mb-3">
+            <div class="card-body">
+              <p><strong>Fecha:</strong> ${atencion.fecha}</p>
+              <p><strong>Tratamiento:</strong> ${atencion.tratamiento}</p>
+              <p><strong>Observaciones:</strong> ${atencion.observaciones || 'No disponibles'}</p>
+              <p><strong>Fotos:</strong> ${atencion.fotos.length > 0 ? atencion.fotos.join(', ') : 'No disponibles'}</p>
+              <p><strong>Videos:</strong> ${atencion.videos.length > 0 ? atencion.videos.join(', ') : 'No disponibles'}</p>
+            </div>
+          </div>
+        `).join('') : '<p>No hay historial de atención médica.</p>'}
+      </div>
+
+      <!-- Columna 3: Recordatorios -->
+      <div class="col-md-3">
+        <h6><strong>Recordatorios:</strong></h6>
+        ${mascota.historialClinico.recordatorios.length > 0 ? mascota.historialClinico.recordatorios.map(recordatorio => `
+          <div class="card mb-3">
+            <div class="card-body">
+              <p><strong>Fecha:</strong> ${recordatorio.fecha}</p>
+              <p><strong>Recordatorio:</strong> ${recordatorio.texto}</p>
+              <p><strong>Última Fecha:</strong> ${recordatorio.ultimaFecha || 'No disponible'}</p>
+              <p><strong>Próxima Fecha:</strong> ${recordatorio.proximaFecha || 'No disponible'}</p>
+            </div>
+          </div>
+        `).join('') : '<p>No hay recordatorios registrados.</p>'}
+      </div>
+
+      <!-- Columna 4: Fotos y Videos -->
+      <div class="col-md-3">
+        <h6><strong>Fotos y Videos:</strong></h6>
+        <p><strong></strong> ${mascota.historialClinico.fotos.length > 0 ? mascota.historialClinico.fotos.join(', ') : 'No disponibles'}</p>
+
+      </div>
+    </div>
+  `;
+
+  // Mostrar el modal con el historial
+  $('#historialModal').modal('show');
+}
+
+
+
 
 // Función para marcar como atendido
 function marcarAtendido(index) {

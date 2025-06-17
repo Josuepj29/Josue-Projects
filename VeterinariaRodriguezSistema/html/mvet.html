@@ -42,81 +42,43 @@
     </table>
   </div>
 
-  <!-- Modal: registrar anamnesis / tratamiento -->
-  <div class="modal fade" id="modalAtencion" tabindex="-1" role="dialog" aria-labelledby="modalAtencionLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document" style="max-width: 850px;">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Atención médica</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
-        </div>
-        <div class="modal-body">
-          <input type="hidden" id="codPacienteActual" />
-
-          <div class="form-group">
-            <label for="inputAnamnesis">Anamnesis</label>
-            <textarea class="form-control" id="inputAnamnesis" rows="4" placeholder="Describe síntomas, antecedentes…"></textarea>
-          </div>
-
-          <div class="form-group">
-            <label for="inputTratamiento">Tratamiento / Costos</label>
-            <textarea class="form-control" id="inputTratamiento" rows="4" placeholder="Medicamentos, procedimientos, costos…"></textarea>
-          </div>
-
-         <div class="form-group">
-  <label>Archivos adjuntos</label>
-  <input type="file" id="inputArchivos" multiple accept="image/*,application/pdf" />
-  <div id="previewArchivos" class="d-flex flex-wrap gap-3 mt-3"></div>
-</div>
-
-
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <button class="btn btn-primary" onclick="guardarAtencion()">Guardar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal: confirmar envío / liberar paciente -->
-  <div class="modal fade" id="modalConfirmar" tabindex="-1" role="dialog" aria-labelledby="modalConfirmarLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document" style="max-width: 400px;">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Confirmar envío</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
-        </div>
-        <div class="modal-body">
-          ¿Deseas confirmar esta atención? El paciente se eliminará de la lista.
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-danger" onclick="confirmarEnvio()">Sí, confirmar</button>
-          <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-<!-- Modal de Historial Clínico -->
-<div id="modalHistorialClinico" class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-lg" role="document">
+ <!-- Modal: registrar anamnesis / tratamiento -->
+<div class="modal fade" id="modalAtencion" tabindex="-1" role="dialog" aria-labelledby="modalAtencionLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="max-width: 850px;">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Historial Clínico</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h5 class="modal-title">Atención médica</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
       </div>
-      <div class="modal-body" id="modalHistorialClinicoBody">
-        <!-- Aquí se cargará el historial clínico -->
+      <div class="modal-body">
+        <input type="hidden" id="codPacienteActual" />
+        <div class="form-group">
+          <label for="inputAnamnesis">Anamnesis</label>
+          <textarea class="form-control" id="inputAnamnesis" rows="4" placeholder="Describe síntomas, antecedentes…"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="inputTratamiento">Tratamiento / Costos</label>
+          <textarea class="form-control" id="inputTratamiento" rows="4" placeholder="Medicamentos, procedimientos, costos…"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Archivos adjuntos</label>
+          <input type="file" id="inputArchivos" multiple accept="image/*,application/pdf" />
+          <div id="previewArchivos" class="d-flex flex-wrap gap-3 mt-3"></div>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <!-- Botón de guardar atención -->
+        <button class="btn btn-primary" id="guardarAtencionBtn">Guardar</button>  <!-- Asegúrate de que este es el ID -->
+        <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
       </div>
     </div>
   </div>
 </div>
+
+
+
 
 
   <!-- Modal: recordatorios -->
@@ -127,6 +89,8 @@
           <h5 class="modal-title" id="modalRecordatoriosLabel">Recordatorios</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
         </div>
+
+        
         <div class="modal-body">
           <label for="selectNuevoRecordatorio">Agregar nuevo recordatorio:</label>
         <select id="selectNuevoRecordatorio" class="form-control mb-3">
@@ -175,10 +139,7 @@
     <option value="Vac_rabia">Vac. Rabia - 365 días</option>
   </optgroup>
 </select>
-        <button id="btnAgregarRecordatorio" class="btn btn-primary btn-block mb-3">Agregar</button>
-
-            <!-- Opciones restantes ... -->
-          </select>
+  
           <hr />
           <h6>Recordatorios agregados:</h6>
           <ul id="listaRecordatorios" class="list-group"></ul>
@@ -194,6 +155,48 @@
       </div>
     </div>
   </div>
+
+<!-- Modal de Historial Clínico -->
+<div id="modalHistorialClinico" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Historial Clínico</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalHistorialClinicoBody">
+        <!-- Aquí se cargará el historial clínico -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal: Confirmar la atención médica -->
+<div class="modal fade" id="modalConfirmarAtencion" tabindex="-1" role="dialog" aria-labelledby="modalConfirmarAtencionLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="max-width: 400px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmar Atención Médica</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro de que deseas guardar esta atención médica para el paciente?
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" onclick="confirmarAtencion()">Sí, guardar atención</button>
+        <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 
   <!-- jQuery -->

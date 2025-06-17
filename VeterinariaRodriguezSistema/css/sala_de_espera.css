@@ -120,3 +120,27 @@ button.btn-secondary {
   color: #222;
   box-sizing: border-box;
 }
+
+
+
+
+.modal-body .card {
+  margin-bottom: 15px;
+  border-radius: 8px;
+}
+
+.modal-body h6 {
+  margin-top: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.card-body {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.card-body p {
+  margin-bottom: 10px;
+}
