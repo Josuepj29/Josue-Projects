@@ -80,7 +80,7 @@ function renderPreviewArchivos(archivos, contenedor, onDelete) {
     contenedor.appendChild(wrapper);
   });
 }
-
+//OK
 /**
  * Visualizador modal universal para imágenes, PDFs y videos (compatibilidad mejorada para PDF).
  * @param {string} base64 - Archivo en base64.
