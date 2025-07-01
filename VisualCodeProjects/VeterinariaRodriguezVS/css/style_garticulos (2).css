@@ -1,0 +1,28 @@
+h1{
+    background:#888989;
+    padding: 10px 0px;
+    margin: 20px opx opx opx;
+
+}
+nav{
+    background:#9c9d9d;
+    padding: 10px 10px;
+    margin: 20px 20px 20px opx;
+    text-align: center;
+}
+nav a{
+    display: inline;
+    padding: 0px 10px;
+    text-transform: uppercase;
+    font-size: 12px;
+    text-decoration: none;
+    color:#050505;
+    
+}
+nav a:hover{
+text-decoration: none;
+color:#aa9429;
+}
+form{
+    padding: 10px 10px;
+}
