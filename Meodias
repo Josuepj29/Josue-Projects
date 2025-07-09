@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Pregunta seria 😎</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    h1 {
+      font-size: 28px;
+      margin-bottom: 40px;
+      color: #333;
+    }
+    #container {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      height: 300px;
+    }
+    button {
+      padding: 15px 35px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      position: absolute;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    button:hover {
+      transform: scale(1.05);
+    }
+    #si {
+      background-color: #4caf50;
+      color: white;
+      left: 30%;
+      top: 50%;
+    }
+    #no {
+      background-color: #f44336;
+      color: white;
+      left: 60%;
+      top: 50%;
+    }
+    #message {
+      margin-top: 30px;
+      font-size: 18px;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+  <h1>-   Me odias?😬</h1>
+  <div id="container">
+    <button id="si">Sí 😎</button>
+    <button id="no">No 😒</button>
+  </div>
+  <div id="message"></div>
+
+  <script>
+    const btnNo = document.getElementById("no");
+    const container = document.getElementById("container");
+    const mensaje = document.getElementById("message");
+
+    btnNo.addEventListener("mouseover", () => {
+      const containerRect = container.getBoundingClientRect();
+      const btnRect = btnNo.getBoundingClientRect();
+
+      const maxX = container.clientWidth - btnRect.width;
+      const maxY = container.clientHeight - btnRect.height;
+
+      const newX = Math.random() * maxX;
+      const newY = Math.random() * maxY;
+
+      btnNo.style.left = `${newX}px`;
+      btnNo.style.top = `${newY}px`;
+    });
+
+    document.getElementById("si").addEventListener("click", () => {
+      mensaje.textContent = "Ya abía que dirías que sí!😢 ";
+    });
+  </script>
+</body>
+</html>
