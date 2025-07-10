@@ -1,0 +1,274 @@
+
+#resultadosBusqueda {
+  margin-top: 20px !important;
+  padding: 20px 30px !important;
+  width: 1500px !important; 
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  border: 1px solid #ddd !important;
+  border-radius: 8px !important;
+  background-color: #fff !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15) !important;
+  box-sizing: border-box !important;
+}
+
+
+#resultadosBusqueda .card {
+  font-size: 1.1rem !important;
+  padding: 25px 40px !important;
+  margin-bottom: 20px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  border: 1px solid #ddd !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1) !important;
+  background-color: #fff !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  box-sizing: border-box !important;
+}
+
+
+#resultadosBusqueda table {
+  font-size: 1.1rem !important;
+  width: 100% !important;
+  table-layout: auto !important; 
+  border-collapse: collapse !important; 
+  border-spacing: 0 !important;
+  border: 1px solid #ddd !important;
+  border-radius: 8px !important;
+}
+
+#resultadosBusqueda table thead tr th {
+  background-color: #f5f5f5 !important;
+  padding: 10px !important;
+  text-align: left !important;
+  border-bottom: 2px solid #ddd !important;
+}
+
+#resultadosBusqueda table tbody tr {
+  background-color: #fff !important;
+  border-bottom: 1px solid #eee !important;
+}
+
+#resultadosBusqueda table tbody tr:last-child {
+  border-bottom: none !important;
+}
+
+#resultadosBusqueda table tbody tr td {
+  padding: 10px !important;
+  vertical-align: middle !important;
+  word-wrap: break-word !important;
+}
+
+
+.container {
+  max-width: 1600px !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  padding: 30px !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15) !important;
+  color: #222 !important;
+  box-sizing: border-box !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+
+a.btn.btn-secondary {
+  padding: 10px 20px !important;
+  font-size: 1.1rem !important;
+  height: auto !important;
+  width: auto !important;
+  min-width: 200px !important;
+  line-height: 1.3 !important;
+  margin-right: 10px !important;
+  border-radius: 6px !important;
+  transition: background-color 0.3s ease !important;
+}
+
+a.btn.btn-secondary:hover {
+  background-color: #444 !important;
+  color: #fff !important;
+}
+
+
+.form-row {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  overflow-x: auto;
+  align-items: center;
+}
+
+.form-row .form-group {
+  flex: 1 1 auto;
+  min-width: 150px;
+  max-width: 230px;
+}
+
+.form-row button {
+  flex: 0 0 auto;
+  margin-top: 0 !important;
+  height: 38px;
+}
+
+
+
+.btn-info {
+  font-size: 1.25rem;  
+  padding: 12px 24px;  
+  width: 200px;    
+  height: auto;        
+  border-radius: 6px;  
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  
+  transition: all 0.3s ease; 
+}
+
+.btn-info:hover {
+  background-color: #17a2b8;  
+  color: white;  
+}
+
+
+
+
+
+.table thead {
+  background-color: #f8f9fa;
+}
+
+.table td, .table th {
+  vertical-align: middle !important;
+  padding: 12px;
+}
+
+
+.card-body .row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-body .col-md-5 {
+  flex: 1; 
+}
+
+
+.table-mascotas th, .table-mascotas td {
+  vertical-align: middle !important;
+  padding: 10px 15px;
+}
+
+
+
+
+#modalEditarMascota .modal-content {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+
+#modalEditarMascota .modal-title {
+  font-weight: 600;
+  color: #333;
+}
+
+
+#modalEditarMascota .btn-close {
+  background: transparent;
+  opacity: 0.6;
+}
+
+#modalEditarMascota .btn-close:hover {
+  opacity: 1;
+}
+
+
+#modalEditarMascota .form-label {
+  font-weight: 500;
+  color: #555;
+}
+
+#modalEditarMascota .form-control,
+#modalEditarMascota .form-select {
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#modalEditarMascota .form-control:focus,
+#modalEditarMascota .form-select:focus {
+  border-color: #4099ff;
+  box-shadow: 0 0 0 0.2rem rgba(64, 153, 255, 0.2);
+}
+
+
+#modalEditarMascota .modal-footer .btn-primary {
+  background: #4099ff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+#modalEditarMascota .modal-footer .btn-primary:hover {
+  background: #267ae0;
+}
+
+
+#modalEditarMascota .modal-body {
+  padding: 20px;
+}
+
+#modalEditarMascota .modal-footer {
+  padding: 20px;
+}
+
+
+
+.botones-accion {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  gap: 20px; 
+}
+
+.botones-accion .custom-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 200px;
+  height: 50px;
+  font-size: 1.1rem;
+  padding: 0 25px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.botones-accion {
+  display: flex;
+  justify-content: center; 
+  gap: 20px;               
+  margin-top: 20px;        
+}
+
+.botones-accion .custom-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 200px;
+  height: 50px;
+  font-size: 1.1rem;
+  padding: 0 25px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.botones-accion .custom-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+

@@ -1,0 +1,217 @@
+
+.btn-llamada {
+  max-width: 80px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+.btn-recordatorio {
+  margin-left: 5px;
+}
+.table-responsive {
+  max-width: 95vw;
+  overflow-x: auto;
+}
+
+.btn-group-sm > .btn {
+  margin-right: 5px;
+}
+
+.container {
+  max-width: 1800px !important;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  color: #222;
+  box-sizing: border-box;
+}
+
+button.btn-sm {
+  padding-left: 12px;
+  padding-right: 12px;
+  height: 36px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  min-width: 80px;
+  max-width: 110px;
+  width: auto;
+}
+
+#tablaSalaPeluqueria button.btn-recordatorio,
+#tablaSalaPeluqueria button.btn-primary.ml-1 {
+  padding: 3px 6px;
+  font-size: 0.7rem;
+  height:  35px;
+  width: 100px;
+}
+
+#tablaSalaPeluqueria td > .btn-group > button {
+  margin-right: 4px;
+}
+
+
+
+
+
+#tablaSalaPeluqueria button.btn-eliminar {
+  padding: 3px 6px;
+  font-size: 0.7rem;
+  height: 35px;
+  width: 30px;
+  line-height: 1;
+}
+
+
+#listaRecordatorios button.btn-danger {
+  padding: 2px 6px;
+  font-size: 0.65rem;
+  height: 20px;
+  width: 30px;
+  line-height: 1;
+}
+
+
+a.btn.btn-secondary {
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  min-width: 840px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+a.btn.btn-secondary:hover {
+  background-color: #444;
+  color: #fff;
+}
+
+
+#modalHB .modal-dialog {
+  width: 95%;
+  max-width: 1800px;
+  margin: 1.75rem auto;
+}
+#modalHB .modal-content {
+  max-height: 85vh;
+  overflow-y: auto;
+  border-radius: 8px;
+}
+#modalHB .table {
+  table-layout: fixed;
+  width: 100%;
+  word-wrap: break-word;
+}
+
+
+#tablaSalaPeluqueria button.btn-cobro {
+  width: 100px;
+  height: 35px;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  padding: 4px 8px;
+}
+
+#tablaSalaPeluqueria button.btn-cobro.btn-success {
+  background-color: #28a745 !important;
+  border-color: #28a745 !important;
+  color: #fff !important;
+}
+
+#tablaSalaPeluqueria button.btn-cobro.btn-danger {
+  background-color: #dc3545 !important;
+  border-color: #dc3545 !important;
+  color: #fff !important;
+}
+
+
+.container {
+  max-width: 1600px !important;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  color: #222;
+  box-sizing: border-box;
+}
+
+.table th, .table td, th, td {
+  word-wrap: break-word;
+  white-space: normal;
+  font-size: 15px;
+  line-height: 1.4;
+  padding: 8px 12px;
+  vertical-align: middle;
+  border: 1px solid #dee2e6;
+}
+
+button.btn-sm {
+  white-space: nowrap;
+  padding: 10px 12px;
+  height: 36px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  min-width: 80px;
+  max-width: 110px;
+}
+td, th {
+  text-align: center;
+  vertical-align: middle;
+}
+
+
+
+.table button,
+button.btn,
+button.btn-sm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 78px;
+  max-width: 110px;
+  height: 35px;
+  font-size: 1rem;
+  font-weight: 400;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(50,50,50,0.09);
+  transition: background 0.25s, color 0.25s, box-shadow 0.2s;
+  padding: 0 18px;
+  cursor: pointer;
+  text-align: center;
+  outline: none;
+  margin: 0 3px;
+  letter-spacing: .02em;
+}
+
+
+.btn-primary     { background: #2196f3; color: #fff; }
+.btn-primary:hover { background: #1976d2; }
+.btn-success     { background: #28a745; color: #fff; }
+.btn-success:hover { background: #218838; }
+.btn-warning     { background: #ffc107; color: #222; }
+.btn-warning:hover { background: #e0a800; }
+.btn-danger      { background: #e74c3c; color: #fff; }
+.btn-danger:hover { background: #c0392b; }
+.btn-info        { background: #26b6c8; color: #fff; }
+.btn-info:hover  { background: #1191a3; }
+.btn-secondary   { background: #666; color: #fff; }
+.btn-secondary:hover { background: #444; }
+
+.btn-recordatorio {
+  min-width: 30px;
+  max-width: 45px;
+  height: 26px;
+  border-radius: 30%;
+  font-size: 1.3rem;
+  padding: 0;
+}
+
+
+td > button,
+td > .btn {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
