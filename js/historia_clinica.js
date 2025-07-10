@@ -2,14 +2,10 @@ window.recordatoriosGruposPelu = window.recordatoriosGruposPelu || [];
 window.recordatoriosMVet = window.recordatoriosMVet || [];
 window.textosRecordatoriosPelu = window.textosRecordatoriosPelu || {};
 window.textosRecordatoriosMVet = window.textosRecordatoriosMVet || {};
-
-// ============ VARIABLES GLOBALES =============
 let archivosHistoriaActuales = [];
 let archivosEdicionActuales = [];
 let recordatoriosEdicionActuales = [];
 let filaHistoriaActual = null;
-
-// === Para lookup plano de textos (generados por recordatorios.js) ===
 window.textosRecordatoriosMVet = window.textosRecordatoriosMVet || {};
 window.textosRecordatoriosPelu = window.textosRecordatoriosPelu || {};
 if (window.recordatoriosMVet) {
@@ -22,8 +18,6 @@ if (window.recordatoriosGruposPelu) {
     grupo.items.forEach(item => window.textosRecordatoriosPelu[item.value] = item.text)
   );
 }
-
-// ========== LLENAR RESULTADOS DE BÚSQUEDA ==========
 function llenarResultadosBusqueda() {
   const tbody = document.querySelector('#tablaResultadosBusqueda tbody');
   tbody.innerHTML = '';
@@ -82,14 +76,10 @@ function llenarResultadosBusqueda() {
     });
   });
 }
-
-// === Evento buscar ===
 document.getElementById('btnBuscar').addEventListener('click', function() {
   llenarResultadosBusqueda();
   $('#resultadoBusqueda').modal('show');
 });
-
-// =========== MOSTRAR HISTORIAL Y MODAL DE EDICIÓN ==============
 function mostrarHistorial(nhc) {
   const obj = getMascotaByNHC(nhc);
   const mascota = obj?.mascota;
@@ -99,16 +89,12 @@ function mostrarHistorial(nhc) {
     alert('No se encontró al propietario o la mascota.');
     return;
   }
-
-  // Llenar datos del paciente
   document.getElementById('nombreDueno').textContent = dueño.dueño || '';
   document.getElementById('nombreMascota').textContent = mascota.nombre || '';
   document.getElementById('NHC').textContent = mascota.NHC || '';
   document.getElementById('direccionPaciente').textContent = dueño.direccion || '';
   document.getElementById('telefonoPaciente').textContent = dueño.telefono || '';
   document.getElementById('correoPaciente').textContent = dueño.correo || '';
-
-  // Historial clínico: MVet + Peluquería
   const historialMVet = mascota.historialClinico?.atencionMVet || [];
   const historialPelu = mascota.historialClinico?.peluqueria || [];
   const historialFusionado = []
@@ -160,42 +146,26 @@ function mostrarHistorial(nhc) {
   document.getElementById('datosPaciente').style.display = 'block';
   $('#resultadoBusqueda').modal('hide');
 }
-
-
-
-
-
-// ========= MODAL DE EDICIÓN (ABRIR Y RELLENAR) ==========
 window.abrirModalEditarHistorial = function(nhc, tipo, idx) {
   const { mascota } = getMascotaByNHC(nhc);
-
-  // Asegura las propiedades y arrays siempre existen
   if (!mascota.historialClinico) mascota.historialClinico = {};
   if (!Array.isArray(mascota.historialClinico.atencionMVet)) mascota.historialClinico.atencionMVet = [];
   if (!Array.isArray(mascota.historialClinico.peluqueria)) mascota.historialClinico.peluqueria = [];
-
-  // Selecciona el array adecuado según tipo
   let historialArr = (tipo === 'peluqueria')
     ? mascota.historialClinico.peluqueria
     : mascota.historialClinico.atencionMVet;
-
-  // Asegúrate que el índice existe
   if (typeof idx !== "number" || idx < 0 || idx >= historialArr.length) {
     alert("No existe la atención/historial solicitado. Verifique los datos.");
     return;
   }
 
   let atencion = historialArr[idx];
-
-  // Prellenar los campos del modal
   document.getElementById('editarNHC').value = nhc;
   document.getElementById('editarTipo').value = tipo;
   document.getElementById('editarIdx').value = idx;
   document.getElementById('editarFecha').value = convertirAFechaLocalInput(atencion.fecha);
   document.getElementById('editarMotivo').value = atencion.servicio || atencion.anamnesis || '';
   document.getElementById('editarTratamiento').value = atencion.costo || atencion.tratamiento || '';
-
-  // Archivos
   archivosEdicionActuales = [...(atencion.archivos || [])];
   renderPreviewArchivos(
     archivosEdicionActuales,
@@ -205,15 +175,11 @@ window.abrirModalEditarHistorial = function(nhc, tipo, idx) {
       renderPreviewArchivos(archivosEdicionActuales, document.getElementById('editarPreviewArchivos'), arguments.callee);
     }
   );
-
-  // Recordatorios
   recordatoriosEdicionActuales = (atencion.recordatorios || []).map(r => ({
     value: r.value || r.texto || r.text,
     texto: r.texto || r.text || window.textosRecordatoriosMVet[r.value] || window.textosRecordatoriosPelu[r.value] || r.value
   }));
   renderEditarListaRecordatorios();
-
-  // Llenar <select> de recordatorio dinámico
   let sel = document.getElementById('editarSelectRecordatorio');
   sel.innerHTML = `<option value="">Agregar recordatorio...</option>`;
   const grupos = tipo === 'peluqueria' ? window.recordatoriosGruposPelu : window.recordatoriosMVet;
@@ -240,10 +206,6 @@ console.log('MVet:', window.recordatoriosMVet);
 
   $('#modalEditarHistorial').modal('show');
 }
-
-
-
-// ============= UTILIDAD DE FECHAS ==============
 function convertirAFechaLocalInput(fecha) {
   let d = new Date(fecha);
   if (isNaN(d)) {
@@ -256,8 +218,6 @@ function convertirAFechaLocalInput(fecha) {
   }
   return d.toISOString().slice(0,16);
 }
-
-// ============ EDICIÓN DE RECORDATORIOS EN EL MODAL =============
 document.getElementById('editarSelectRecordatorio').addEventListener('change', function() {
   const value = this.value;
   if (!value) return;
@@ -277,7 +237,6 @@ function renderEditarListaRecordatorios() {
   let div = document.getElementById('editarListaRecordatorios');
   div.innerHTML = '';
   recordatoriosEdicionActuales.forEach((r, i) => {
-    // Crea un span estilo badge
     const badge = document.createElement('span');
     badge.className = 'badge badge-pill badge-secondary mr-2 mb-2 d-inline-flex align-items-center';
     badge.style.fontSize = '0.95rem';
@@ -286,12 +245,8 @@ function renderEditarListaRecordatorios() {
     badge.style.padding = '7px 7px';
 badge.style.minWidth = '55px';
 badge.style.justifyContent = 'center';
-
-    // Texto del recordatorio
     const text = document.createElement('span');
     text.textContent = r.texto || r.text || (window.textosRecordatoriosMVet?.[r.value] || window.textosRecordatoriosPelu?.[r.value]) || r.value;
-
-    // Botón X pequeño a la derecha del badge
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'close ml-1';
@@ -308,10 +263,6 @@ badge.style.justifyContent = 'center';
     div.appendChild(badge);
   });
 }
-
-
-
-// ============ INPUT DE ARCHIVOS EN EDICIÓN ==============
 document.getElementById("editarArchivos").addEventListener("change", function(event) {
   const archivos = Array.from(event.target.files);
   archivos.forEach(archivo => {
@@ -327,45 +278,31 @@ document.getElementById("editarArchivos").addEventListener("change", function(ev
   });
   event.target.value = '';
 });
-
-// ============ GUARDAR CAMBIOS AL EDITAR ==============
 document.getElementById('formEditarHistorial').addEventListener('submit', function(e) {
   e.preventDefault();
 
   const nhc = document.getElementById('editarNHC').value;
   const tipo = document.getElementById('editarTipo').value;
   const idx = parseInt(document.getElementById('editarIdx').value);
-
-  // Obtener el array global
   let registros = getRegistrosMascotas();
-
-  // Buscar propietario y mascota
   let propietario = registros.find(p => (p.mascotas || []).some(m => m.NHC === nhc));
   if (!propietario) {
     alert("No se encontró el propietario para guardar los cambios.");
     return;
   }
   let mascota = propietario.mascotas.find(m => m.NHC === nhc);
-
-  // Asegurar arrays
   if (!mascota.historialClinico) mascota.historialClinico = {};
   if (!Array.isArray(mascota.historialClinico.atencionMVet)) mascota.historialClinico.atencionMVet = [];
   if (!Array.isArray(mascota.historialClinico.peluqueria)) mascota.historialClinico.peluqueria = [];
-
-  // Escoge el historial a modificar
   let historialArr = (tipo === 'peluqueria')
     ? mascota.historialClinico.peluqueria
     : mascota.historialClinico.atencionMVet;
-
-  // Revisar que el índice sea válido
   if (typeof idx !== "number" || idx < 0 || idx >= historialArr.length) {
     alert("No se encontró la atención a editar.");
     return;
   }
 
   let atencion = historialArr[idx];
-
-  // Actualiza campos
   let fechaInput = document.getElementById('editarFecha').value;
   let fechaStr = fechaInput
     ? new Date(fechaInput).toLocaleString('es-PE', { hour12: true })
@@ -376,8 +313,6 @@ document.getElementById('formEditarHistorial').addEventListener('submit', functi
   atencion.costo = document.getElementById('editarTratamiento').value;
   atencion.archivos = [...archivosEdicionActuales];
   atencion.tipo = tipo;
-
-  // Recordatorios
   atencion.recordatorios = recordatoriosEdicionActuales.map(r => {
     let fechaInicio = fechaStr;
     let proxima = calcularFechaProxima(fechaInicio, r.value || r.texto);
@@ -388,28 +323,20 @@ document.getElementById('formEditarHistorial').addEventListener('submit', functi
       fechaProxima: proxima
     };
   });
-
-  // --- GUARDAR el array global actualizado ---
   setRegistrosMascotas(registros);
 
   $('#modalEditarHistorial').modal('hide');
   alert("Historial actualizado.");
   mostrarHistorial(nhc);
 });
-
-
-// ============ INICIALIZACIÓN =============
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btnBuscar').addEventListener('click', function() {
     llenarResultadosBusqueda();
     $('#resultadoBusqueda').modal('show');
   });
 });
-
-// ============ UTILIDADES EXTRA =============
 function convertirFechaISO(fecha) {
   if (!fecha) return new Date('1970-01-01');
-  // ISO o "28/6/2025, 01:34 a.m."
   if (/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(fecha)) return new Date(fecha);
   const parts = fecha.split(", ");
   if (parts.length < 2) return new Date('1970-01-01');
@@ -422,12 +349,8 @@ function convertirFechaISO(fecha) {
   else if (meridian.toLowerCase().includes('a.m.') && hour === 12) hour = 0;
   return new Date(year, month - 1, day, hour, minute, second);
 }
-
-// ================== calcularFechaProxima ===================
 function calcularFechaProxima(fechaInicio, value) {
   let dias = 0;
-  // Custom lógica para calcular días según value
-  // Ejemplo: 'vacuna_puppy_14' => 14 días
   let match = value && value.match(/\d+$/);
   if (match) dias = parseInt(match[0]);
   else if (/365/.test(value)) dias = 365;

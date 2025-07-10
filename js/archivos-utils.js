@@ -1,11 +1,5 @@
-// ========== VISUALIZADOR Y PREVISUALIZADOR UNIVERSAL DE ARCHIVOS ==========
 
-/**
- * Renderiza una previsualización de archivos base64 en un contenedor.
- * @param {Array<string>} archivos - Arreglo de archivos en base64.
- * @param {HTMLElement} contenedor - El elemento donde renderizar los previews.
- * @param {Function} [onDelete] - Callback que recibe el índice del archivo a eliminar.
- */
+
 function renderPreviewArchivos(archivos, contenedor, onDelete) {
   contenedor.innerHTML = '';
 
@@ -19,7 +13,7 @@ function renderPreviewArchivos(archivos, contenedor, onDelete) {
       elemento.style.maxWidth = '150px';
       elemento.style.cursor = 'pointer';
       elemento.title = 'Click para ver grande';
-      elemento.onclick = () => mostrarArchivoGrande(base64); // Usa visor universal
+      elemento.onclick = () => mostrarArchivoGrande(base64); 
     } else if (base64.startsWith('data:video')) {
       elemento = document.createElement('video');
       elemento.src = base64;
@@ -42,8 +36,6 @@ function renderPreviewArchivos(archivos, contenedor, onDelete) {
       elemento = document.createElement('p');
       elemento.innerText = 'Archivo';
     }
-
-    // Botón eliminar (si aplica)
     let btn;
     if (onDelete) {
       btn = document.createElement('button');
@@ -80,16 +72,9 @@ function renderPreviewArchivos(archivos, contenedor, onDelete) {
     contenedor.appendChild(wrapper);
   });
 }
-//OK
-//Ok2
-//Ok3
 
-/**
- * Visualizador modal universal para imágenes, PDFs y videos (compatibilidad mejorada para PDF).
- * @param {string} base64 - Archivo en base64.
- */
+
 function mostrarArchivoGrande(base64) {
-  // Elimina cualquier modal viejo
   let modal = document.getElementById('modalArchivoGrande');
   if (modal) modal.remove();
 
@@ -112,7 +97,6 @@ function mostrarArchivoGrande(base64) {
     contenido = `<img src="${base64}" style="max-width:90vw; max-height:90vh; border-radius:12px; box-shadow:0 0 20px #000;">`;
   } else if (base64.startsWith('data:application/pdf')) {
     try {
-      // Crea Blob URL temporal para iframe (mayor compatibilidad)
       const byteString = atob(base64.split(',')[1]);
       const ab = new ArrayBuffer(byteString.length);
       const ia = new Uint8Array(ab);
@@ -144,8 +128,6 @@ function mostrarArchivoGrande(base64) {
     <span style="position:absolute;top:24px;right:32px;font-size:44px;color:white;cursor:pointer;z-index:2" onclick="document.getElementById('modalArchivoGrande').remove()">&times;</span>
     <div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;">${contenido}</div>
   `;
-
-  // Cerrar clic fondo
   modal.onclick = function(e) {
     if (e.target === modal) modal.remove();
   };
@@ -156,12 +138,8 @@ window.mostrarArchivoGrande = mostrarArchivoGrande;
 
 
 
-/**
- * Visualizador modal universal para imágenes grandes.
- * @param {string} src - Imagen en base64.
- */
+
 function mostrarArchivoGrande(base64) {
-  // Elimina cualquier modal viejo
   let modal = document.getElementById('modalArchivoGrande');
   if (modal) modal.remove();
 
@@ -199,27 +177,17 @@ function mostrarArchivoGrande(base64) {
     <span style="position:absolute;top:24px;right:32px;font-size:44px;color:white;cursor:pointer;z-index:2" onclick="document.getElementById('modalArchivoGrande').remove()">&times;</span>
     <div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;">${contenido}</div>
   `;
-
-  // Cerrar clic fondo
   modal.onclick = function(e) {
     if (e.target === modal) modal.remove();
   };
 
   document.body.appendChild(modal);
 }
-window.mostrarArchivoGrande = mostrarArchivoGrande; // Asegura globalidad
-window.mostrarArchivoGrande = mostrarArchivoGrande; // Lo mismo, para compatibilidad
-
-
-
-
-
-// ARCHIVOS CARRUSEL 
+window.mostrarArchivoGrande = mostrarArchivoGrande; 
+window.mostrarArchivoGrande = mostrarArchivoGrande; 
 
 function mostrarCarruselArchivos(archivos, indexInicial = 0) {
   if (!archivos || archivos.length === 0) return;
-
-  // Elimina visor viejo si hay
   let modal = document.getElementById('modalCarruselArchivos');
   if (modal) modal.remove();
 
@@ -233,7 +201,6 @@ function mostrarCarruselArchivos(archivos, indexInicial = 0) {
       contenido = `<img src="${base64}" style="max-width:90vw; max-height:90vh; border-radius:10px; box-shadow:0 0 30px #000;">`;
     } else if (base64.startsWith('data:application/pdf')) {
       try {
-        // Blob URL para compatibilidad
         const byteString = atob(base64.split(',')[1]);
         const ab = new ArrayBuffer(byteString.length);
         const ia = new Uint8Array(ab);
@@ -291,8 +258,6 @@ function mostrarCarruselArchivos(archivos, indexInicial = 0) {
   modal.style.cursor = 'pointer';
   modal.style.zIndex = '999999';
   document.body.appendChild(modal);
-
-  // Navegación
   window._carruselPrev = function() {
     index = (index - 1 + archivos.length) % archivos.length;
     render();
@@ -301,8 +266,6 @@ function mostrarCarruselArchivos(archivos, indexInicial = 0) {
     index = (index + 1) % archivos.length;
     render();
   };
-
-  // Cerrar al hacer clic fuera del contenido
   modal.onclick = function(e) {
     if (e.target === modal) modal.remove();
   };
@@ -310,35 +273,3 @@ function mostrarCarruselArchivos(archivos, indexInicial = 0) {
   render();
 }
 window.mostrarCarruselArchivos = mostrarCarruselArchivos;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* // Supón que archivosActuales es tu array de base64
-
-
-const contenedor = document.getElementById('previewArchivos');
-renderPreviewArchivos(archivosActuales, contenedor, function (index) {
-  archivosActuales.splice(index, 1);
-  renderPreviewArchivos(archivosActuales, contenedor, arguments.callee); // Recarga el preview
-});
-
-
-mostrarImagenGrande(base64DeImagen);
-
-
-*/

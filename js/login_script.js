@@ -21,8 +21,6 @@ iconClose.addEventListener('click', () => {
     wrapper.classList.remove('active');
 });
 
-// --- LOGIN ---
-
 const errorMessage = document.getElementById('loginErrorMessage');
 
 function showError(message) {
@@ -62,12 +60,8 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     }
 });
 
-// --- REGISTRO ---
-
 const registerForm = document.querySelector('.form-box.register form');
 const termsCheckbox = document.getElementById('termsCheckbox');
-
-// Creamos un div para mostrar errores de registro con id
 const registerErrorMessage = document.createElement('div');
 registerErrorMessage.id = 'registerErrorMessage';
 registerErrorMessage.style.marginTop = '10px';
@@ -90,7 +84,6 @@ registerForm.addEventListener('submit', function(event) {
         event.preventDefault();
         showRegisterError('Debes aceptar los términos y condiciones para registrarte.');
     } else {
-        // Aquí iría la lógica real de registro o redireccionamiento
         window.location.href = 'principal.html';
     }
 });

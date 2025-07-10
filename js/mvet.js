@@ -1,10 +1,7 @@
-// ========================= VARIABLES GLOBALES Y HELPERS =========================
 let pacienteAConfirmar = null;
 let pacienteRecordatorios = null;
 let recordatorios = [];
 let archivosActuales = [];
-
-// Helper para buscar el texto de recordatorio (M.Vet)
 function obtenerTextoRecordatorioMVet(value) {
   for (const grupo of recordatoriosMVet) {
     for (const item of grupo.items) {
@@ -13,16 +10,12 @@ function obtenerTextoRecordatorioMVet(value) {
   }
   return value;
 }
-
-// ========================= OBTENER Y GUARDAR PACIENTES (SALA DE ESPERA) =========================
 function obtenerPacientes() {
   return JSON.parse(localStorage.getItem('salaEspera') || '[]');
 }
 function setPacientes(data) {
   localStorage.setItem('salaEspera', JSON.stringify(data));
 }
-
-// ========================= CARGA DE PACIENTES EN TABLA =========================
 function cargarPacientes() {
   const tbody = document.getElementById('tablaMVet');
   tbody.innerHTML = '';
@@ -57,8 +50,6 @@ function cargarPacientes() {
     tbody.appendChild(fila);
   });
 }
-
-// =========== RECORDATORIOS: Llenar el <select> desde el agrupado ===========
 function llenarSelectRecordatoriosMVet() {
   const select = document.getElementById('selectNuevoRecordatorio');
   select.innerHTML = '<option value="" selected disabled>Seleccione un recordatorio</option>';
@@ -75,8 +66,6 @@ function llenarSelectRecordatoriosMVet() {
   });
 }
 document.addEventListener('DOMContentLoaded', llenarSelectRecordatoriosMVet);
-
-// ========================= OBSERVACIÓN Y FECHAS =========================
 function mostrarObservacion(NHC) {
   const paciente = obtenerPacientes().find(p => p.NHC === NHC);
   alert(paciente?.observacion || 'No hay observaciones registradas.');
@@ -97,8 +86,6 @@ function convertirFechaISO(fecha) {
   return new Date(year, month - 1, day, hour, minute, second);
 }
 
-// ========================= MODAL ATENCIÓN MÉDICA =========================
-
 function abrirModalAtencion(NHC) {
   pacienteRecordatorios = NHC;
   document.getElementById('codPacienteActual').value = NHC;
@@ -109,15 +96,12 @@ function abrirModalAtencion(NHC) {
   document.getElementById('inputAnamnesis').value = paciente?.anamnesisTmp || '';
   document.getElementById('inputTratamiento').value = paciente?.tratamientoTmp || '';
   archivosActuales = paciente?.archivosTmp || [];
-
-  // Limpia input file y renderiza previsualización
   document.getElementById('inputArchivos').value = '';
   renderPreviewArchivos(
     archivosActuales,
     document.getElementById('previewArchivos'),
     function (i) {
       archivosActuales.splice(i, 1);
-      // Actualiza temporalmente en salaEspera
       const sala = obtenerPacientes();
       sala.forEach(p => {
         if (p.NHC === NHC) p.archivosTmp = archivosActuales;
@@ -133,8 +117,6 @@ function abrirModalAtencion(NHC) {
 
   $('#modalAtencion').modal('show');
 }
-
-// Escuchar selección de archivos
 document.getElementById('inputArchivos').addEventListener('change', function (event) {
   const archivos = Array.from(event.target.files);
   const NHC = document.getElementById('codPacienteActual').value;
@@ -169,8 +151,6 @@ document.getElementById('inputArchivos').addEventListener('change', function (ev
   });
   event.target.value = '';
 });
-
-// Guardar atención temporalmente en salaEspera
 document.getElementById('guardarAtencionBtn').addEventListener('click', function () {
   const NHC = document.getElementById('codPacienteActual').value;
   const anam = document.getElementById('inputAnamnesis').value.trim();
@@ -190,8 +170,6 @@ document.getElementById('guardarAtencionBtn').addEventListener('click', function
   $('#modalAtencion').modal('hide');
 });
 
-// ========================= MODAL DE RECORDATORIOS =========================
-
 function abrirModalRecordatorios(NHC) {
   pacienteRecordatorios = NHC;
   const sala = obtenerPacientes();
@@ -206,8 +184,6 @@ function abrirModalRecordatorios(NHC) {
     keyboard: false
   });
 }
-
-// Actualizar lista de recordatorios en el modal (agrupado, usando helper)
 function actualizarListaRecordatorios() {
   const lista = document.getElementById('listaRecordatorios');
   lista.innerHTML = '';
@@ -221,14 +197,12 @@ function actualizarListaRecordatorios() {
     const li = document.createElement('li');
     li.className = 'list-group-item d-flex justify-content-between align-items-center';
     li.appendChild(document.createTextNode(obtenerTextoRecordatorioMVet(valor)));
-    // Botón eliminar
     const btn = document.createElement('button');
     btn.className = 'btn btn-danger btn-sm ml-2';
     btn.textContent = '×';
     btn.onclick = () => {
       recordatorios.splice(i, 1);
       actualizarListaRecordatorios();
-      // Guarda en salaEspera
       if (pacienteRecordatorios) {
         const sala = obtenerPacientes();
         sala.forEach(p => {
@@ -243,15 +217,12 @@ function actualizarListaRecordatorios() {
     lista.appendChild(li);
   });
 }
-
-// Agregar recordatorio desde select
 document.getElementById('selectNuevoRecordatorio').addEventListener('change', function () {
   const valor = this.value;
   if (valor && !recordatorios.includes(valor)) {
     recordatorios.push(valor);
     actualizarListaRecordatorios();
     this.value = '';
-    // Guardar inmediatamente en salaEspera
     if (pacienteRecordatorios) {
       const sala = obtenerPacientes();
       sala.forEach(p => {
@@ -263,8 +234,6 @@ document.getElementById('selectNuevoRecordatorio').addEventListener('change', fu
     }
   }
 });
-
-// Guardar cambios de fecha de cita médica temporalmente
 document.getElementById('inputFechaCita').addEventListener('change', () => {
   if (pacienteRecordatorios) {
     const sala = obtenerPacientes();
@@ -276,7 +245,6 @@ document.getElementById('inputFechaCita').addEventListener('change', () => {
     setPacientes(sala);
   }
 });
-// ========================= CONFIRMAR Y GUARDAR ATENCIÓN DEFINITIVA =========================
 
 function abrirConfirmacion(NHC) {
   pacienteAConfirmar = NHC;
@@ -290,8 +258,6 @@ function confirmarEnvio() {
   const paciente = sala.find(p => p.NHC === pacienteAConfirmar);
   const hoy = new Date().toISOString().split('T')[0];
   const recordatoriosAplicados = [];
-
-  // Procesar cada recordatorio clave seleccionado
   (paciente?.recordatoriosTmp || []).forEach(clave => {
     let dias = extraerDiasRecordatorioMVet(clave);
     let proxima = "—";
@@ -306,8 +272,6 @@ function confirmarEnvio() {
       fechaProxima: proxima
     });
   });
-
-  // Si hay fecha manual, agregar como recordatorio extra
   if (paciente?.fechaCitaTmp) {
     recordatoriosAplicados.push({
       texto: "Cita médica (calendario)",
@@ -315,8 +279,6 @@ function confirmarEnvio() {
       fechaProxima: paciente.fechaCitaTmp
     });
   }
-
-  // 1️⃣ GUARDAR EN HISTORIAL UNIFICADO (en registrosMascotas)
   updateMascotaByNHC(pacienteAConfirmar, (mascota) => {
     if (!mascota.historialClinico.atencionMVet) mascota.historialClinico.atencionMVet = [];
     mascota.historialClinico.atencionMVet.push({
@@ -329,8 +291,6 @@ function confirmarEnvio() {
     mascota.historialClinico.fechaCita = paciente?.fechaCitaTmp || null;
     return mascota;
   });
-
-  // 2️⃣ LIMPIAR PACIENTE DE SALA DE ESPERA
   const nuevaSala = sala.filter(p => p.NHC !== pacienteAConfirmar);
   setPacientes(nuevaSala);
   cargarPacientes();
@@ -339,10 +299,6 @@ function confirmarEnvio() {
   alert('Atención finalizada. Datos pasados a historial.');
   pacienteAConfirmar = null;
 }
-
-// ========================= HISTORIAL CLÍNICO (MODULAR) =========================
-
-// Ver historial clínico de la mascota (usa el render universal)
 function abrirModalHistorialClinico(NHC) {
   const { mascota } = getMascotaByNHC(NHC) || {};
   const modalBody = document.getElementById('modalHistorialClinicoBody');
@@ -360,8 +316,6 @@ function abrirModalHistorialClinico(NHC) {
     historial = historial.concat(mascota.historialClinico.peluqueria.map(h => ({ ...h, origen: "Peluquería" })));
   historial = historial.filter(h => h.fecha)
     .sort((a, b) => convertirFechaISO(b.fecha) - convertirFechaISO(a.fecha));
-
-  // Render universal
   renderHistorialClinico(historial, modalBody, function(index, historialArr) {
     const item = historialArr[index];
     if (item.archivos && item.archivos.length > 0) {
@@ -374,31 +328,20 @@ function abrirModalHistorialClinico(NHC) {
   $('#modalHistorialClinico').modal({ backdrop: 'static' });
 }
 
-// ========================= LISTENERS INICIALES =========================
-
 document.addEventListener('DOMContentLoaded', () => {
   cargarPacientes();
-  llenarSelectRecordatoriosMVet(); // Llenar el select de recordatorios agrupados
+  llenarSelectRecordatoriosMVet(); 
 });
-
-// ========================= HELPERS PARA RECORDATORIOS =========================
-
-// Obtener texto usando el agrupado de recordatoriosMVet
 function obtenerTextoRecordatorioMVet(clave) {
   for (const grupo of recordatoriosMVet) {
     const found = grupo.items.find(item => item.value === clave);
     if (found) return found.text;
   }
-  // Si no está en el agrupado, puede estar hardcodeado o venir del select manualmente
   return clave.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
 }
-
-// Extraer días de la clave (ej: "puppy_14" → 14)
 function extraerDiasRecordatorioMVet(clave) {
   const m = clave.match(/(\d+)$/);
   if (m) return parseInt(m[1]);
   if (clave === "cita_medica") return 1;
   return 0;
 }
-
-// ========================= FIN DE MVet.js =========================

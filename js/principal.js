@@ -1,7 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
   const cards = document.querySelectorAll(".dashboard-card");
-
-  // Animación suave de entrada escalonada
   cards.forEach((card, index) => {
     card.style.opacity = 0;
     card.style.transform = "translateY(20px)";
@@ -11,8 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
       card.style.transform = "translateY(0)";
     }, 100 * index);
   });
-
-  // Sonido al hacer clic
   const clickSound = new Audio("https://www.soundjay.com/buttons/sounds/button-3.mp3");
   cards.forEach(card => {
     card.addEventListener("click", () => {
@@ -20,14 +16,10 @@ document.addEventListener("DOMContentLoaded", function () {
       clickSound.play();
     });
   });
-
-  // Tooltips para cada card
   cards.forEach(card => {
     const label = card.querySelector("span").textContent;
     card.setAttribute("title", `Ir a ${label}`);
   });
-
-  // Configuración de partículas de fondo - estilo burbuja
   tsParticles.load("tsparticles", {
     fullScreen: { enable: true, zIndex: -1 },
     particles: {

@@ -176,10 +176,8 @@
 
 #datosPaciente {
   display: none;
-  /* mantiene oculto */
 }
 
-/* Cuando quieras mostrarlo, agregas una clase que active la visibilidad */
 #datosPaciente.visible {
   display: block;
 }

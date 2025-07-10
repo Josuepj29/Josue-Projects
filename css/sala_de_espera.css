@@ -1,4 +1,4 @@
-/* Contenedor grande similar a historia clínica */
+
 .container {
   max-width: 1200px !important;
   background: rgba(255, 255, 255, 0.95);
@@ -9,7 +9,7 @@
   box-sizing: border-box;
 }
 
-/* Tabla con layout auto para buen ajuste */
+
 table {
   width: 100%;
   table-layout: auto !important;
@@ -26,15 +26,15 @@ th, td {
   border: 1px solid #dee2e6;
 }
 
-/* Limitar ancho de columnas importantes */
-th:nth-child(1), td:nth-child(1), /* Dueño */
+
+th:nth-child(1), td:nth-child(1), 
 th:nth-child(2), td:nth-child(2),
-th:nth-child(6), td:nth-child(6)  /* Observación */
+th:nth-child(6), td:nth-child(6)  
 {
   max-width: 180px;
 }
 
-th:nth-child(3), td:nth-child(3) /* Dirección */
+th:nth-child(3), td:nth-child(3) 
 {
   max-width: 200px;
   white-space: normal;
@@ -42,31 +42,31 @@ th:nth-child(3), td:nth-child(3) /* Dirección */
   overflow-wrap: break-word;
 }
 
-th:nth-child(4), td:nth-child(4) /* Teléfono */
+th:nth-child(4), td:nth-child(4) 
 {
   width: 120px;
   text-align: center;
 }
 
-th:nth-child(5), td:nth-child(5) /* NHC (CodAlt) */
+th:nth-child(5), td:nth-child(5) 
 {
   width: 120px;
   text-align: center;
 }
 
-th:nth-child(7), td:nth-child(7) /* Estado */
+th:nth-child(7), td:nth-child(7) 
 {
   width: 100px;
   text-align: center;
 }
 
-th:nth-child(8), td:nth-child(8) /* Acción */
+th:nth-child(8), td:nth-child(8) 
 {
   width: 150px;
   text-align: center;
 }
 
-/* Botones de acción */
+
 button.btn-sm {
   white-space: nowrap;
   padding-left: 12px;
@@ -84,7 +84,7 @@ button.btn-secondary {
   min-width: 60px;
 }
 
-/* Modal resultados búsqueda */
+
 #resultadoBusqueda .modal-dialog {
   max-width: 900px;
   max-height: 80vh;
@@ -95,7 +95,7 @@ button.btn-secondary {
   padding: 1rem;
 }
 
-/* Tabla dentro del modal */
+
 #resultadoBusqueda table {
   width: 100%;
   table-layout: auto !important;
@@ -157,13 +157,13 @@ button.btn-secondary {
 }
 
 #historialModal .modal-dialog {
-  width: 95%;          /* 👉 Aumenta el ancho relativo */
-  max-width: 1800px;   /* 👉 Mayor ancho máximo */
-  margin: 1.75rem auto; /* 👉 Centrado y espacio arriba/abajo */
+  width: 95%;          
+  max-width: 1800px;   
+  margin: 1.75rem auto; 
 }
 
 #historialModal .modal-content {
-  max-height: 85vh;    /* 👉 Altura visible con scroll */
-  overflow-y: auto;    /* 👉 Scroll interno */
-  border-radius: 8px;  /* 👉 Opcional: bordes redondeados */
+  max-height: 85vh;    
+  overflow-y: auto;    
+  border-radius: 8px;  
 }

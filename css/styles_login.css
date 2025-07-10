@@ -263,16 +263,16 @@ header{
     text-decoration: underline;
 }
 
-/* Estilo base para mensajes de error */
+
 
 #loginErrorMessage {
-    color: #d93025; /* rojo */
+    color: #d93025; 
     font-size: 0.9em;
     margin-top: 10px;
     text-align: center;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
-    height: 1.2em; /* espacio fijo para evitar saltos */
+    height: 1.2em; 
 }
 
 #loginErrorMessage.show {

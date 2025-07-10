@@ -1,11 +1,3 @@
-// ========== VISUALIZADOR UNIVERSAL DE HISTORIAL CLÍNICO ==========
-
-/**
- * Renderiza un historial clínico en una tabla, listo para cualquier página.
- * @param {Array<Object>} historial - Lista de atenciones o eventos clínicos.
- * @param {HTMLElement} contenedor - Elemento donde insertar la tabla.
- * @param {Function} [onVerArchivos] - Callback para ver archivos, recibe (index, historial).
- */
 function renderHistorialClinico(historial, contenedor, onVerArchivos) {
   contenedor.innerHTML = '';
   if (!historial || !Array.isArray(historial) || historial.length === 0) {
@@ -56,15 +48,10 @@ function renderHistorialClinico(historial, contenedor, onVerArchivos) {
     </tbody>
   `;
   contenedor.appendChild(tabla);
-
-  // El truco: setea globalmente la función de visor si existe callback
   if (typeof onVerArchivos === "function") {
     window._verArchivosHistorialUniversal = (index) => onVerArchivos(index, historial);
   }
 }
-
-
-// fecha.utils
 
 function convertirFechaISO(fecha) {
   if (!fecha) return new Date('1970-01-01');
@@ -88,25 +75,20 @@ function convertirFechaISO(fecha) {
 
 function calcularFechaProxima(fechaBase, texto) {
   let dias = 0;
-  // Busca número de días en value: pipetas_30
   const matchValue = typeof texto === 'string' && texto.match(/_(\d+)$/);
   if (matchValue) dias = parseInt(matchValue[1], 10);
-  // O en text: "Pipetas - 30 días" o "Vac. Puppy - 14 días"
   if (!dias && typeof texto === 'string') {
     const matchText = texto.match(/(\d+)\s*d[ií]as?/i);
     if (matchText) dias = parseInt(matchText[1], 10);
   }
   if (!dias) return "—";
-  // Parse fechaBase: '27/6/2025, 10:32 p.m.' o yyyy-mm-dd
   let fecha = new Date();
   if (typeof fechaBase === 'string') {
-    // Soporta '27/6/2025, 10:32 p.m.'
     const partes = fechaBase.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
     if (partes) {
       const [_, d, m, y] = partes;
       fecha = new Date(`${y}-${m}-${d}`);
     } else {
-      // Soporta formato yyyy-mm-dd
       const matchISO = fechaBase.match(/(\d{4})-(\d{2})-(\d{2})/);
       if (matchISO) {
         fecha = new Date(fechaBase);
@@ -122,16 +104,3 @@ function calcularFechaProxima(fechaBase, texto) {
 
 
 
-
-
-
-/* // Supón que historial es tu array de atenciones, y modalBody el div contenedor
-renderHistorialClinico(historial, modalBody, function(index, historial) {
-  // Por ejemplo, puedes usar la función del visor de archivos modular:
-  const item = historial[index];
-  renderPreviewArchivos(item.archivos, document.getElementById('previewArchivosModal'));
-  // O tu propio visor modal
-});
-
-
-*/

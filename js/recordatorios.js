@@ -1,7 +1,3 @@
-// recordatorios.js
-
-// ================== Recordatorios para M.Vet (Atención médica) ==================
-// Usar este formato para llenado dinámico de <select> con optgroup
 
 const recordatoriosMVet = [
   {
@@ -64,8 +60,6 @@ const recordatoriosMVet = [
   }
 ];
 
-// recordatorios_peluqueria
-
 const recordatoriosGruposPelu = [
   {
     grupo: "Baño",
@@ -99,15 +93,12 @@ const recordatoriosGruposPelu = [
     ]
   }
 ];
-// Este bloque genera textosRecordatoriosPelu de forma global y plana:
 window.textosRecordatoriosPelu = {};
 recordatoriosGruposPelu.forEach(grupo => {
   grupo.items.forEach(item => {
     window.textosRecordatoriosPelu[item.value] = item.text;
   });
 });
-
-// Genera textosRecordatoriosMVet de forma global y plana
 window.textosRecordatoriosMVet = {};
 recordatoriosMVet.forEach(grupo => {
   grupo.items.forEach(item => {

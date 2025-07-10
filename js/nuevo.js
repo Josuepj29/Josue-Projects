@@ -1,4 +1,3 @@
-// === UTILIDADES PARA NHC Y REGISTROS ===
 
 function getProximoNHC() {
   let num = parseInt(localStorage.getItem('proximoNHC') || '1');
@@ -9,8 +8,6 @@ function aumentarNHC() {
   num++;
   localStorage.setItem('proximoNHC', num.toString());
 }
-
-// === BUSCAR Y RENDERIZAR DUEÑOS Y MASCOTAS ===
 
 function buscar() {
   const nDueño = document.getElementById('buscarDueno').value.toLowerCase();
@@ -100,7 +97,6 @@ function buscar() {
     `;
   });
 }
-// === MODAL: REGISTRAR NUEVO DUEÑO Y MASCOTA ===
 
 function abrirModalNuevo() {
   document.getElementById('formNuevo').reset();
@@ -181,8 +177,6 @@ document.getElementById('formNuevo').addEventListener('submit', function (e) {
   buscar();
 });
 
-// === MODAL: AGREGAR MASCOTA A DUEÑO EXISTENTE ===
-
 function abrirModalAgregarMascota(dueñoId) {
   document.getElementById('dueñoId').value = dueñoId;
   document.getElementById('formAgregarMascota').reset();
@@ -250,8 +244,6 @@ document.getElementById('formAgregarMascota').addEventListener('submit', functio
   buscar();
 });
 
-// === MODAL: EDITAR MASCOTA ===
-
 function abrirModalEditarMascota(dueñoId, NHC) {
   const registros = getRegistrosMascotas();
   const dueño = registros.find(p => p.dueñoId === dueñoId);
@@ -307,7 +299,6 @@ document.getElementById('formEditarMascota').addEventListener('submit', function
     esterilizada,
     sexo,
     fechaNac
-    // historialClinico SE CONSERVA tal como está
   };
 
   setRegistrosMascotas(registros);
@@ -316,18 +307,12 @@ document.getElementById('formEditarMascota').addEventListener('submit', function
   $('#modalEditarMascota').modal('hide');
   buscar();
 });
-
-// === UTILIDADES VARIAS (pueden ser opcionales según tu flujo) ===
-
-// Mostrar/ocultar elemento con clase .visible
 function toggleVisibility(elementId, show) {
   const el = document.getElementById(elementId);
   if (!el) return;
   if (show) el.classList.add('visible');
   else el.classList.remove('visible');
 }
-
-// Guardar y cargar observaciones en localStorage para paciente
 function guardarObservacion(NHC, texto) {
   localStorage.setItem(`observacion_${NHC}`, texto);
 }
@@ -335,15 +320,11 @@ function guardarObservacion(NHC, texto) {
 function cargarObservacion(NHC) {
   return localStorage.getItem(`observacion_${NHC}`) || '';
 }
-
-// Función para mostrar alertas con confirmación simple
 function confirmarAccion(mensaje, callback) {
   if (confirm(mensaje)) {
     callback();
   }
 }
-
-// Limpiar todo (para pruebas, si lo necesitas)
 function limpiarTodo() {
   if (confirm('¿Estás seguro que deseas borrar todos los registros?')) {
     localStorage.removeItem('registrosMascotas');

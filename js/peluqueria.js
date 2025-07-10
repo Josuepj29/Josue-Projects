@@ -1,10 +1,7 @@
-// ======= VARS GLOBALES =======
-let archivosHistoriaActuales = []; // Archivos adjuntos para historia
+let archivosHistoriaActuales = []; 
 let filaHistoriaActual = null;
 let filaRecordatorioActual = null;
-const llamadasPorFila = new Map(); // Solo memoria
-
-// ==== STORAGE UTILS ====
+const llamadasPorFila = new Map(); 
 function getRegistrosMascotas() {
   return JSON.parse(localStorage.getItem('registrosMascotas') || '[]');
 }
@@ -17,8 +14,6 @@ function getSalaPeluqueria() {
 function setSalaPeluqueria(data) {
   localStorage.setItem('salaPeluqueria', JSON.stringify(data));
 }
-
-// ==== Útil para obtener texto de recordatorio por value ====
 function buscarTextoRecordatorio(value, grupos) {
   for (const grupo of grupos) {
     for (const item of grupo.items) {
@@ -27,8 +22,6 @@ function buscarTextoRecordatorio(value, grupos) {
   }
   return value || "";
 }
-
-// ==== BÚSQUEDA Y AGREGADO A SALA ====
 function llenarResultadosBusqueda() {
   const tbody = document.querySelector('#tablaResultadosBusqueda tbody');
   tbody.innerHTML = '';
@@ -89,8 +82,6 @@ function llenarResultadosBusqueda() {
     });
   });
 }
-
-// Evento agregar a sala
 document.querySelector('#tablaResultadosBusqueda').addEventListener('click', (e) => {
   if (e.target && e.target.classList.contains('btn-agregar')) {
     const btn = e.target;
@@ -113,9 +104,6 @@ function agregarSalaPeluqueria(nombreMascota, nombreDueno, nhc) {
   }
   renderizarSalaPeluqueria();
 }
-
-
-// ========= RENDER DE SALA =========
 function renderizarSalaPeluqueria() {
   const tabla = document.getElementById("tablaSalaPeluqueria");
   tabla.innerHTML = "";
@@ -141,17 +129,15 @@ function renderizarSalaPeluqueria() {
       <td><button class="btn btn-outline-info btn-sm" onclick="llamarDueno(this)">--</button></td>
       <td><button class="btn btn-info btn-sm" onclick="mostrarHistorialLlamadas(this)">H. Llamada</button></td>
       <td><button class="btn btn-success btn-sm" onclick="cobrarMascota(this)">No cobrado</button></td>
-      <td><button class="btn btn-info btn-sm" onclick="abrirModalHC(this)">HC</button></td>
+      <td><button class="btn btn-info btn-sm" onclick="abrirModalHB(this)">HC</button></td>
       <td><button class="btn btn-primary btn-sm" onclick="abrirModalHistoria(this)">+</button></td>
       <td class="text-center"><button class="btn btn-warning btn-recordatorio" onclick="abrirModalRecordatorio(this)">⏰</button></td>
       <td class="text-center"><button class="btn btn-danger btn-sm" onclick="eliminarFila(this)">X</button></td>
     `;
     tabla.appendChild(tr);
-    llamadasPorFila.set(idFila, []); // Inicializa llamadas en memoria
+    llamadasPorFila.set(idFila, []); 
   });
 }
-
-// ======= MODALES: historia, archivos =======
 document.getElementById("archivosHistoria").addEventListener("change", function(event) {
   const archivos = Array.from(event.target.files);
   archivos.forEach(archivo => {
@@ -169,7 +155,7 @@ document.getElementById("archivosHistoria").addEventListener("change", function(
     };
     reader.readAsDataURL(archivo);
   });
-  event.target.value = ''; // Permitir elegir el mismo archivo después
+  event.target.value = ''; 
 });
 
 function abrirModalHistoria(btn) {
@@ -198,8 +184,6 @@ function abrirModalHistoria(btn) {
   );
   $("#modalHistoria").modal("show");
 }
-
-// ======= LLAMADAS, ESTADO, COBRO =======
 function cambiarEstado(btn) {
   if (confirm("¿Baño completado?")) {
     btn.textContent = "Finalizado";
@@ -265,7 +249,6 @@ function cobrarMascota(btn) {
     btn.textContent = "No cobrado";
   }
 }
-// ====== GUARDAR HISTORIA (TEMPORAL) ======
 document.getElementById("btnConfirmarHistoria").addEventListener("click", function () {
   if (!filaHistoriaActual) return;
 
@@ -273,11 +256,7 @@ document.getElementById("btnConfirmarHistoria").addEventListener("click", functi
   const registros = getRegistrosMascotas();
   const propietario = registros.find(p => p.mascotas.some(m => m.NHC === nhc));
   const mascota = propietario.mascotas.find(m => m.NHC === nhc);
-
-  // Recordatorios temporales antes de guardar
   const recordatoriosTemp = mascota.recordatoriosTemp || [];
-
-  // ADVERTENCIA si no hay recordatorios, pero deja continuar
   if (recordatoriosTemp.length === 0) {
     if (!confirm("No has agregado ningún recordatorio. ¿Deseas guardar la historia de todas formas?")) {
       return;
@@ -287,12 +266,8 @@ document.getElementById("btnConfirmarHistoria").addEventListener("click", functi
       return;
     }
   }
-
-  // Fecha con hora
   const fechaAhora = new Date();
   const fechaCompleta = `${fechaAhora.toLocaleDateString()}, ${fechaAhora.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
-
-  // Recordatorios a guardar en la historia temporal
   const recordatoriosConvertidos = recordatoriosTemp.map(r => ({
     texto: r.text || r.texto || textosRecordatoriosPelu[r.value] || r.value,
     value: r.value,
@@ -312,8 +287,6 @@ document.getElementById("btnConfirmarHistoria").addEventListener("click", functi
   $("#modalHistoria").modal("hide");
   alert("Guardado temporalmente. Se añadirá al historial clínico cuando elimines la mascota de la sala.");
 });
-
-// ====== CONFIRMAR Y GUARDAR RECORDATORIO TEMPORAL ======
 document.getElementById('btnConfirmarRecordatorio').addEventListener('click', () => {
   if (!filaRecordatorioActual) return;
   const nhc = filaRecordatorioActual.getAttribute('data-nhc');
@@ -322,8 +295,6 @@ document.getElementById('btnConfirmarRecordatorio').addEventListener('click', ()
   const mascota = propietario.mascotas.find(m => m.NHC === nhc);
 
   mascota.recordatoriosTemp = [...window.recordatoriosTemp];
-
-  // Si ya existe historia temporal, actualiza sus recordatorios
   if (mascota.historiaTemp) {
     const fechaHistoria = mascota.historiaTemp.fecha || new Date().toLocaleDateString();
     mascota.historiaTemp.recordatorios = window.recordatoriosTemp.map(r => ({
@@ -346,8 +317,6 @@ document.getElementById("btnCancelarHistoria").addEventListener("click", functio
   document.getElementById("archivosHistoria").value = "";
   $("#modalHistoria").modal("hide");
 });
-
-// ====== ELIMINAR FILA (PASAR A HISTORIAL) ======
 function eliminarFila(btn) {
   if (!confirm('¿Eliminar esta mascota y guardar atención en historial?')) return;
 
@@ -356,8 +325,6 @@ function eliminarFila(btn) {
   const registros = getRegistrosMascotas();
   const propietario = registros.find(p => p.mascotas.some(m => m.NHC === nhc));
   const mascota = propietario.mascotas.find(m => m.NHC === nhc);
-
-  // Construye la nueva atención a guardar en el historial
   const historiaTemp = mascota.historiaTemp || {};
 
   const fecha = historiaTemp.fecha || new Date().toLocaleDateString();
@@ -371,19 +338,13 @@ function eliminarFila(btn) {
     archivos: historiaTemp.archivos || [],
     recordatorios: recordatorios
   };
-
-  // Guardar en historial clínico (estructura global)
   mascota.historialClinico = mascota.historialClinico || {};
   mascota.historialClinico.peluqueria = mascota.historialClinico.peluqueria || [];
   mascota.historialClinico.peluqueria.push(nuevaAtencion);
-
-  // Limpiar campos temporales
   mascota.historiaTemp = null;
   mascota.recordatoriosTemp = [];
 
   setRegistrosMascotas(registros);
-
-  // Limpiar sala y eliminar la fila
   let sala = getSalaPeluqueria();
   sala = sala.filter(m => m.nhc !== nhc);
   setSalaPeluqueria(sala);
@@ -392,18 +353,14 @@ function eliminarFila(btn) {
 
   alert("Mascota eliminada y atención guardada en historial clínico.");
 }
-
-// ====== MODAL DE HISTORIAL CLÍNICO ======
 function capitalizeFirst(str) {
   if (!str) return "";
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-function abrirModalHC(btn) {
+function abrirModalHB(btn) {
   const fila = btn.closest("tr");
   const nhc = fila.getAttribute("data-nhc");
-
-  // Lee ambos orígenes
   const registros = getRegistrosMascotas();
   const propietario = registros.find(p => p.mascotas.some(m => m.NHC === nhc));
   const mascota = propietario?.mascotas.find(m => m.NHC === nhc);
@@ -413,11 +370,7 @@ function abrirModalHC(btn) {
   const historial = [...historialMVet, ...historialPelu]
     .filter(h => h.fecha)
     .sort((a, b) => convertirFechaISO(b.fecha) - convertirFechaISO(a.fecha));
-
-  // Guarda fusión para visor de archivos
   localStorage.setItem("_historialCombinado_" + nhc, JSON.stringify(historial));
-
-  // Render tabla
   const tbody = document.getElementById("tablaHBBody");
   const sinHistorialP = document.getElementById("sinHistorialHB");
   tbody.innerHTML = "";
@@ -466,22 +419,16 @@ function abrirModalHC(btn) {
     keyboard: false
   });
 }
-
-// ========== RECORDATORIO MODAL Y LLENADO SELECT ==========
 function abrirModalRecordatorio(btn) {
   filaRecordatorioActual = btn.closest('tr');
   const nhc = filaRecordatorioActual.getAttribute('data-nhc');
   const registros = getRegistrosMascotas();
   const propietario = registros.find(p => p.mascotas.some(m => m.NHC === nhc));
   const mascota = propietario.mascotas.find(m => m.NHC === nhc);
-
-  // Iniciar recordatorios temp o cargar si ya existen
   window.recordatoriosTemp = mascota?.recordatoriosTemp || [];
   actualizarListaRecordatoriosModal();
   $('#modalRecordatorio').modal('show');
 }
-
-// LLENAR SELECT (usando recordatoriosGruposPelu de recordatorios.js)
 function llenarSelectRecordatoriosPelu() {
   const select = document.getElementById('selectRecordatorio');
   if (!select) return;
@@ -499,8 +446,6 @@ function llenarSelectRecordatoriosPelu() {
     select.appendChild(optgroup);
   });
 }
-
-// Inicializar select al cargar
 document.addEventListener('DOMContentLoaded', () => {
   renderizarSalaPeluqueria();
   llenarSelectRecordatoriosPelu();
@@ -524,8 +469,6 @@ document.getElementById('selectRecordatorio').addEventListener('change', () => {
   const select = document.getElementById('selectRecordatorio');
   const value = select.value;
   if (!value) return;
-
-  // Evita duplicados
   if (!window.recordatoriosTemp.some(r => r.value === value)) {
     window.recordatoriosTemp.push({
       value,

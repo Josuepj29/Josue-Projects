@@ -1,8 +1,8 @@
-/* Estilo para el contenedor de resultados */
+
 #resultadosBusqueda {
   margin-top: 20px !important;
   padding: 20px 30px !important;
-  width: 1500px !important; /* Usar 100% para llenar el contenedor padre */
+  width: 1500px !important; 
   margin-left: 0 !important;
   margin-right: 0 !important;
   border: 1px solid #ddd !important;
@@ -12,7 +12,7 @@
   box-sizing: border-box !important;
 }
 
-/* Estilo para las tarjetas que contienen los resultados */
+
 #resultadosBusqueda .card {
   font-size: 1.1rem !important;
   padding: 25px 40px !important;
@@ -28,12 +28,12 @@
   box-sizing: border-box !important;
 }
 
-/* Estilo para la tabla de resultados */
+
 #resultadosBusqueda table {
   font-size: 1.1rem !important;
   width: 100% !important;
-  table-layout: auto !important; /* Permitir ajuste automático de columnas */
-  border-collapse: collapse !important; /* No separar filas */
+  table-layout: auto !important; 
+  border-collapse: collapse !important; 
   border-spacing: 0 !important;
   border: 1px solid #ddd !important;
   border-radius: 8px !important;
@@ -61,7 +61,7 @@
   word-wrap: break-word !important;
 }
 
-/* Contenedor principal */
+
 .container {
   max-width: 1600px !important;
   background: rgba(255, 255, 255, 0.95) !important;
@@ -74,7 +74,7 @@
   margin-right: auto !important;
 }
 
-/* Estilo para el botón del menú principal */
+
 a.btn.btn-secondary {
   padding: 10px 20px !important;
   font-size: 1.1rem !important;
@@ -92,7 +92,7 @@ a.btn.btn-secondary:hover {
   color: #fff !important;
 }
 
-/* Estilo para la fila de los formularios */
+
 .form-row {
   display: flex;
   flex-wrap: nowrap;
@@ -114,26 +114,26 @@ a.btn.btn-secondary:hover {
 }
 
 
-/* Estilo para el botón de agregar más mascotas */
+
 .btn-info {
-  font-size: 1.25rem;  /* Tamaño de texto más grande */
-  padding: 12px 24px;  /* Relleno más grande para hacer el botón más grande */
-  width: 200px;    /* Ancho mínimo del botón */
-  height: auto;        /* Deja que el botón ajuste su tamaño según el contenido */
-  border-radius: 6px;  /* Bordes redondeados */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Sombra sutil para un efecto de profundidad */
-  transition: all 0.3s ease; /* Transición suave para cambios de estilo */
+  font-size: 1.25rem;  
+  padding: 12px 24px;  
+  width: 200px;    
+  height: auto;        
+  border-radius: 6px;  
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  
+  transition: all 0.3s ease; 
 }
 
 .btn-info:hover {
-  background-color: #17a2b8;  /* Color al pasar el cursor */
-  color: white;  /* Cambiar el color del texto al pasar el cursor */
+  background-color: #17a2b8;  
+  color: white;  
 }
 
 
 
 
-/* Estilo adicional para las tablas de resultados de mascotas */
+
 .table thead {
   background-color: #f8f9fa;
 }
@@ -143,17 +143,17 @@ a.btn.btn-secondary:hover {
   padding: 12px;
 }
 
-/* Asegurarse de que las columnas estén alineadas correctamente */
+
 .card-body .row {
   display: flex;
   justify-content: space-between;
 }
 
 .card-body .col-md-5 {
-  flex: 1; /* Esto asegura que las columnas se distribuyan bien */
+  flex: 1; 
 }
 
-/* Asegurarse de que la tabla también esté bien alineada */
+
 .table-mascotas th, .table-mascotas td {
   vertical-align: middle !important;
   padding: 10px 15px;
@@ -161,19 +161,19 @@ a.btn.btn-secondary:hover {
 
 
 
-/* 🟢 Estilo general del modal */
+
 #modalEditarMascota .modal-content {
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* 🟢 Título del modal */
+
 #modalEditarMascota .modal-title {
   font-weight: 600;
   color: #333;
 }
 
-/* 🟢 Botón de cerrar (header) */
+
 #modalEditarMascota .btn-close {
   background: transparent;
   opacity: 0.6;
@@ -183,7 +183,7 @@ a.btn.btn-secondary:hover {
   opacity: 1;
 }
 
-/* 🟢 Campos de formulario */
+
 #modalEditarMascota .form-label {
   font-weight: 500;
   color: #555;
@@ -202,7 +202,7 @@ a.btn.btn-secondary:hover {
   box-shadow: 0 0 0 0.2rem rgba(64, 153, 255, 0.2);
 }
 
-/* 🟢 Botón Guardar Cambios */
+
 #modalEditarMascota .modal-footer .btn-primary {
   background: #4099ff;
   border: none;
@@ -216,7 +216,7 @@ a.btn.btn-secondary:hover {
   background: #267ae0;
 }
 
-/* 🟢 Espaciado general */
+
 #modalEditarMascota .modal-body {
   padding: 20px;
 }
@@ -231,7 +231,7 @@ a.btn.btn-secondary:hover {
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;
-  gap: 20px; /* Espacio real entre botones */
+  gap: 20px; 
 }
 
 .botones-accion .custom-btn {
@@ -249,9 +249,9 @@ a.btn.btn-secondary:hover {
 
 .botones-accion {
   display: flex;
-  justify-content: center; /* o flex-end si prefieres a la derecha */
-  gap: 20px;               /* espacio entre botones */
-  margin-top: 20px;        /* espacio respecto a los campos */
+  justify-content: center; 
+  gap: 20px;               
+  margin-top: 20px;        
 }
 
 .botones-accion .custom-btn {

@@ -1,4 +1,4 @@
-/* --- BASE EXISTENTE --- */
+
 .btn-llamada {
   max-width: 80px;
   font-size: 0.85rem;
@@ -55,7 +55,7 @@ button.btn-sm {
 
 
 
-/* --- BOTÓN ELIMINAR X SOLO --- */
+
 #tablaSalaPeluqueria button.btn-eliminar {
   padding: 3px 6px;
   font-size: 0.7rem;
@@ -64,7 +64,7 @@ button.btn-sm {
   line-height: 1;
 }
 
-/* Botón eliminar dentro de modales */
+
 #listaRecordatorios button.btn-danger {
   padding: 2px 6px;
   font-size: 0.65rem;
@@ -73,7 +73,7 @@ button.btn-sm {
   line-height: 1;
 }
 
-/* Menú Principal botón */
+
 a.btn.btn-secondary {
   padding: 10px 20px;
   font-size: 1.1rem;
@@ -86,7 +86,7 @@ a.btn.btn-secondary:hover {
   color: #fff;
 }
 
-/* --- MODAL HB --- */
+
 #modalHB .modal-dialog {
   width: 95%;
   max-width: 1800px;
@@ -103,7 +103,7 @@ a.btn.btn-secondary:hover {
   word-wrap: break-word;
 }
 
-/* --- BOTÓN COBRO ESPECIAL --- */
+
 #tablaSalaPeluqueria button.btn-cobro {
   width: 100px;
   height: 35px;
@@ -160,7 +160,7 @@ td, th {
 }
 
 
-/* BOTONES MODERNOS EN TABLAS */
+
 .table button,
 button.btn,
 button.btn-sm {
@@ -184,7 +184,7 @@ button.btn-sm {
   letter-spacing: .02em;
 }
 
-/* Colores personalizados, puedes ajustar a gusto */
+
 .btn-primary     { background: #2196f3; color: #fff; }
 .btn-primary:hover { background: #1976d2; }
 .btn-success     { background: #28a745; color: #fff; }
@@ -207,7 +207,7 @@ button.btn-sm {
   padding: 0;
 }
 
-/* Centra contenido en celdas de botón */
+
 td > button,
 td > .btn {
   margin: 0 auto;

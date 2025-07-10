@@ -1,21 +1,15 @@
-// ==================== LOCALSTORAGE UTILS ====================
-
-// Obtener todos los registros (dueños + mascotas)
 function getRegistrosMascotas() {
   return JSON.parse(localStorage.getItem('registrosMascotas') || '[]');
 }
 function setRegistrosMascotas(data) {
   localStorage.setItem('registrosMascotas', JSON.stringify(data));
 }
-// Sala de espera: lista de NHC de mascotas
 function getSalaEspera() {
   return JSON.parse(localStorage.getItem('salaEspera') || '[]');
 }
 function setSalaEspera(data) {
   localStorage.setItem('salaEspera', JSON.stringify(data));
 }
-
-// Buscar mascota única por NHC en toda la base
 function getMascotaPorNHC(nhc) {
   for (const dueño of getRegistrosMascotas()) {
     if (!dueño.mascotas) continue;
@@ -24,8 +18,6 @@ function getMascotaPorNHC(nhc) {
   }
   return null;
 }
-
-// ==================== BÚSQUEDA ====================
 
 function buscar() {
   const nDueño = document.getElementById('buscarDueno').value.toLowerCase();
@@ -54,8 +46,6 @@ function buscar() {
       }
     });
   });
-
-  // Mostrar resultados
   const cont = document.getElementById('tablaResultadosBusqueda').getElementsByTagName('tbody')[0];
   cont.innerHTML = '';
 
@@ -88,8 +78,6 @@ function buscar() {
   $('#resultadoBusqueda').modal('show');
 }
 
-// ==================== AGREGAR A SALA DE ESPERA (CON MODAL) ====================
-
 function abrirModalObservacion(nombreMascota, nombreDueno, NHC, direccion, telefono) {
   document.getElementById('obsNombreMascota').value = nombreMascota;
   document.getElementById('obsNombreDueno').value = nombreDueno;
@@ -99,8 +87,6 @@ function abrirModalObservacion(nombreMascota, nombreDueno, NHC, direccion, telef
   document.getElementById('campoObservacion').value = '';
   $('#modalObservacion').modal('show');
 }
-
-// Evento para el formulario del modal
 document.getElementById('formObservacion').addEventListener('submit', function (e) {
   e.preventDefault();
   const nombreMascota = document.getElementById('obsNombreMascota').value;
@@ -134,8 +120,6 @@ document.getElementById('formObservacion').addEventListener('submit', function (
 $('#resultadoBusqueda').modal('hide');
 });
 
-// ==================== RENDERIZAR SALA DE ESPERA ====================
-
 function renderizarSala() {
   const tabla = document.querySelector('#tablaSalaEspera tbody');
   tabla.innerHTML = "";
@@ -166,20 +150,13 @@ function renderizarSala() {
   });
 }
 
-
-// ==================== HISTORIAL CLÍNICO (MODULAR) ====================
-
 function verHistorial(NHC) {
   const mascota = getMascotaPorNHC(NHC);
   const modalBody = document.getElementById('historialModal').querySelector('.modal-body');
-
-  // 🔄 SIEMPRE deja el div para archivos en el DOM.
   modalBody.innerHTML = `
     <div id="tablaHistorial"></div>
     <div id="previewArchivosHistorial" class="mt-3"></div>
   `;
-
-  // ⚡ Renderiza la tabla del historial en el nuevo div
   const tablaCont = document.getElementById('tablaHistorial');
   const previewContainer = document.getElementById('previewArchivosHistorial');
 
@@ -201,7 +178,7 @@ function verHistorial(NHC) {
 renderHistorialClinico(historial, tablaCont, function(index, historialArr) {
   const item = historialArr[index];
   if (item.archivos && item.archivos.length > 0) {
-    mostrarCarruselArchivos(item.archivos, 0); // 0 = inicia en el primero
+    mostrarCarruselArchivos(item.archivos, 0); 
   } else {
     alert('No hay archivos para mostrar.');
   }
@@ -211,19 +188,14 @@ renderHistorialClinico(historial, tablaCont, function(index, historialArr) {
   $('#historialModal').modal('show');
 }
 
-
-// ==================== MARCAR PACIENTE COMO ATENDIDO ====================
-
 function marcarAtendido(index) {
   if (!confirm("¿Estás seguro de marcar este paciente como atendido?")) return;
   let sala = getSalaEspera();
-  sala.splice(index, 1); // Elimina el paciente directamente
+  sala.splice(index, 1); 
   setSalaEspera(sala);
   renderizarSala();
   alert("Paciente eliminado de la sala de espera.");
 }
-
-// ==================== ELIMINAR PACIENTE ATENDIDO ====================
 
 function eliminarPaciente(index) {
   if (!confirm("¿Eliminar definitivamente este paciente de la sala de espera?")) return;
@@ -232,8 +204,6 @@ function eliminarPaciente(index) {
   setSalaEspera(sala);
   renderizarSala();
 }
-
-// ==================== INICIALIZACIÓN Y EVENTOS ====================
 
 window.onload = renderizarSala;
 document.getElementById('btnBuscar').addEventListener('click', buscar);

@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
-/* Reset y fuente global */
+
 * {
   margin: 0;
   padding: 0;
@@ -8,7 +8,6 @@
   font-family: 'Poppins', sans-serif;
 }
 
-/* Fondo y tipografía general */
 body {
   min-height: 100vh;
   background: url('../img/back2.png') no-repeat center center fixed;
@@ -16,7 +15,7 @@ body {
   margin: 0;
 }
 
-/* Header fijo */
+
 header {
   position: fixed;
   top: 0;
@@ -31,7 +30,7 @@ header {
   color: white;
 }
 
-/* Contenedores comunes */
+
 .wrapper-small {
   max-width: 400px;
   width: 100%;
@@ -192,6 +191,14 @@ header {
   opacity: 1;
 }
 
+
+
+
+
+
+
+
+
 /* Otros */
 .remember-forgot {
   font-size: 0.9em;
@@ -234,12 +241,10 @@ header {
   text-decoration: underline;
 }
 
-/* Ocultar datos paciente por defecto */
 #datosPaciente {
   display: none;
 }
 
-/* Mostrar datos paciente con clase */
 #datosPaciente.visible {
   display: block;
 }

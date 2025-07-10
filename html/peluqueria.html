@@ -5,12 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Peluquería / MPET</title>
 
-  <!-- CSS base y específico -->
-  <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/base.css" />
   <link rel="stylesheet" href="../css/peluqueria.css" />
 
-  <!-- Bootstrap CSS -->
-  <link
+    <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
   />
@@ -44,8 +42,7 @@
       </div>
     </div>
 
-    <!-- Modal con resultados de búsqueda -->
-    <div class="modal fade" id="resultadoBusqueda" tabindex="-1" role="dialog" aria-labelledby="resultadoBusquedaLabel" aria-hidden="true">
+        <div class="modal fade" id="resultadoBusqueda" tabindex="-1" role="dialog" aria-labelledby="resultadoBusquedaLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -67,46 +64,39 @@
                 </tr>
               </thead>
               <tbody>
-                <!-- Se llenará dinámicamente -->
-              </tbody>
+                              </tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Tabla de peluquería -->
-    <div class="mt-4 table-responsive">
-      <h4>Mascotas en Sala de Peluquería</h4>
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>Dueño</th>
-            <th>Mascota</th>
-            <th>Dirección</th>
-            <th>Teléfono</th>
-            <th>NHC</th>
-            <th>Estado</th>
-            <th>Llamada</th>
-            <th>Historial Llamadas</th>
-            <th>Cobro</th>
-            <th>Historial Clinico</th>
-            <th><strong>Servicio</strong></th>
-            <th><strong>Rec.</strong></th>
-            <th><!-- vacio para boton X --></th>
-          </tr>
-        </thead>
-        <tbody id="tablaSalaPeluqueria"></tbody>
-      </table>
-    </div>
-  </div>
+        <div class="mt-4 table-responsive">
+   <h4>Mascotas en Sala de Peluquería</h4>
+<table id="tablaSalaPeluqueria" class="table table-hover">
+  <thead>
+    <tr>
+      <th>Dueño</th>
+      <th>Mascota</th>
+      <th>Dirección</th>
+      <th>Teléfono</th>
+      <th>NHC</th>
+      <th>Estado</th>
+      <th>Llamada</th>
+      <th>Historial Llamadas</th>
+      <th>Cobro</th>
+      <th>Historial Clínico</th>
+      <th><strong>Servicio</strong></th>
+      <th><strong>Rec.</strong></th>
+      <th><strong>Eliminar</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- filas dinámicas aquí -->
+  </tbody>
+</table>
 
-  <!-- Modales aquí (igual que los que ya tienes) -->
-
-
-
-  <!-- Modal Historial de Baños -->
-
+  
 <div id="modalHB" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog" id="modalHBDialog" style="width: 95%; max-width: 1800px;">
     <div class="modal-content">
@@ -139,8 +129,7 @@
 </div>
 
 
-  <!-- Modal Historia de Baño -->
-  <div class="modal fade" id="modalHistoria" tabindex="-1" role="dialog" aria-labelledby="modalHistoriaLabel" aria-hidden="true">
+    <div class="modal fade" id="modalHistoria" tabindex="-1" role="dialog" aria-labelledby="modalHistoriaLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -174,8 +163,7 @@
   </div>
 
 
- <!-- Modal Recordatorio -->
-<div class="modal fade" id="modalRecordatorio" tabindex="-1" role="dialog" aria-labelledby="modalRecordatorioLabel" aria-hidden="true">
+ <div class="modal fade" id="modalRecordatorio" tabindex="-1" role="dialog" aria-labelledby="modalRecordatorioLabel" aria-hidden="true">
   <div class="modal-dialog" role="document" style="max-width: 500px;">
     <div class="modal-content">
       <div class="modal-header">
@@ -198,8 +186,7 @@
 </div>
 
 
-  <!-- Modal Historial Recordatorios -->
-  <div class="modal fade" id="modalHistorialRecordatorios" tabindex="-1" role="dialog" aria-labelledby="modalHistorialRecordatoriosLabel" aria-hidden="true">
+    <div class="modal fade" id="modalHistorialRecordatorios" tabindex="-1" role="dialog" aria-labelledby="modalHistorialRecordatoriosLabel" aria-hidden="true">
     <div class="modal-dialog" role="document" style="max-width: 400px;">
       <div class="modal-content">
         <div class="modal-header">
@@ -209,8 +196,7 @@
           </button>
         </div>
         <div class="modal-body" id="modalHistorialRecordatoriosBody">
-          <!-- Contenido dinámico -->
-        </div>
+                  </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
         </div>
@@ -218,7 +204,6 @@
     </div>
   </div>
 
-<!-- MODAL REUTILIZABLE PARA IMAGEN GRANDE -->
 <div id="modalImagenGrande"
      style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
             background:rgba(0,0,0,0.85); z-index:9999; justify-content:center; align-items:center;">
@@ -230,8 +215,7 @@
 
 
 
-  <!-- Scripts -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
 

@@ -1,8 +1,8 @@
-/* Fondo y contenedor principal */
+
 #mvet-container {
   max-width: 1700px;
   margin: 20px auto;
-  background-color: #fff !important; /* Forzar fondo blanco sólido */
+  background-color: #fff !important; 
   padding: 20px 60px;
   border-radius: 15px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.15);
@@ -10,7 +10,7 @@
   color: #222;
 }
 
-/* Tablas con layout fijo */
+
 #mvet-container .table {
   table-layout: fixed;
   width: 100%;
@@ -18,7 +18,7 @@
   overflow-wrap: break-word;
 }
 
-/* Columna Dueño */
+
 #mvet-container th:nth-child(1),
 #mvet-container td:nth-child(1) {
   width: 160px;
@@ -29,7 +29,7 @@
 }
 
 
-/* Columna Mascota */
+
 #mvet-container th:nth-child(2),
 #mvet-container td:nth-child(2) {
   width: 160px;
@@ -39,7 +39,7 @@
   text-overflow: ellipsis;
 }
 
-/* Columna Telefono */
+
 #mvet-container th:nth-child(3),
 #mvet-container td:nth-child(3) {
   width: 120px;
@@ -49,7 +49,7 @@
   text-overflow: ellipsis;
 }
 
-/* Columna Direccion */
+
 #mvet-container th:nth-child(4),
 #mvet-container td:nth-child(4) {
   width: 200px;
@@ -60,7 +60,7 @@
 }
 
 
-/* Columna NHC */
+
 #mvet-container th:nth-child(5),
 #mvet-container td:nth-child(5) {
   width: 150px;
@@ -70,7 +70,7 @@
   text-overflow: ellipsis;
 }
 
-/* Columna estado */
+
 #mvet-container th:nth-child(6),
 #mvet-container td:nth-child(6) {
   width: 180px;
@@ -78,7 +78,7 @@
 }
 
 
-/* Columna botones */
+
 #mvet-container th:nth-child(7),
 #mvet-container td:nth-child(7) {
   width: 580px;
@@ -89,10 +89,10 @@
 
 
 
-/* Botones grupo */
+
 #mvet-container .btn-group {
   display: flex;
-  gap: 10px; /* espacio entre botones */
+  gap: 10px; 
   flex-wrap: nowrap;
   align-items: center;
   justify-content: flex-start;
@@ -114,34 +114,34 @@
 }
 
 
-/* Botón eliminar pequeño para recordatorios */
+
 #listaRecordatorios .btn-danger {
-  width: 24px !important;          /* ancho fijo pequeño */
-  height: 24px !important;         /* alto fijo pequeño */
-  padding: 0 !important;           /* sin padding para que no crezca */
-  font-size: 1.2rem !important;    /* tamaño de la cruz '×' */
+  width: 24px !important;          
+  height: 24px !important;         
+  padding: 0 !important;           
+  font-size: 1.2rem !important;    
   line-height: 1 !important;
-  border-radius: 4px !important;   /* bordes ligeramente redondeados */
+  border-radius: 4px !important;   
   font-weight: 700 !important;
-  background-color: #dc3545 !important; /* rojo bootstrap */
+  background-color: #dc3545 !important; 
   color: white !important;
   border: none !important;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
-  min-width: unset !important;     /* eliminar min-width para evitar conflictos */
+  min-width: unset !important;     
   cursor: pointer !important;
 }
 
 
-/* Lista recordatorios */
+
 #listaRecordatorios li.list-group-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-/* Preview archivos */
+
 .preview-archivo {
   position: relative;
   width: 100px;
@@ -168,7 +168,7 @@
   margin-bottom: 4px;
 }
 
-/* Icono PDF dentro preview */
+
 .preview-archivo .icon-pdf {
   font-weight: 700;
   font-size: 1.5rem;
@@ -177,7 +177,7 @@
   margin-bottom: 6px;
 }
 
-/* Botón eliminar archivos preview */
+
 .preview-archivo button.btn-eliminar-archivo {
   position: absolute;
   top: 4px;
@@ -208,13 +208,13 @@
 }
 
 #modalHistorialClinico .modal-dialog {
-  width: 95%;          /* 👉 Muy ancho relativo para pantallas grandes */
-  max-width: 1800px;   /* 👉 Máximo ancho de 1800px */
-  margin: 1.75rem auto; /* 👉 Espaciado superior e inferior y centrado */
+  width: 95%;          
+  max-width: 1800px;   
+  margin: 1.75rem auto; 
 }
 
 #modalHistorialClinico .modal-content {
-  max-height: 85vh;    /* 👉 Altura máxima visible */
-  overflow-y: auto;    /* 👉 Scroll interno si se pasa */
-  border-radius: 8px;  /* 👉 Bordes redondeados, opcional */
+  max-height: 85vh;    
+  overflow-y: auto;    
+  border-radius: 8px;  
 }
