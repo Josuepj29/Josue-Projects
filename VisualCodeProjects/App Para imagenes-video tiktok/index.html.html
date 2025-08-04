@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Editor Modular Retro TikTok</title>
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    canvas {
+      border: 2px solid #ccc;
+      max-width: 100%;
+      height: auto;
+      touch-action: none;
+    }
+    .controls {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      width: 100%;
+      max-width: 600px;
+    }
+    .text-block {
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    input[type="text"], input[type="range"], input[type="color"], select, input[type="file"] {
+      font-size: 1rem;
+      padding: 0.3rem;
+      width: 100%;
+    }
+    button {
+      padding: 0.6rem;
+      font-size: 1rem;
+      background-color: #222;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #444;
+    }
+  </style>
+</head>
+<body>
+  <h2>🧱 Editor Modular Retro TikTok</h2>
+  <input type="file" id="imgInput" accept="image/*">
+  <canvas id="editorCanvas"></canvas>
+
+  <div class="controls">
+    <button onclick="addTextBlock()">➕ Agregar nuevo texto</button>
+    <div id="textBlocks"></div>
+    <button onclick="downloadImage()">📥 Descargar Imagen</button>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('editorCanvas');
+    const ctx = canvas.getContext('2d');
+    const textBlocksDiv = document.getElementById('textBlocks');
+    const imgInput = document.getElementById('imgInput');
+    const img = new Image();
+
+    const texts = [];
+    let draggedText = null;
+
+    img.onload = () => {
+      canvas.width = img.width;
+      canvas.height = img.height;
+      draw();
+    };
+
+    imgInput.addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        img.src = event.target.result;
+      };
+      if (file) reader.readAsDataURL(file);
+    });
+
+    function addTextBlock() {
+      const t = {
+        text: '',
+        x: 100 + texts.length * 20,
+        y: 100 + texts.length * 20,
+        rotation: 0,
+        fontSize: 20,
+        color: '#000000',
+        font: 'Courier New',
+        isDragging: false
+      };
+      texts.push(t);
+      renderControls();
+      draw();
+    }
+
+    function removeTextBlock(index) {
+      texts.splice(index, 1);
+      renderControls();
+      draw();
+    }
+
+    function renderControls() {
+      textBlocksDiv.innerHTML = '';
+      texts.forEach((t, i) => {
+        const block = document.createElement('div');
+        block.className = 'text-block';
+
+        block.innerHTML = `
+          <input type="text" placeholder="Texto" value="${t.text}" oninput="texts[${i}].text = this.value; draw()">
+          <label>Rotación</label>
+          <input type="range" min="-1" max="1" step="0.01" value="${t.rotation}" oninput="texts[${i}].rotation = parseFloat(this.value); draw()">
+          <label>Tamaño</label>
+          <input type="range" min="10" max="48" step="1" value="${t.fontSize}" oninput="texts[${i}].fontSize = parseInt(this.value); draw()">
+          <label>Color</label>
+          <input type="color" value="${t.color}" oninput="texts[${i}].color = this.value; draw()">
+          <label>Fuente</label>
+          <select onchange="texts[${i}].font = this.value; draw()">
+            <option value="Courier New" selected>Courier New</option>
+            <option value="Segoe UI Emoji">Segoe UI Emoji</option>
+            <option value="Arial">Arial</option>
+            <option value="Comic Sans MS">Comic Sans</option>
+            <option value="monospace">Monospace</option>
+          </select>
+          <button onclick="removeTextBlock(${i})">🗑️ Eliminar</button>
+        `;
+
+        textBlocksDiv.appendChild(block);
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (img.src) ctx.drawImage(img, 0, 0);
+
+      texts.forEach(t => {
+        ctx.save();
+        ctx.translate(t.x, t.y);
+        ctx.rotate(t.rotation);
+        ctx.font = `${t.fontSize}px ${t.font}`;
+        ctx.fillStyle = t.color;
+        ctx.textBaseline = 'top';
+        wrapText(ctx, t.text, 0, 0, 200, t.fontSize + 4);
+        ctx.restore();
+      });
+    }
+
+    function wrapText(context, text, x, y, maxWidth, lineHeight) {
+      const words = text.split(' ');
+      let line = '';
+
+      for (let n = 0; n < words.length; n++) {
+        const testLine = line + words[n] + ' ';
+        const metrics = context.measureText(testLine);
+        const testWidth = metrics.width;
+        if (testWidth > maxWidth && n > 0) {
+          context.fillText(line, x, y);
+          line = words[n] + ' ';
+          y += lineHeight;
+        } else {
+          line = testLine;
+        }
+      }
+      context.fillText(line, x, y);
+    }
+
+    canvas.addEventListener('mousedown', startDrag);
+    canvas.addEventListener('touchstart', startDrag);
+    canvas.addEventListener('mouseup', endDrag);
+    canvas.addEventListener('touchend', endDrag);
+    canvas.addEventListener('mousemove', drag);
+    canvas.addEventListener('touchmove', drag);
+
+    function startDrag(e) {
+      const pos = getPos(e);
+      for (const t of texts) {
+        const dist = Math.hypot(pos.x - t.x, pos.y - t.y);
+        if (dist < 100) {
+          draggedText = t;
+          break;
+        }
+      }
+    }
+
+    function drag(e) {
+      if (draggedText) {
+        const pos = getPos(e);
+        draggedText.x = pos.x;
+        draggedText.y = pos.y;
+        draw();
+      }
+    }
+
+    function endDrag() {
+      draggedText = null;
+    }
+
+    function getPos(evt) {
+      const rect = canvas.getBoundingClientRect();
+      const e = evt.touches ? evt.touches[0] : evt;
+      return {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      };
+    }
+
+    function downloadImage() {
+      const link = document.createElement('a');
+      link.download = 'imagen-retro.png';
+      link.href = canvas.toDataURL();
+      link.click();
+    }
+  </script>
+</body>
+</html>
