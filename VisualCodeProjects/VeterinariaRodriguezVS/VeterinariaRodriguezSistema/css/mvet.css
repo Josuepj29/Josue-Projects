@@ -1,0 +1,220 @@
+
+#mvet-container {
+  max-width: 1700px;
+  margin: 20px auto;
+  background-color: #fff !important; 
+  padding: 20px 60px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  box-sizing: border-box;
+  color: #222;
+}
+
+
+#mvet-container .table {
+  table-layout: fixed;
+  width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+
+#mvet-container th:nth-child(1),
+#mvet-container td:nth-child(1) {
+  width: 160px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+
+#mvet-container th:nth-child(2),
+#mvet-container td:nth-child(2) {
+  width: 160px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+#mvet-container th:nth-child(3),
+#mvet-container td:nth-child(3) {
+  width: 120px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+#mvet-container th:nth-child(4),
+#mvet-container td:nth-child(4) {
+  width: 200px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+
+#mvet-container th:nth-child(5),
+#mvet-container td:nth-child(5) {
+  width: 150px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+#mvet-container th:nth-child(6),
+#mvet-container td:nth-child(6) {
+  width: 180px;
+  white-space: normal;
+}
+
+
+
+#mvet-container th:nth-child(7),
+#mvet-container td:nth-child(7) {
+  width: 580px;
+  white-space: normal;
+}
+
+
+
+
+
+
+#mvet-container .btn-group {
+  display: flex;
+  gap: 10px; 
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#mvet-container .btn-group .btn {
+  white-space: nowrap;
+  min-width: 11px;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 30px;
+  font-weight: 10;
+  font-size: 1rem;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  border-radius: 6px;
+  margin: 0;
+}
+
+
+
+#listaRecordatorios .btn-danger {
+  width: 24px !important;          
+  height: 24px !important;         
+  padding: 0 !important;           
+  font-size: 1.2rem !important;    
+  line-height: 1 !important;
+  border-radius: 4px !important;   
+  font-weight: 700 !important;
+  background-color: #dc3545 !important; 
+  color: white !important;
+  border: none !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  min-width: unset !important;     
+  cursor: pointer !important;
+}
+
+
+
+#listaRecordatorios li.list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.preview-archivo {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f8f9fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #555;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  flex-direction: column;
+}
+
+.preview-archivo img {
+  max-width: 90%;
+  max-height: 70%;
+  object-fit: contain;
+  margin-bottom: 4px;
+}
+
+
+.preview-archivo .icon-pdf {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #dc3545;
+  user-select: none;
+  margin-bottom: 6px;
+}
+
+
+.preview-archivo button.btn-eliminar-archivo {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 22px;
+  height: 22px;
+  font-size: 1.1rem;
+  padding: 0;
+  border-radius: 3px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.table th,
+.table td {
+  word-wrap: break-word;
+  white-space: normal;
+  font-size: 15px;
+  line-height: 1.4;
+  padding: 8px 12px;
+  vertical-align: middle;
+}
+
+#modalHistorialClinico .modal-dialog {
+  width: 95%;          
+  max-width: 1800px;   
+  margin: 1.75rem auto; 
+}
+
+#modalHistorialClinico .modal-content {
+  max-height: 85vh;    
+  overflow-y: auto;    
+  border-radius: 8px;  
+}

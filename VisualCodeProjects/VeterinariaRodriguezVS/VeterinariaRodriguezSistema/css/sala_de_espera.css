@@ -1,0 +1,171 @@
+
+.container {
+  max-width: 1200px !important;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  color: #222;
+  box-sizing: border-box;
+}
+
+
+table {
+  width: 100%;
+  table-layout: auto !important;
+  word-wrap: normal;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px 12px;
+  vertical-align: middle;
+  white-space: normal !important;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  border: 1px solid #dee2e6;
+}
+
+
+th:nth-child(1), td:nth-child(1), 
+th:nth-child(2), td:nth-child(2),
+th:nth-child(6), td:nth-child(6)  
+{
+  max-width: 180px;
+}
+
+th:nth-child(3), td:nth-child(3) 
+{
+  max-width: 200px;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+th:nth-child(4), td:nth-child(4) 
+{
+  width: 120px;
+  text-align: center;
+}
+
+th:nth-child(5), td:nth-child(5) 
+{
+  width: 120px;
+  text-align: center;
+}
+
+th:nth-child(7), td:nth-child(7) 
+{
+  width: 100px;
+  text-align: center;
+}
+
+th:nth-child(8), td:nth-child(8) 
+{
+  width: 150px;
+  text-align: center;
+}
+
+
+button.btn-sm {
+  white-space: nowrap;
+  padding-left: 12px;
+  padding-right: 12px;
+  height: 36px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+button.btn-danger {
+  min-width: 60px;
+}
+
+button.btn-secondary {
+  min-width: 60px;
+}
+
+
+#resultadoBusqueda .modal-dialog {
+  max-width: 900px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+#resultadoBusqueda .modal-body {
+  padding: 1rem;
+}
+
+
+#resultadoBusqueda table {
+  width: 100%;
+  table-layout: auto !important;
+  word-wrap: normal;
+}
+
+#resultadoBusqueda th,
+#resultadoBusqueda td {
+  white-space: normal !important;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  padding: 10px 12px;
+  vertical-align: middle;
+}
+
+.container {
+  max-width: 1600px !important;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  color: #222;
+  box-sizing: border-box;
+}
+
+
+
+
+.modal-body .card {
+  margin-bottom: 15px;
+  border-radius: 8px;
+}
+
+.modal-body h6 {
+  margin-top: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.card-body {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.card-body p {
+  margin-bottom: 10px;
+}
+
+
+.table th,
+.table td {
+  word-wrap: break-word;
+  white-space: normal;
+  font-size: 15px;
+  line-height: 1.4;
+  padding: 8px 12px;
+  vertical-align: middle;
+}
+
+#historialModal .modal-dialog {
+  width: 95%;          
+  max-width: 1800px;   
+  margin: 1.75rem auto; 
+}
+
+#historialModal .modal-content {
+  max-height: 85vh;    
+  overflow-y: auto;    
+  border-radius: 8px;  
+}
+
+

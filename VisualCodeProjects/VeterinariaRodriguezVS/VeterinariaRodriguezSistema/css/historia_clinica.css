@@ -1,0 +1,234 @@
+.container {
+  max-width: 1600px !important;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  color: #222;
+  box-sizing: border-box;
+}
+
+#datosPaciente {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 30px;
+  max-width: 100%;
+  margin: 0 auto 40px auto;
+  box-sizing: border-box;
+}
+
+.info-col {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.info-col .list-group {
+  flex: 1 1 45%;
+  min-width: 250px;
+  margin-right: 20px;
+}
+
+.info-col .list-group:last-child {
+  margin-right: 0;
+}
+
+
+
+
+#tablaHistorial td {
+  vertical-align: middle;
+  padding: 12px 15px;
+}
+
+
+#tablaHistorial td:last-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  white-space: normal;
+  word-break: break-word;
+  max-width: 400px; /
+}
+
+#tablaHistorial td:last-child .observacion-text {
+  flex-grow: 1;
+  max-height: 80px; 
+  overflow-y: auto; 
+  padding-right: 10px;
+  white-space: normal;
+}
+
+
+#tablaHistorial td:last-child .botones-acciones {
+  flex-shrink: 0;
+  display: flex;
+  gap: 5px;
+  min-width: 10px; 
+  justify-content: flex-end;
+}
+
+#tablaHistorial td:last-child .botones-acciones button {
+  min-width: 30px;
+  white-space: nowrap;
+}
+
+#btnConfirmarObservacion {
+  max-width: 200px;
+  width: 100%;
+}
+
+.modal-fotos {
+  display: none; 
+  position: fixed;
+  z-index: 1050;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  overflow: auto;
+  padding-top: 60px;
+}
+
+.modal-fotos-content {
+  background-color: #fff;
+  margin: auto;
+  padding: 20px 30px;
+  border-radius: 10px;
+  max-width: 800px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  position: relative;
+}
+
+.modal-fotos-content .close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #aaa;
+}
+
+.modal-fotos-content .close:hover {
+  color: #000;
+}
+
+.preview-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 25px;
+}
+
+.preview-item {
+  flex: 1 1 45%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+}
+
+.preview-item img {
+  max-width: 100%;
+  border-radius: 6px;
+  height: auto;
+}
+
+.preview-item iframe {
+  width: 100%;
+  height: 200px;
+  border-radius: 6px;
+}
+
+.preview-item p {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #444;
+}
+
+
+#tablaHistorial td:last-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;   gap: 10px;
+  white-space: normal;
+  word-break: break-word;
+  max-width: none; }
+
+#tablaHistorial td:last-child .observacion-text {
+  flex-grow: 1;
+  margin-right: 15px;   white-space: normal;
+  overflow-wrap: break-word;
+}
+
+#tablaHistorial td:last-child .botones-acciones {
+  display: flex;
+  flex-shrink: 0;
+  gap: 8px;
+  min-width: 90px;   justify-content: flex-end;
+}
+
+
+
+a.btn.btn-secondary {
+  padding: 10px 20px;        font-size: 1.1rem;         height: auto;              width: auto;               min-width: 840px;          line-height: 1.3;
+  margin-right: 10px;        border-radius: 6px;        transition: background-color 0.3s ease;
+}
+
+a.btn.btn-secondary:hover {
+  background-color: #444;    color: #fff;             }
+
+
+#tablaHistorial th, #tablaHistorial td {
+  vertical-align: top !important;
+  text-align: left;
+  padding: 10px 8px;
+  font-size: 15px;
+}
+
+#tablaHistorial th {
+  background: #f5f6fa;
+}
+
+#tablaHistorial td {
+  background: #fff;
+  border-top: 1px solid #eee;
+}
+
+#tablaHistorial td:nth-child(1) { min-width: 120px; max-width: 170px; }
+#tablaHistorial td:nth-child(2) { min-width: 120px; max-width: 170px; }
+#tablaHistorial td:nth-child(3) { min-width: 80px; max-width: 130px; text-align: center; }
+#tablaHistorial td:nth-child(4) { min-width: 170px; max-width: 240px; }
+#tablaHistorial td:nth-child(5) { min-width: 130px; max-width: 150px; text-align: center; }
+#tablaHistorial td:nth-child(6) { min-width: 90px; max-width: 150px; text-align: left; }
+
+#tablaHistorial .btn-info {
+  min-width: 95px;
+  font-size: 15px;
+}
+
+.btn-info, .btn-success {
+  min-width: 95px;
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+
+#editarListaRecordatorios > div {
+  transition: background 0.2s;
+}
+#editarListaRecordatorios > div:hover {
+  background: #ececec;
+}
+
+#editarPreviewArchivos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-start;
+}
+#editarPreviewArchivos > * {
+  margin-bottom: 0;
+}
+
+

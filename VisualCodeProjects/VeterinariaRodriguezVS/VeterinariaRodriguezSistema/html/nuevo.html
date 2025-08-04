@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Buscar / Registrar Dueño y Mascota</title>
+
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/nuevo.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" />
+</head>
+<body>
+
+  <div class="container mt-4 p-4 rounded" style="background:rgba(255,255,255,.95);">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2>Nuevo – Atención Médica</h2>
+      <a href="principal.html" class="btn btn-secondary">Menú Principal</a>
+    </div>
+
+    <div class="container overlay">
+      <h2 class="mb-4 text-center">Buscar Dueño y Mascota</h2>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <input type="text" class="form-control" id="buscarDueno" placeholder="Nombre del Dueño" />
+        </div>
+        <div class="form-group col-md-3">
+          <input type="text" class="form-control" id="buscarMascota" placeholder="Nombre de la Mascota" />
+        </div>
+        <div class="form-group col-md-3">
+          <input type="text" class="form-control" id="buscarTelefono" placeholder="Teléfono" />
+        </div>
+        <div class="form-group col-md-6">
+          <input type="text" class="form-control" id="buscarDireccion" placeholder="Dirección" />
+        </div>
+        <div class="form-group col-md-6">
+          <input type="text" class="form-control" id="buscarNHC" placeholder="NHC de Mascota" />
+        </div>
+      </div>
+      <div class="botones-accion">
+        <button type="button" class="btn btn-primary custom-btn" onclick="buscar()">
+          🔍 Buscar
+        </button>
+        <button type="button" class="btn btn-success custom-btn" onclick="abrirModalNuevo()">
+          ➕ Registrar Nuevo Dueño y Mascota
+        </button>
+      </div>
+    </div>
+
+    <div id="resultadosBusqueda"></div>
+
+
+
+    <div class="modal fade" id="modalNuevo" tabindex="-1" role="dialog" aria-labelledby="modalNuevoLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Registrar Nuevo Dueño y Mascota</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="formNuevo">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="nuevoNombreDueño">Dueño</label>
+                  <input type="text" class="form-control" id="nuevoNombreDueño" required />
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="nuevoTelefono">Teléfono</label>
+                  <input type="text" class="form-control" id="nuevoTelefono" />
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="nuevoDireccion">Dirección</label>
+                  <input type="text" class="form-control" id="nuevoDireccion" />
+                </div>
+                <div class="form-group col-md-3">
+                  <label for="nuevoDni">DNI</label>
+                  <input type="text" class="form-control" id="nuevoDni" placeholder="Puede quedar en blanco" />
+                </div>
+                <div class="form-group col-md-1">
+                  <label for="nuevoEdad">Edad</label>
+                  <input type="number" min="0" maxlength="2" class="form-control" id="nuevoEdad" placeholder="Edad" />
+                </div>
+                <div class="form-group col-md-2">
+                  <label for="nuevoCorreo">Correo</label>
+                  <input type="email" class="form-control" id="nuevoCorreo" />
+                </div>
+              </div>
+              <hr />
+              <h5>Datos de la Mascota</h5>
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="nuevoNombreMascota">Nombre</label>
+                  <input type="text" class="form-control" id="nuevoNombreMascota" required />
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="nuevoRaza">Raza</label>
+                  <input type="text" class="form-control" id="nuevoRaza" />
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="nuevoPeso">Peso</label>
+                  <input type="text" class="form-control" id="nuevoPeso" placeholder="kg" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="nuevoEspecie">Especie</label>
+                  <select class="form-control" id="nuevoEspecie">
+                    <option value="Canina">Canina</option>
+                    <option value="Felina">Felina</option>
+                    <option value="Otro">Otro</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="nuevoEsterilizada">Esterilizada</label>
+                  <select class="form-control" id="nuevoEsterilizada">
+                    <option value="Sí">Sí</option>
+                    <option value="No">No</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="nuevoSexo">Sexo</label>
+                  <select class="form-control" id="nuevoSexo">
+                    <option value="Macho">Macho</option>
+                    <option value="Hembra">Hembra</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="nuevoFechaNac">Fecha de Nacimiento</label>
+                <input type="date" class="form-control" id="nuevoFechaNac" />
+              </div>
+              <button type="submit" class="btn btn-success">Guardar y Confirmar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="modal fade" id="modalEditarDueno" tabindex="-1" role="dialog" aria-labelledby="modalEditarDuenoLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form id="formEditarDueno">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalEditarDuenoLabel">Editar Datos del Dueño</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="editarDuenoIdDueno">
+          <div class="form-group">
+            <label for="editarNombreDueño">Nombre</label>
+            <input type="text" class="form-control" id="editarNombreDueño" required>
+          </div>
+          <div class="form-group">
+            <label for="editarDniDueño">DNI</label>
+            <input type="text" class="form-control" id="editarDniDueño">
+          </div>
+          <div class="form-group">
+            <label for="editarEdadDueño">Edad</label>
+            <input type="number" class="form-control" id="editarEdadDueño">
+          </div>
+          <div class="form-group">
+            <label for="editarDireccionDueño">Dirección</label>
+            <input type="text" class="form-control" id="editarDireccionDueño">
+          </div>
+          <div class="form-group">
+            <label for="editarTelefonoDueño">Teléfono</label>
+            <input type="text" class="form-control" id="editarTelefonoDueño">
+          </div>
+          <div class="form-group">
+            <label for="editarCorreoDueño">Correo</label>
+            <input type="email" class="form-control" id="editarCorreoDueño">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+        <div class="modal fade" id="modalAgregarMascota" tabindex="-1" role="dialog" aria-labelledby="modalAgregarMascotaLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Agregar Nueva Mascota</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="formAgregarMascota">
+              <input type="hidden" id="dueñoId" />
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="inputNombreMascota">Nombre</label>
+                  <input type="text" class="form-control" id="inputNombreMascota" required />
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="inputRaza">Raza</label>
+                  <input type="text" class="form-control" id="inputRaza" />
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="inputPeso">Peso</label>
+                  <input type="text" class="form-control" id="inputPeso" placeholder="kg" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="inputEspecie">Especie</label>
+                  <select class="form-control" id="inputEspecie">
+                    <option value="Canina">Canina</option>
+                    <option value="Felina">Felina</option>
+                    <option value="Otro">Otro</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="inputEsterilizada">Esterilizada</label>
+                  <select class="form-control" id="inputEsterilizada">
+                    <option value="Sí">Sí</option>
+                    <option value="No">No</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="inputSexo">Sexo</label>
+                  <select class="form-control" id="inputSexo">
+                    <option value="Macho">Macho</option>
+                    <option value="Hembra">Hembra</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputFechaNac">Fecha de Nacimiento</label>
+                <input type="date" class="form-control" id="inputFechaNac" />
+              </div>
+              <button type="submit" class="btn btn-primary">Guardar Mascota</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <div id="modalEditarMascota" class="modal fade" tabindex="-1">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Editar Mascota</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form id="formEditarMascota">
+            <div class="modal-body">
+              <input type="hidden" id="editarDuenoId">
+              <div class="mb-3">
+                <label class="form-label">Nombre de la mascota</label>
+                <input type="text" id="editarNombreMascota" class="form-control" required>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Raza</label>
+                  <input type="text" id="editarRaza" class="form-control">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Peso (kg)</label>
+                  <input type="number" id="editarPeso" class="form-control" min="0" step="0.1">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Especie</label>
+                  <select id="editarEspecie" class="form-control">
+                    <option value="">Seleccionar</option>
+                    <option value="Canina">Canina</option>
+                    <option value="Felina">Felina</option>
+                  </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Esterilizada</label>
+                  <select id="editarEsterilizada" class="form-control">
+                    <option value="">Seleccionar</option>
+                    <option value="Sí">Sí</option>
+                    <option value="No">No</option>
+                  </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Sexo</label>
+                  <select id="editarSexo" class="form-control">
+                    <option value="">Seleccionar</option>
+                    <option value="Macho">Macho</option>
+                    <option value="Hembra">Hembra</option>
+                  </select>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Fecha de Nacimiento</label>
+                <input type="date" id="editarFechaNac" class="form-control">
+                </div>
+              <div class="mb-3">
+  <label class="form-label">NHC</label>
+  <input type="text" id="editarNHC" class="form-control" readonly style="background:#e9ecef;">
+</div>
+
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary w-100">Guardar Cambios</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+
+
+    <script src="../js/storage-utils.js"></script>
+  <script src="../js/archivos-utils.js"></script>
+  <script src="../js/historial-utils.js"></script>
+
+  <script src="../js/nuevo.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sala de Espera</title>
+
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/sala_de_espera.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" />
+</head>
+
+<body>
+  <div class="container mt-4 p-4 rounded">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="text-center">Sala de Espera</h2>
+      <a href="principal.html" class="btn btn-secondary">Menú Principal</a>
+    </div>
+
+    <!-- Filtros -->
+    <div class="form-row mb-3">
+      <div class="col"><input type="text" class="form-control" placeholder="Nombre del Dueño" id="buscarDueno" /></div>
+      <div class="col"><input type="text" class="form-control" placeholder="Teléfono" id="buscarTelefono" /></div>
+      <div class="col"><input type="text" class="form-control" placeholder="Nombre de la Mascota" id="buscarMascota" /></div>
+      <div class="col"><input type="text" class="form-control" placeholder="Dirección" id="buscarDireccion" /></div>
+      <div class="col"><input type="text" class="form-control" placeholder="NHC" id="buscarNHC" /></div>
+      <div class="col"><button class="btn btn-primary" id="btnBuscar">Buscar</button></div>
+    </div>
+
+    <!-- Modal de resultados -->
+    <div class="modal fade" id="resultadoBusqueda" tabindex="-1" role="dialog" aria-labelledby="resultadoBusquedaLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Resultados de Búsqueda</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <table class="table table-bordered" id="tablaResultadosBusqueda">
+              <thead>
+                <tr>
+                  <th>Dueño</th>
+                  <th>Mascota</th>
+                  <th>Dirección</th>
+                  <th>Teléfono</th>
+                  <th>NHC</th>
+                  <th>Agregar</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabla principal -->
+    <div class="mt-4">
+      <h4>Mascotas en Sala de Espera</h4>
+      <table class="table table-hover" id="tablaSalaEspera">
+        <thead>
+          <tr>
+            <th>Dueño</th>
+            <th>Mascota</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
+            <th>NHC</th>
+            <th>Observación</th>
+            <th>Estado</th>
+            <th>Acción</th>
+            <th>Historial</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal de historial -->
+  <div class="modal fade" id="historialModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" id="historialModalDialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Historial Clínico</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="previewArchivosHistorial" class="mt-3"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de observación -->
+  <div class="modal fade" id="modalObservacion" tabindex="-1" aria-labelledby="labelModalObservacion" aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="formObservacion" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="labelModalObservacion">Observación para el médico</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <textarea id="campoObservacion" class="form-control" placeholder="Observación (opcional)" rows="3"></textarea>
+          <input type="hidden" id="obsNombreMascota" />
+          <input type="hidden" id="obsNombreDueno" />
+          <input type="hidden" id="obsNHC" />
+          <input type="hidden" id="obsDireccion" />
+          <input type="hidden" id="obsTelefono" />
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Agregar a sala de espera</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Placeholder para modal de imagen -->
+  <div id="modalImagenGrande" style="display:none;"></div>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+
+  <script src="../js/storage-utils.js"></script>
+  <script src="../js/archivos-utils.js"></script>
+  <script src="../js/historial-utils.js"></script>
+  <script src="../js/recordatorios.js"></script>
+
+  
+  <script src="../js/sala_de_espera.js"></script>
+</body>
+</html>
