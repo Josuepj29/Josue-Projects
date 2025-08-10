@@ -1,11 +1,15 @@
 .container {
-  max-width: 1600px !important;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 30px;
-  border-radius: 8px;
+  max-width: 1500px !important; /* <--- Ajusta aquí para achicar el contenedor */
+  margin: 30px auto;
+  background-color: #fff !important; 
+  padding: 20px 22px;
+  border-radius: 15px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-  color: #222;
   box-sizing: border-box;
+  color: #222;
+  transition: max-width 0.3s;
+  margin-left: 300px;
+
 }
 
 #datosPaciente {
@@ -17,6 +21,36 @@
   margin: 0 auto 40px auto;
   box-sizing: border-box;
 }
+
+
+.btn-menu-panel {
+  position: fixed;
+  top: 36px;
+  left: 48px;
+  z-index: 1000;
+  min-width: 220px;
+  height: 62px;
+  font-size: 1.22rem;
+  font-weight: 700;
+  background: #457b9d;
+  color: #fff !important;
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 3px 14px rgba(51,134,200,0.13);
+  text-decoration: none !important;
+  margin: 0 !important;
+  transition: background 0.2s;
+  letter-spacing: 0.01em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-menu-panel:hover,
+.btn-menu-panel:focus {
+  background: #27476a;
+  color: #fff !important;
+}
+
 
 .info-col {
   display: flex;

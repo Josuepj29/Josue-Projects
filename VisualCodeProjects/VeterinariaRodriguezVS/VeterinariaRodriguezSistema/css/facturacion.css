@@ -1,0 +1,175 @@
+body {
+    background-size: cover;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0 0 30px 0;
+}
+.btn-regresar {
+    display: inline-block;
+    background: #389ee6;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 12px 28px;
+    border-radius: 12px;
+    font-size: 1.13em;
+    margin: 30px 0 0 38px;
+    transition: background 0.2s;
+    font-weight: 600;
+    box-shadow: 0 2px 12px rgba(51, 134, 200, 0.15);
+}
+.btn-regresar:hover {
+    background: #276391;
+    color: #fff !important;
+}
+
+.btn-regresar,
+.btn-regresar:visited,
+.btn-regresar:hover,
+.btn-regresar:active,
+.btn-regresar:focus {
+    text-decoration: none !important;
+}
+
+#contenedor-facturacion {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 2px 18px rgba(0,0,0,0.10);
+    max-width: 1100px;
+    margin: -60px auto 0 auto;
+    padding: 35px 35px 24px 35px;
+}
+#contenedor-facturacion h1 {
+    font-size: 2.1em;
+    font-weight: 800;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 34px;
+    color: #15181c;
+    letter-spacing: 0.01em;
+}
+.filtros-fecha {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 18px;
+    justify-content: center;
+}
+.filtros-fecha input[type="date"] {
+    border: 1.5px solid #e1e1e1;
+    border-radius: 8px;
+    padding: 7px 12px;
+    font-size: 1em;
+    background: #f8fafd;
+}
+.filtros-fecha button {
+    background: #168fff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 26px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.18s;
+    box-shadow: 0 2px 10px rgba(34,132,210,0.06);
+    font-family: inherit;
+}
+.filtros-fecha button:hover {
+    background: #146fd3;
+}
+.tabla-zona {
+    background: #f8fafc;
+    border-radius: 12px;
+    margin: 24px 0 18px 0;
+    padding: 22px 20px;
+    box-shadow: 0 1px 8px rgba(40,60,80,0.06);
+}
+.tabla-zona h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 7px;
+    background: #fff;
+}
+th, td {
+    padding: 9px 12px;
+    border-bottom: 1px solid #e4e7ee;
+    text-align: left;
+}
+th {
+    background: #eef5fa;
+    font-weight: 600;
+}
+tr:last-child td {
+    border-bottom: none;
+}
+.subtotal, .total-final {
+    font-size: 1.14em;
+    font-weight: 600;
+    color: #168fff;
+    text-align: right;
+    margin-top: 8px;
+}
+.total-final {
+    font-size: 1.24em;
+    color: #25b04b;
+    margin-top: 20px;
+    margin-bottom: 12px;
+    text-shadow: 0 1px 2px #d9ffe1;
+}
+.vacio {
+    color: #555;
+    font-style: italic;
+    margin-bottom: 9px;
+}
+@media (max-width: 900px) {
+    #contenedor-facturacion {
+        padding: 10px 1vw;
+    }
+    .tabla-zona, table {
+        font-size: 0.98em;
+    }
+}
+@media (max-width: 600px) {
+    #contenedor-facturacion h1 {
+        font-size: 1.1em;
+    }
+    .filtros-fecha {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    .tabla-zona, table {
+        font-size: 0.91em;
+    }
+}
+
+button.boton-activo, .boton-activo {
+    background: #c43a3a !important;
+    color: #fff !important;
+    border: 1.5px solid #ffffff !important;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    transition: background 0.2s, color 0.2s;
+}
+
+.filtros-fecha {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.zona-exportar {
+    margin-top: 6px;
+    margin-bottom: 12px;
+    gap: 14px;
+}
+#btnExportarExcel, #btnExportarPDF {
+    min-width: 160px;
+    font-weight: bold;
+}

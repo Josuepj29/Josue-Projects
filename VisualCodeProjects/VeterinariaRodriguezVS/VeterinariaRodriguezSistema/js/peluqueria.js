@@ -71,7 +71,7 @@ function llenarResultadosBusqueda() {
 
   const resultados = registros.filter(p => {
     const dueñoMatch = (p.dueño || '').toLowerCase().includes(nombreDuenoFiltro);
-    const telefonoMatch = (p.telefono || '').toLowerCase().includes(telefonoFiltro);
+    const telefonoMatch = ((p.telefono || '').toLowerCase().includes(telefonoFiltro) ||(p.telefono2 || '').toLowerCase().includes(telefonoFiltro));
     const direccionMatch = (p.direccion || '').toLowerCase().includes(direccionFiltro);
 
     const tieneMascotas = Array.isArray(p.mascotas) && p.mascotas.some(m => {
@@ -101,7 +101,7 @@ function llenarResultadosBusqueda() {
         <td>${p.dueño || ''}</td>
         <td>${m.nombre || ''}</td>
         <td>${p.direccion || ''}</td>
-        <td>${p.telefono || ''}</td>
+        <td>${combinarTelefonos(p.telefono, p.telefono2)}</td>
         <td>${nhcMascota}</td>
         <td>
           <button class="btn btn-success btn-agregar"
@@ -119,31 +119,34 @@ function llenarResultadosBusqueda() {
 
 
 
-document.querySelector('#tablaResultadosBusqueda').addEventListener('click', (e) => {
-  if (e.target && e.target.classList.contains('btn-agregar')) {
-    const btn = e.target;
-    const nombreMascota = btn.getAttribute('data-mascota');
-    const nombreDueno = btn.getAttribute('data-dueno');
-    const nhc = btn.getAttribute('data-nhc');
-    agregarSalaPeluqueria(nombreMascota, nombreDueno, nhc);
-    $('#resultadoBusqueda').modal('hide');
-  }
-});
-
 
 
 function agregarSalaPeluqueria(nombreMascota, nombreDueno, nhc) {
-  const tabla = document.getElementById("tablaSalaPeluqueria");
-  if (tabla && tabla.querySelector(`tr[data-nhc="${nhc}"]`)) return;
+  nhc = (nhc || '').trim();
+
+  if (!nhc) {
+    alert('Error: La mascota no tiene NHC válido.');
+    return;
+  }
 
   let sala = getSalaPeluqueria();
-  if (!sala.some(m => m.nhc === nhc)) {
-    sala.push({ nhc, nombreMascota, nombreDueno });
-    setSalaPeluqueria(sala);
+
+  let yaEsta = sala.some(m => (m.nhc || '').trim().toLowerCase() === nhc.toLowerCase());
+
+  if (yaEsta) {
+    alert('Esta mascota ya está en la sala de peluquería.');
+    return; // evita agregarla de nuevo
   }
+
+  // Si no está, la agregamos sin alertas
+  sala.push({ nhc, nombreMascota, nombreDueno });
+  setSalaPeluqueria(sala);
 
   renderizarSalaPeluqueria();
 }
+
+
+
 
 function renderizarSalaPeluqueria() {
   const tbody = document.querySelector("#tablaSalaPeluqueria tbody");
@@ -168,7 +171,7 @@ function renderizarSalaPeluqueria() {
       <td>${propietario.dueño || ''}</td>
       <td>${mascota.nombre || ''}</td>
       <td>${propietario.direccion || ''}</td>
-      <td>${propietario.telefono || ''}</td>
+      <td>${combinarTelefonos(propietario.telefono, propietario.telefono2)}</td>
       <td>${item.nhc}</td>
       <td><button class="btn btn-warning btn-sm" onclick="cambiarEstado(this)">En curso</button></td>
       <td><button class="btn btn-outline-info btn-sm" onclick="llamarDueno(this)">--</button></td>
@@ -184,6 +187,7 @@ function renderizarSalaPeluqueria() {
     llamadasPorFila.set(idFila, []);
   });
 }
+
 
 document.getElementById("archivosHistoria").addEventListener("change", function (event) {
   const archivos = Array.from(event.target.files);
@@ -219,8 +223,8 @@ function abrirModalHistoria(btn) {
 
   const historia = mascota.historiaTemp || {};
 
-  document.getElementById("historiaBaño").value = historia.servicio || "";
-  document.getElementById("observacionesHistoria").value = historia.costo || "";
+   document.getElementById("historiaBaño").value = historia.anamnesis || "";
+  document.getElementById("observacionesHistoria").value = historia.tratamiento || "";
   archivosHistoriaActuales = [...(historia.archivos || [])];
 
   renderPreviewArchivos(
@@ -331,7 +335,7 @@ document.getElementById("btnConfirmarHistoria").addEventListener("click", functi
 const hoyStr = ahora.getFullYear() + '-' +
   String(ahora.getMonth() + 1).padStart(2, '0') + '-' +
   String(ahora.getDate()).padStart(2, '0');
-const fechaAplicado = ahora.toISOString();  // SIEMPRE ASÍ
+ const fechaAplicado = obtenerFechaHoraLocal(); 
 
   const recordatoriosConvertidos = recordatoriosTemp.map(r => ({
     texto: r.text || r.texto || textosRecordatoriosPelu[r.value] || r.value,
@@ -343,13 +347,11 @@ const fechaAplicado = ahora.toISOString();  // SIEMPRE ASÍ
 
   mascota.historiaTemp = {
     fecha: fechaAplicado,
-    servicio: document.getElementById("historiaBaño").value.trim(),
-    anamnesis: document.getElementById("historiaBaño").value.trim(),
-    costo: document.getElementById("observacionesHistoria").value.trim(),
-    tratamiento: document.getElementById("observacionesHistoria").value.trim(),
-    archivos: [...archivosHistoriaActuales],
-    recordatorios: recordatoriosConvertidos
-  };
+    anamnesis: document.getElementById("historiaBaño").value.trim(),  
+    tratamiento: document.getElementById("observacionesHistoria").value.trim(), 
+    archivos: [...archivosHistoriaActuales], 
+    recordatorios: recordatoriosConvertidos 
+};
 
   setRegistrosMascotas(registros);
   $("#modalHistoria").modal("hide");
@@ -415,7 +417,7 @@ if (mascota.historiaTemp) {
   const hoyStr = ahora.getFullYear() + '-' +
     String(ahora.getMonth() + 1).padStart(2, '0') + '-' +
     String(ahora.getDate()).padStart(2, '0');
-  const fechaAplicado = ahora.toISOString();
+   const fechaAplicado = obtenerFechaHoraLocal();
 
   // Recalcula todas las fechas de recordatorios antes de guardar
   if (Array.isArray(mascota.historiaTemp.recordatorios)) {
@@ -480,7 +482,7 @@ function abrirModalHB(btn) {
 
   const historial = [...historialMVet, ...historialPelu]
     .filter(h => h.fecha)
-    .sort((a, b) => convertirFechaISO(b.fecha) - convertirFechaISO(a.fecha));
+     .sort((a, b) => parsearFechaSeguro(b.fecha) - parsearFechaSeguro(a.fecha));
 
   try {
     localStorage.setItem("_historialCombinado_" + nhc, JSON.stringify(historial));
@@ -621,3 +623,6 @@ function actualizarListaRecordatoriosModal() {
     listaDiv.appendChild(item);
   });
 }
+
+
+

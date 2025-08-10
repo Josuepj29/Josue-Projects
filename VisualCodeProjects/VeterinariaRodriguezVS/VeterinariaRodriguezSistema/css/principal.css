@@ -114,3 +114,41 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
+
+.btn-logout {
+  position: fixed;
+  top: 24px;         /* O ajústalo a 36px para alinear con tu barra */
+  right: 36px;       /* Bien pegado al borde derecho */
+  z-index: 9999;
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 18px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  padding: 16px 32px;
+  box-shadow: 0 3px 14px rgba(51,134,200,0.13);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-logout:hover {
+  background: #c0392b;
+}
+
+
+.dashboard-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch; /* o center si prefieres */
+  gap: 2rem; /* Espacio entre cards */
+}
+
+.dashboard-card {
+  /* Tus estilos actuales, ejemplo: */
+  min-width: 260px;
+  max-width: 320px;
+  min-height: 180px;
+  flex: 1 1 300px;
+  margin-bottom: 0;
+}

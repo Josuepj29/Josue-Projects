@@ -1,3 +1,95 @@
+// Diccionario: días por cada value de recordatorio (MVet y Peluquería)
+const DIAS_POR_RECORDATORIO = {
+  // --- MVet ---
+  'mv_cita_medica_1': 1,
+  'mv_vacuna_puppy_14': 14,
+  'mv_vacuna_puppy_21': 21,
+  'mv_vacuna_cuadruple_14': 14,
+  'mv_vacuna_cuadruple_21': 21,
+  'mv_vacuna_quintuple_14': 14,
+  'mv_vacuna_quintuple_21': 21,
+  'mv_vacuna_quintuple_180': 180,
+  'mv_vacuna_quintuple_corona_14': 14,
+  'mv_vacuna_quintuple_corona_21': 21,
+  'mv_vacuna_quintuple_corona_180': 180,
+  'mv_vacuna_sextuple_rabia': 365,
+  'mv_vacuna_kc': 365,
+  'mv_vacuna_rabia_perro': 365,
+  'mv_pipetas_14': 14,
+  'mv_pipetas_30': 30,
+  'mv_desparasitacion_externa_30': 30,
+  'mv_desparasitacion_externa_90': 90,
+  'mv_oxantel_1': 1,
+  'mv_oxantel_10': 10,
+  'mv_oxantel_30': 30,
+  'mv_oxantel_60': 60,
+  'mv_puppymec_1': 1,
+  'mv_puppymec_10': 10,
+  'mv_puppymec_14': 14,
+  'mv_fripets_10': 10,
+  'mv_fripets_30': 30,
+  'mv_fripets_60': 60,
+  'mv_vacuna_gato_triple_14': 14,
+  'mv_vacuna_gato_triple_21': 21,
+  'mv_vacuna_gato_triple_365': 365,
+  'mv_vacuna_gato_leucemia': 30,
+  'mv_vacuna_gato_rabia': 365,
+  // --- Peluquería ---
+  'pelu_siguiente_bano_7': 7,
+  'pelu_siguiente_bano_21': 21,
+  'pelu_pipetas_14': 14,
+  'pelu_pipetas_30': 30,
+  'pelu_desparasitacion_externa_30': 30,
+  'pelu_desparasitacion_externa_90': 90,
+  'pelu_oxantel_1': 1,
+  'pelu_oxantel_10': 10,
+  'pelu_oxantel_30': 30,
+  'pelu_oxantel_60': 60,
+  'pelu_puppymec_1': 1,
+  'pelu_puppymec_10': 10,
+  'pelu_puppymec_14': 14,
+  'pelu_fripets_10': 10,
+  'pelu_fripets_30': 30,
+  'pelu_fripets_60': 60
+  // Agrega aquí nuevos valores si aparecen más
+};
+
+/**
+ * Calcula la fecha próxima para cualquier recordatorio
+ * @param {string} fechaBase - Fecha base ('YYYY-MM-DD')
+ * @param {string} tipoRecordatorio - El value del recordatorio (ej: 'mv_vacuna_puppy_14')
+ * @returns {string} Fecha próxima en 'YYYY-MM-DD', o '—' si inválido
+ */
+function calcularFechaProxima(fechaBase, tipoRecordatorio) {
+  if (!fechaBase || !tipoRecordatorio) return "—";
+  // Intentar parsear fechaBase a objeto Date (local)
+  let baseDate;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(fechaBase)) {
+    let [y, m, d] = fechaBase.split('-');
+    baseDate = new Date(Number(y), Number(m) - 1, Number(d));
+  } else {
+    baseDate = new Date(fechaBase);
+  }
+  if (isNaN(baseDate)) return "—";
+  // Buscar días a sumar
+  const diasASumar = DIAS_POR_RECORDATORIO[tipoRecordatorio] || 0;
+  baseDate.setDate(baseDate.getDate() + diasASumar);
+  return baseDate.toISOString().slice(0, 10);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function formatearFechaHora(fechaISO) {
   try {
     if (!fechaISO || isNaN(new Date(fechaISO).getTime())) {
@@ -109,10 +201,6 @@ const proxima = r.proxima || r.fechaProxima || calcularFechaProxima(baseProxima,
   contenedor.appendChild(tabla);
 }
 
-
-
-
-
 function convertirFechaISO(fecha) {
   if (!fecha) return new Date('1970-01-01');
   if (/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(fecha)) return new Date(fecha);
@@ -130,40 +218,36 @@ function convertirFechaISO(fecha) {
 }
 
 
-
-
-function calcularFechaProxima(fechaBase, texto) {
-  let dias = 0;
-
-  if (texto === 'cita_medica') {
-    dias = 1;
-  } else {
-    const matchValue = typeof texto === 'string' && texto.match(/_(\d+)$/);
-    if (matchValue) dias = parseInt(matchValue[1], 10);
-
-    if (!dias && typeof texto === 'string') {
-      const matchText = texto.match(/(\d+)\s*d[ií]as?/i);
-      if (matchText) dias = parseInt(matchText[1], 10);
-    }
-  }
-
-  if (!dias) return "—";
-
-  let fecha = new Date();
-
-
-if (typeof fechaBase === 'string') {
-  const matchISO = fechaBase.match(/^(\d{4})-(\d{2})-(\d{2})/);
-  if (matchISO) {
-    const [_, y, m, d] = matchISO;
-    fecha = new Date(parseInt(y), parseInt(m) - 1, parseInt(d)); // LOCAL, NO UTC
-  }
-}
-  fecha.setDate(fecha.getDate() + dias);
-  return fecha.toISOString().slice(0, 10);
+function obtenerFechaHoraLocal() {
+    const ahora = new Date();
+    const fecha = ahora.getFullYear() + '-' +
+        String(ahora.getMonth() + 1).padStart(2, '0') + '-' +
+        String(ahora.getDate()).padStart(2, '0');
+    const hora = String(ahora.getHours()).padStart(2, '0') + ':' +
+        String(ahora.getMinutes()).padStart(2, '0') + ':' +
+        String(ahora.getSeconds()).padStart(2, '0');
+    return `${fecha} ${hora}`;
 }
 
 
-
+function parsearFechaSeguro(f) {
+  if (f instanceof Date && !isNaN(f)) return f.getTime();
+  if (typeof f === 'string' && /^\d{4}-\d{2}-\d{2}/.test(f)) {
+    let d = new Date(f);
+    if (!isNaN(d)) return d.getTime();
+  }
+  // dd/mm/yyyy, hh:mm (ejemplo: 7/8/2025, 4:02:49 a. m.)
+  if (typeof f === 'string' && /\d{1,2}\/\d{1,2}\/\d{4}/.test(f)) {
+    let partes = f.split(/[\s,]+/);
+    let fecha = partes[0].split('/');
+    let hora = (partes[1] || '00:00').split(':');
+    let d = new Date(
+      parseInt(fecha[2]), parseInt(fecha[1]) - 1, parseInt(fecha[0]),
+      parseInt(hora[0] || '0'), parseInt(hora[1] || '0')
+    );
+    if (!isNaN(d)) return d.getTime();
+  }
+  return -Infinity;
+}
 
 

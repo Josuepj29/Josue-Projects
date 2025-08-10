@@ -1,341 +1,210 @@
-// Abrir modal y preparar formulario
-function abrirFormulario() {
-  const modal = document.getElementById("modalAgregarVenta");
-  modal.style.display = "block";
+let carrito = [];
+let indexEditando = null;
 
-  document.getElementById("formVenta").reset();
-
-  const sugerencias = document.getElementById("sugerenciasArticulos");
-  sugerencias.innerHTML = "";
-  sugerencias.classList.remove("show");
-  sugerencias.style.display = "none";
-
-  document.getElementById("camposVenta").style.display = "none";
-
-  const inputBusqueda = document.getElementById("busquedaArticulo");
-  inputBusqueda.value = "";
-  inputBusqueda.focus();
-
-  // Limpiar código seleccionado
-  document.getElementById("codigo").value = "";
-  delete document.getElementById("formVenta").dataset.editIndex;
-
-}
-
-// Cerrar modal y ocultar campos
-function cerrarModal() {
-  document.getElementById("modalAgregarVenta").style.display = "none";
-  document.getElementById("camposVenta").style.display = "none";
-
-  const sugerencias = document.getElementById("sugerenciasArticulos");
-  sugerencias.innerHTML = "";
-  sugerencias.classList.remove("show");
-  sugerencias.style.display = "none";
-}
-
-// Buscar artículos para mostrar sugerencias
-function buscarArticulo() {
-  const query = document.getElementById("busquedaArticulo").value.toLowerCase().trim();
-  const articulos = JSON.parse(localStorage.getItem("articulos")) || [];
-  const sugerenciasDiv = document.getElementById("sugerenciasArticulos");
-
-  sugerenciasDiv.innerHTML = "";
-  sugerenciasDiv.classList.remove("show");
-  sugerenciasDiv.style.display = "none";
-
-  if (query === "") return;
-
-  const coincidencias = articulos.filter(a =>
-    a.codigo.toString().toLowerCase().includes(query) ||
-    a.descripcion.toLowerCase().includes(query)
-  );
-
-  if (coincidencias.length === 0) return;
-
-  coincidencias.forEach(articulo => {
-    const item = document.createElement("a");
-    item.classList.add("dropdown-item");
-    item.href = "#";
-    item.textContent = `${articulo.codigo} - ${articulo.descripcion}`;
-    item.addEventListener("click", (e) => {
-      e.preventDefault();
-      seleccionarArticulo(articulo);
-
-      sugerenciasDiv.innerHTML = "";
-      sugerenciasDiv.classList.remove("show");
-      sugerenciasDiv.style.display = "none";
-    });
-    sugerenciasDiv.appendChild(item);
+// ========== CARGA ARTÍCULOS AL SELECT ==========
+function cargarArticulosEnSelect() {
+  const articulos = JSON.parse(localStorage.getItem('articulos')) || [];
+  const select = document.getElementById('selectArticulo');
+  select.innerHTML = '<option value="" disabled selected>Selecciona artículo</option>';
+  articulos.forEach(art => {
+    if (art.cantidad > 0) {
+      select.innerHTML += `<option value="${art.codigo}" data-precio="${art.precio}" data-stock="${art.cantidad}">${art.descripcion} (Stock: ${art.cantidad})</option>`;
+    }
   });
-
-  sugerenciasDiv.classList.add("show");
-  sugerenciasDiv.style.display = "block";
 }
 
-// Seleccionar artículo de la lista
-function seleccionarArticulo(articulo) {
-  document.getElementById("codigo").value = articulo.codigo;
-  document.getElementById("descripcion").value = articulo.descripcion;
-  document.getElementById("precio").value = parseFloat(articulo.precio).toFixed(2);
-  document.getElementById("cantidad").value = 1;
-  calcularTotal();
-
-  const ahora = new Date();
-  document.getElementById("fechaHora").value = ahora.toLocaleString();
-
-  document.getElementById("camposVenta").style.display = "block";
-
-  const sugerencias = document.getElementById("sugerenciasArticulos");
-  sugerencias.innerHTML = "";
-  sugerencias.classList.remove("show");
-  sugerencias.style.display = "none";
-}
-
-// Calcular total según cantidad y precio
-function calcularTotal() {
-  const cantidad = parseFloat(document.getElementById("cantidad").value) || 0;
-  const precio = parseFloat(document.getElementById("precio").value) || 0;
-  const total = cantidad * precio;
-  document.getElementById("total").value = total.toFixed(2);
-}
-
-// Agregar venta a localStorage y actualizar tabla
-function agregarVenta(e) {
+// ========== AGREGAR AL CARRITO ==========
+document.getElementById('formAgregarArticulo').addEventListener('submit', function (e) {
   e.preventDefault();
+  const select = document.getElementById('selectArticulo');
+  const codigo = select.value;
+  const nombre = select.options[select.selectedIndex]?.text?.split(' (')[0] || '';
+  const precio = parseFloat(select.options[select.selectedIndex]?.dataset?.precio || 0);
+  const stock = parseInt(select.options[select.selectedIndex]?.dataset?.stock || 0);
+  const cantidad = parseInt(document.getElementById('cantidadArticulo').value);
 
-  const codigo = document.getElementById("codigo").value;
-  const descripcion = document.getElementById("descripcion").value;
-  const cantidad = parseFloat(document.getElementById("cantidad").value);
-  const precio = parseFloat(document.getElementById("precio").value);
-  const total = parseFloat(document.getElementById("total").value);
-  const fechaHora = document.getElementById("fechaHora").value;
-
-  if (!codigo || !descripcion || isNaN(cantidad) || isNaN(precio)) {
-    alert("Completa todos los campos correctamente.");
+  if (!codigo || cantidad < 1 || cantidad > stock) {
+    alert('Cantidad inválida o sin stock.');
     return;
   }
 
-  const venta = { codigo, descripcion, cantidad, precio, total, fechaHora };
-  const ventas = JSON.parse(localStorage.getItem("ventas")) || [];
-
-  const formVenta = document.getElementById("formVenta");
-  const indexEditar = formVenta.dataset.editIndex;
-
-  if (indexEditar !== undefined && indexEditar !== "") {
-    ventas[parseInt(indexEditar)] = venta;
-    delete formVenta.dataset.editIndex;
-    alert("Venta actualizada correctamente.");
+  const idx = carrito.findIndex(i => i.codigo == codigo);
+  if (idx >= 0) {
+    if (carrito[idx].cantidad + cantidad > stock) {
+      alert('No hay suficiente stock.');
+      return;
+    }
+    carrito[idx].cantidad += cantidad;
   } else {
-    ventas.push(venta);
-    alert("Venta agregada correctamente.");
+    const articulos = JSON.parse(localStorage.getItem('articulos')) || [];
+    const articulo = articulos.find(a => String(a.codigo) === String(codigo));
+    carrito.push({ codigo, nombre, precio, cantidad, stock, archivos: articulo?.archivos || [] });
   }
+  this.reset();
+  renderCarrito();
+});
 
-  localStorage.setItem("ventas", JSON.stringify(ventas));
-  cerrarModal();
-  cargarTablaVentas();
-}
-
-
-// Cargar ventas desde localStorage
-function cargarTablaVentas() {
-  const ventas = JSON.parse(localStorage.getItem("ventas")) || [];
-  const tbody = document.querySelector("#tablaVentas tbody");
-  tbody.innerHTML = "";
-
-  if (ventas.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="7" class="text-center">No hay ventas registradas.</td></tr>`;
-    return;
-  }
-
-  ventas.forEach((venta, index) => {
-    const tr = document.createElement("tr");
-
+// ========== RENDERIZA EL CARRITO ==========
+function renderCarrito() {
+  const tbody = document.querySelector('#tablaCarrito tbody');
+  tbody.innerHTML = '';
+  let total = 0;
+  carrito.forEach((item, i) => {
+    const subtotal = item.precio * item.cantidad;
+    total += subtotal;
+    const tr = document.createElement('tr');
     tr.innerHTML = `
-  <td>${venta.codigo}</td>
-  <td>${venta.descripcion}</td>
-  <td>${venta.cantidad}</td>
-  <td>${venta.precio.toFixed(2)}</td>
-  <td>${venta.total.toFixed(2)}</td>
-  <td>${venta.fechaHora}</td>
-  <td>
-    <div style="display: flex; gap: 6px;">
-      <button class="btn btn-info btn-sm" onclick="verArchivos('${venta.codigo}')">👁️ Ver</button>
-      <button class="btn btn-warning btn-sm" onclick="editarVenta(${index})">✏️ Editar</button>
-      <button class="btn btn-danger btn-sm" onclick="eliminarVenta(${index})">🗑️ Eliminar</button>
-    </div>
-  </td>
-`;
-
-
+      <td>${item.nombre}</td>
+      <td>${item.cantidad}</td>
+      <td>S/ ${item.precio.toFixed(2)}</td>
+      <td>S/ ${subtotal.toFixed(2)}</td>
+      <td class="acciones-cell">
+        <button class="btn-blue btn-tabla" onclick="modificarArticuloVenta(${i})">Modificar</button>
+        <button class="btn-red btn-tabla" onclick="eliminarDelCarrito(${i})">Eliminar</button>
+        <button class="btn-blue btn-tabla" onclick="verArchivoArticulo(${i})">Ver</button>
+      </td>
+    `;
     tbody.appendChild(tr);
   });
+  document.getElementById('totalVenta').innerHTML = `<span class="total-derecha">Total: <b>S/ ${total.toFixed(2)}</b></span>`;
+  document.getElementById('btnPagar').disabled = carrito.length === 0;
 }
 
+// ========== MODIFICAR ARTÍCULO EN MODAL ==========
+window.modificarArticuloVenta = function (i) {
+  const item = carrito[i];
+  indexEditando = i;
+  document.getElementById('editCodigo').value = item.codigo;
+  document.getElementById('editDescripcion').value = item.nombre;
+  document.getElementById('editCantidad').value = item.cantidad;
+  document.getElementById('editPrecio').value = item.precio;
+  document.getElementById('modalEditarVenta').style.display = 'block';
+};
 
-function verArchivos(codigo) {
-  const articulos = JSON.parse(localStorage.getItem("articulos")) || [];
-  const articulo = articulos.find(a => a.codigo == codigo);
-
-  if (!articulo || !articulo.archivos || articulo.archivos.length === 0) {
-    alert("No hay archivos asociados a este artículo.");
+document.getElementById('formEditarVenta').onsubmit = function(e) {
+  e.preventDefault();
+  const nuevaCantidad = parseInt(document.getElementById('editCantidad').value);
+  const nuevoPrecio = parseFloat(document.getElementById('editPrecio').value);
+  if (nuevaCantidad < 1 || isNaN(nuevoPrecio) || nuevoPrecio < 0) {
+    alert('Datos inválidos');
     return;
   }
+  // Buscar el stock real disponible
+  const codigo = document.getElementById('editCodigo').value;
+  const articulos = JSON.parse(localStorage.getItem('articulos')) || [];
+  const articulo = articulos.find(a => String(a.codigo) === String(codigo));
+  const stockDisponible = articulo ? parseInt(articulo.cantidad) : 0;
 
-  // Mostrar carrusel con los archivos
- mostrarCarruselArchivos(articulo.archivos.map(a => a.base64), 0);
-}
-
-
-// Eliminar venta
-function eliminarVenta(index) {
-  const ventas = JSON.parse(localStorage.getItem("ventas")) || [];
-  ventas.splice(index, 1);
-  localStorage.setItem("ventas", JSON.stringify(ventas));
-  cargarTablaVentas();
-}
-
-// Cerrar sugerencias al hacer click fuera
-document.addEventListener("click", (event) => {
-  const input = document.getElementById("busquedaArticulo");
-  const sugerencias = document.getElementById("sugerenciasArticulos");
-
-  if (input && sugerencias && !input.contains(event.target) && !sugerencias.contains(event.target)) {
-    sugerencias.classList.remove("show");
-    sugerencias.style.display = "none";
-  }
-});
-
-// Inicialización segura al cargar la página
-document.addEventListener("DOMContentLoaded", () => {
-  cargarTablaVentas();
-
-  const formVenta = document.getElementById("formVenta");
-  if (formVenta) {
-    formVenta.removeEventListener("submit", agregarVenta);
-    formVenta.addEventListener("submit", agregarVenta);
-  }
-
-  const inputBusqueda = document.getElementById("busquedaArticulo");
-  if (inputBusqueda) {
-    inputBusqueda.addEventListener("input", buscarArticulo);
-  }
-
-  const cantidadInput = document.getElementById("cantidad");
-  if (cantidadInput) {
-    cantidadInput.addEventListener("input", calcularTotal);
-  }
-
-  const precioInput = document.getElementById("precio");
-  if (precioInput) {
-    precioInput.addEventListener("input", calcularTotal);
-  }
-});
-
-
-function borrarVentas() {
-  if (confirm("¿Estás seguro de que deseas borrar todas las ventas?")) {
-    // Elimina las ventas del almacenamiento local
-    localStorage.removeItem("ventas");
-
-    // Limpia la tabla en el DOM
-    const tbody = document.querySelector("#tablaVentas tbody");
-    tbody.innerHTML = "";
-
-    console.log("🔴 Todas las ventas han sido borradas.");
-  }
-}
-
-
-function abrirModalVenta() {
-  const ventas = JSON.parse(localStorage.getItem("ventas")) || [];
-
-  if (ventas.length === 0) {
-    alert("No hay productos en la tabla para vender.");
+  // Validar stock
+  if (nuevaCantidad > stockDisponible) {
+    alert(`No hay suficiente stock. Solo hay ${stockDisponible} unidades disponibles.`);
     return;
   }
+  carrito[indexEditando].cantidad = nuevaCantidad;
+  carrito[indexEditando].precio = nuevoPrecio;
+  renderCarrito();
+  cerrarModalEditarVenta();
+};
 
-  const resumenDiv = document.getElementById("resumenVenta");
-  resumenDiv.innerHTML = ""; // Limpiar antes
 
-  let totalFinal = 0;
 
-  // Generar contenido dinámico con los artículos en la tabla
-  ventas.forEach((venta, index) => {
-    const itemHTML = `
-      <div style="border-bottom: 1px solid #ccc; padding: 5px 0;">
-        <strong>${venta.descripcion}</strong> x${venta.cantidad} -  S/ ${venta.precio.toFixed(2)} 
-        = <strong>S/ ${(venta.precio * venta.cantidad).toFixed(2)}</strong>
-      </div>
-    `;
-    totalFinal += venta.precio * venta.cantidad;
-    resumenDiv.innerHTML += itemHTML;
+
+window.cerrarModalEditarVenta = function() {
+  document.getElementById('modalEditarVenta').style.display = 'none';
+  indexEditando = null;
+};
+
+// ========== ELIMINAR DEL CARRITO CON CONFIRMACIÓN ==========
+window.eliminarDelCarrito = function(i) {
+  if (confirm("¿Seguro que quieres eliminar este artículo del carrito?")) {
+    carrito.splice(i, 1);
+    renderCarrito();
+  }
+};
+
+// ========== VER ARCHIVO/FOTO DEL ARTÍCULO (usa tu carrusel) ==========
+window.verArchivoArticulo = function(i) {
+  const archivos = carrito[i]?.archivos || [];
+  if (!archivos.length) return alert("Sin archivo asociado");
+  // Si archivos son [{base64, ...}]
+  mostrarCarruselArchivos(archivos.map(a => a.base64), 0);
+};
+
+// ========== PAGAR: MUESTRA MODAL DE CONFIRMACIÓN ==========
+document.getElementById('btnPagar').onclick = function () {
+  renderResumenVenta();
+  document.getElementById('modalPago').style.display = 'block';
+};
+
+
+
+
+
+function renderResumenVenta() {
+  let html = '<ul>';
+  let total = 0;
+  carrito.forEach(item => {
+    const subt = item.precio * item.cantidad;
+    html += `
+      <li>
+        <span class="nombre-articulo">${item.nombre} <span style="color:#666;font-weight:400;">x${item.cantidad}</span></span>
+        <span style="color:#2196f3;">S/ ${subt.toFixed(2)}</span>
+      </li>`;
+    total += subt;
   });
-
-  resumenDiv.innerHTML += `<hr><p style="font-size: 18px;"><strong>Total: S/ ${totalFinal.toFixed(2)}</strong></p>`;
-
-  document.getElementById("modalResumenVenta").style.display = "block";
+  html += `</ul>
+    <span class="res-total">Total: S/ ${total.toFixed(2)}</span>
+  `;
+  document.getElementById('resumenVenta').innerHTML = html;
 }
 
 
-function editarVenta(index) {
-  const ventas = JSON.parse(localStorage.getItem("ventas")) || [];
-  const venta = ventas[index];
-
-  const modal = document.getElementById("modalAgregarVenta");
-  modal.style.display = "block";
-
-  // Mostrar directamente los campos sin esperar selección
-  document.getElementById("camposVenta").style.display = "block";
-
-  // Rellenar los campos directamente
-  document.getElementById("codigo").value = venta.codigo;
-  document.getElementById("descripcion").value = venta.descripcion;
-  document.getElementById("cantidad").value = venta.cantidad;
-  document.getElementById("precio").value = venta.precio;
-  document.getElementById("total").value = venta.total;
-  document.getElementById("fechaHora").value = venta.fechaHora;
-
-  // Limpiar búsqueda y sugerencias (por si acaso)
-  document.getElementById("busquedaArticulo").value = "";
-  const sugerencias = document.getElementById("sugerenciasArticulos");
-  sugerencias.innerHTML = "";
-  sugerencias.classList.remove("show");
-  sugerencias.style.display = "none";
-
-  // Guardar el índice que se está editando
-  document.getElementById("formVenta").dataset.editIndex = index;
-}
-
-
-
-
-
-
-
-
-
-function procesarVenta() {
-  const medioPago = document.getElementById("medioPago").value;
-  const ventas = JSON.parse(localStorage.getItem("ventas")) || [];
-
-  if (ventas.length === 0) {
-    alert("No hay ventas que procesar.");
-    cerrarModalVenta();
+// ========== CONFIRMAR Y PAGAR ==========
+document.getElementById('btnConfirmarPago').onclick = function () {
+  const metodo = document.getElementById('metodoPago').value;
+  if (!metodo) {
+    alert('Selecciona método de pago');
     return;
   }
+  
+  // --- CONFIRMACIÓN DE COBRO ---
+  if (!confirm('¿Estás seguro de realizar el cobro y finalizar la venta?')) {
+    return; // Si cancela, no sigue el proceso
+  }
 
-  // Aquí podrías guardar un historial si quieres
 
-  // Limpiar tabla y localStorage
-  localStorage.removeItem("ventas");
-  document.querySelector("#tablaVentas tbody").innerHTML = "";
+  // --- GUARDAR LA VENTA EN HISTORIAL ---
+  let historialVentas = JSON.parse(localStorage.getItem('ventas')) || [];
+  historialVentas.push({
+    fecha: new Date().toISOString(),
+    carrito: JSON.parse(JSON.stringify(carrito)), // copia profunda
+    metodo: metodo,
+    total: carrito.reduce((acc, i) => acc + i.cantidad * i.precio, 0)
+  });
+  localStorage.setItem('ventas', JSON.stringify(historialVentas));
+  // --------------------------------------
 
-  // Cerrar modal
-  cerrarModalVenta();
+  // Actualiza stock de los artículos en localStorage
+  let articulos = JSON.parse(localStorage.getItem('articulos')) || [];
+  carrito.forEach(item => {
+    const art = articulos.find(a => String(a.codigo) === String(item.codigo));
+    if (art) art.cantidad -= item.cantidad;
+  });
+  localStorage.setItem('articulos', JSON.stringify(articulos));
+  cerrarModalPago();
+  carrito = [];
+  renderCarrito();
+  cargarArticulosEnSelect();
+  alert("¡Venta realizada correctamente!");
+};
 
-  alert(`Venta procesada exitosamente con medio de pago: ${medioPago.toUpperCase()}`);
-}
 
-function cerrarModalVenta() {
-  document.getElementById("modalResumenVenta").style.display = "none";
-}
+window.cerrarModalPago = function() {
+  document.getElementById('modalPago').style.display = 'none';
+};
+
+// ========== INICIALIZACIÓN ==========
+document.addEventListener('DOMContentLoaded', function () {
+  cargarArticulosEnSelect();
+  renderCarrito();
+});

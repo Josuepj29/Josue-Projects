@@ -7,6 +7,60 @@
   box-shadow: 0 4px 15px rgba(0,0,0,0.15);
   color: #222;
   box-sizing: border-box;
+  margin-right: 180px !important;
+}
+
+
+.btn-menu-panel {
+  position: fixed;
+  top: 36px;
+  left: 48px;
+  z-index: 1000;
+  min-width: 220px;
+  height: 62px;
+  font-size: 1.22rem;
+  font-weight: 700;
+  background: #457b9d;
+  color: #fff !important;
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 3px 14px rgba(51,134,200,0.13);
+  text-decoration: none !important;
+  margin: 0 !important;
+  /* AÑADE ESTE MARGEN */
+  margin-right: 20px !important;  /* O puedes poner 24px, prueba valores pequeños */
+  margin-top: 10px !important;    /* Opcional, si quieres separar del borde arriba */
+  letter-spacing: 0.01em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-menu-panel:hover,
+.btn-menu-panel:focus {
+  background: #27476a;
+  color: #fff !important;
+}
+
+
+/* Haz todos los botones de la tabla más redondeados */
+.table button,
+button.btn,
+button.btn-sm,
+#tablaSalaEspera button,
+#tablaSalaEspera .btn {
+  border-radius: 100px ;
+  padding-left: 22px !important;
+  padding-right: 22px !important;
+  min-width: 90px;
+  font-weight: 600;
+}
+
+/* Si tienes botones pequeños (como el de eliminar), puedes personalizar: */
+#tablaSalaEspera button.btn-danger {
+  min-width: 60px;
+  padding-left: 0.7em !important;
+  padding-right: 0.7em !important;
 }
 
 

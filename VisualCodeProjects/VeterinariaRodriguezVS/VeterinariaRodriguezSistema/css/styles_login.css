@@ -279,3 +279,22 @@ header{
     opacity: 1;
 }
 
+
+.modal {
+  position: fixed; top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.55);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 99999;
+}
+.modal-content {
+  background: #fff;
+  padding: 32px 24px 20px 24px;
+  border-radius: 20px;
+  min-width: 320px;
+  max-width: 95vw;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.18);
+}
+.modal-content label { display: block; margin-top: 10px; font-weight:600; }
+.modal-content input { width: 100%; margin: 6px 0 16px 0; padding:7px 10px;}

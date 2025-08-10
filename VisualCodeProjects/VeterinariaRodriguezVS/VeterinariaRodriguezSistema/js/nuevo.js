@@ -29,6 +29,7 @@ function buscar() {
   const nDueño = safeInputValue('buscarDueno');
   const nMascota = safeInputValue('buscarMascota');
   const telefono = safeInputValue('buscarTelefono');
+  const telefono2 = safeInputValue('buscarTelefono2');
   const direccion = safeInputValue('buscarDireccion');
   const nhc = safeInputValue('buscarNHC');
 
@@ -39,7 +40,7 @@ function buscar() {
   const resultados = registros.filter(d => {
     return (nDueño === '' || (d.dueño || '').toLowerCase().includes(nDueño)) &&
        (nMascota === '' || (d.mascotas || []).some(m => (m.nombre || '').toLowerCase().includes(nMascota))) &&
-       (telefono === '' || (d.telefono || '').toLowerCase().includes(telefono)) &&
+       (telefono === '' || (d.telefono || '').toLowerCase().includes(telefono) || (d.telefono2 || '').toLowerCase().includes(telefono)) &&
        (direccion === '' || (d.direccion || '').toLowerCase().includes(direccion)) &&
        (nhc === '' || (d.mascotas || []).some(m => (m.NHC || '').toLowerCase().includes(nhc)));
   });
@@ -68,6 +69,7 @@ function buscar() {
           <div class="row d-flex justify-content-between">
             <div class="col-md-5">
               <p><strong>Teléfono:</strong> ${dueño.telefono || 'No disponible'}</p>
+              <p><strong>Teléfono 2:</strong> ${dueño.telefono2 || 'No disponible'}</p>
               <p><strong>Dirección:</strong> ${dueño.direccion || 'No disponible'}</p>
               <p><strong>DNI:</strong> ${dueño.dni || 'No disponible'}</p>
             </div>
@@ -134,6 +136,7 @@ document.getElementById('formNuevo').addEventListener('submit', function (e) {
   const edad = document.getElementById('nuevoEdad').value.trim();
   const direccion = document.getElementById('nuevoDireccion').value.trim();
   const telefono = document.getElementById('nuevoTelefono').value.trim();
+  const telefono2 = document.getElementById('nuevoTelefono2').value.trim();
   const correo = document.getElementById('nuevoCorreo').value.trim();
 
   const nombreMascota = document.getElementById('nuevoNombreMascota').value.trim();
@@ -157,9 +160,11 @@ document.getElementById('formNuevo').addEventListener('submit', function (e) {
   }
 
   const existe = registros.some(p =>
-    p.dueño?.toLowerCase() === nombreDueño.toLowerCase() &&
-    p.telefono === telefono
-  );
+  p.dueño?.toLowerCase() === nombreDueño.toLowerCase() &&
+  p.telefono === telefono &&
+  p.telefono2 === telefono2
+);
+
   if (existe) {
     alert('El dueño ya está registrado. Use "Agregar más mascotas".');
     return;
@@ -194,6 +199,7 @@ document.getElementById('formNuevo').addEventListener('submit', function (e) {
     edad,
     direccion,
     telefono,
+    telefono2,
     correo,
     mascotas: [nuevaMascota]
   };
@@ -336,6 +342,7 @@ function abrirModalEditarDueno(dueñoId) {
   document.getElementById('editarEdadDueño').value = dueño.edad || '';
   document.getElementById('editarDireccionDueño').value = dueño.direccion || '';
   document.getElementById('editarTelefonoDueño').value = dueño.telefono || '';
+  document.getElementById('editarTelefonoDueño2').value = dueño.telefono2 || '';
   document.getElementById('editarCorreoDueño').value = dueño.correo || '';
 
   $('#modalEditarDueno').modal('show');
@@ -354,6 +361,7 @@ document.getElementById('formEditarDueno').addEventListener('submit', function (
   dueño.edad = document.getElementById('editarEdadDueño').value.trim();
   dueño.direccion = document.getElementById('editarDireccionDueño').value.trim();
   dueño.telefono = document.getElementById('editarTelefonoDueño').value.trim();
+  dueño.telefono2 = document.getElementById('editarTelefonoDueño2').value.trim();
   dueño.correo = document.getElementById('editarCorreoDueño').value.trim();
 
   localStorage.setItem('registrosMascotas', JSON.stringify(registros));

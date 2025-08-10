@@ -179,14 +179,16 @@ function agregarFilaArticulo(articulo, index) {
     <td>${parseFloat(articulo.precio).toFixed(2)}</td>
     <td>${articulo.cantidad}</td>
     <td class="acciones-cell">
-      <button class="btn btn-warning btn-tabla" onclick="modificarArticulo(${index})">✏️ Modificar</button>
-      <button class="btn btn-danger btn-tabla" onclick="eliminarArticulo(${index})">🗑️ Eliminar</button>
-      <button class="btn btn-info btn-tabla" onclick="verArchivos(${index})">👁 Ver</button>
+      <button class="btn-blue btn-tabla" onclick="modificarArticulo(${index})">✏️ Modificar</button>
+      <button class="btn-red btn-tabla" onclick="eliminarArticulo(${index})">🗑️ Eliminar</button>
+      <button class="btn-blue btn-tabla" onclick="verArchivos(${index})">👁 Ver</button>
     </td>
   `;
 
   tabla.appendChild(fila);
 }
+
+
 
 // Mostrar todos los artículos
 function mostrarArticulos() {
@@ -237,9 +239,8 @@ function modificarArticulo(index) {
   document.getElementById("descripcion").value = articulo.descripcion;
   document.getElementById("precio").value = articulo.precio;
   document.getElementById("cantidad").value = articulo.cantidad;
-
   document.getElementById("codigo").readOnly = true;
-  document.getElementById("descripcion").readOnly = true;
+  
 
   filaEditando = index;
 

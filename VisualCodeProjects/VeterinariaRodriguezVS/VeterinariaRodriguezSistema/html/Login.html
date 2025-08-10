@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio</title>
     <link rel="stylesheet" href="../css/styles_login.css">
 </head>
@@ -10,68 +10,84 @@
     <header>
         <h2 class="logo">Veterinaria Rodriguez</h2>
         <nav class="navigation">
-            <a href="#">Home</a>
-            <a href="#">About</a>
-            <a href="#">Services</a>
-            <a href="#">Contact</a>
-            <button class="btnLogin-popup">Login</button>
+            <a href="../html/contacto.html">Contacto</a>
         </nav>
     </header>
 
-    <div class="wrapper">
-
-        <span class="icon-close"><ion-icon name="close"></ion-icon></span>
+        <div class="wrapper active-popup">
 
         <div class="form-box login">
             <h2>Login</h2>
-            <form id="loginForm" action="principal.html">
+            <form id="loginForm" autocomplete="off">
                 <div class="input-box">
                     <span class="icon"><ion-icon name="mail"></ion-icon></span>
                     <input type="email" id="loginEmail" name="email" required>
                     <label>Correo electrónico</label>
                 </div>
                 <div class="input-box">
-                    <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+
                     <input type="password" id="loginPassword" name="password" required>
                     <label>Contraseña</label>
                 </div>
                 <div class="remember-forgot">
                     <label><input type="checkbox">Guardar contraseña</label>
-                    <a href="#">Forgot Password</a>                    
+                    <a href="#" id="forgotPasswordLink">¿Olvidaste tu contraseña?</a>
                 </div>
                 <button type="submit" class="btn">Iniciar Sesión</button>
                 <div id="loginErrorMessage"></div>
                 <div class="login-register">
-                    <p> ¿No tienes una cuenta? <a href="#" class="register-link">Registrate</a></p>
+                    <p>¿No tienes una cuenta? <a href="#" class="register-link">Regístrate</a></p>
                 </div>
             </form>
         </div>
         <div class="form-box register">
             <h2>Registro</h2>
-            <form action="principal.html" method="post">
+            <form id="registerForm" autocomplete="off">
                 <div class="input-box">
-                    <span class="icon"><ion-icon name="person"></ion-icon></span>
-                    <input type="text" required>
-                    <label>Usuario</label>
+                    <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                    <input type="email" id="registerEmail" required>
+                    <label>Correo electrónico</label>
                 </div>
                 <div class="input-box">
-                    <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-                    <input type="password" required>
+                    <span class="icon"><ion-icon name="person"></ion-icon></span>
+                    <input type="text" id="registerUsername" required>
+                    <label>Nombre</label>
+                </div>
+                <div class="input-box">
+                    <input type="password" id="registerPassword" required>
                     <label>Contraseña</label>
                 </div>
                 <div class="remember-forgot">
-                    <label> <input type="checkbox" id="termsCheckbox">Acepto los terminos y condiciones</label>                 
+                    <label><input type="checkbox" id="termsCheckbox">Acepto los términos y condiciones</label>
                 </div>
-                <button type="submit" class="btn">Registrate</button>
+                <button type="submit" class="btn">Registrarse</button>
+                <div id="registerErrorMessage"></div>
                 <div class="login-register">
-                    <p> ¿Ya tienes una cuenta? <a href="#" class="login-link">Iniciar sesión</a></p>
+                    <p>¿Ya tienes una cuenta? <a href="#" class="login-link">Iniciar sesión</a></p>
                 </div>
             </form>
         </div>
     </div>
-    
+
+ <!-- Modal restablecer contraseña, solo pide el correo -->
+<div id="resetPasswordModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span id="closeResetModal" style="float:right;cursor:pointer;font-size:1.5rem;">&times;</span>
+    <h3>Restablecer contraseña</h3>
+    <form id="resetPasswordForm" autocomplete="off">
+      <label for="resetEmail">Ingresa tu correo:</label>
+      <input type="email" id="resetEmail" required>
+      <button type="submit" class="btn">Enviar enlace</button>
+      <div id="resetPasswordMessage" style="margin-top:12px;font-size:1.05em;"></div>
+    </form>
+    <small style="display:block;margin-top:8px;color:#888;">Recibirás un email si tu correo está registrado.</small>
+  </div>
+</div>
+
+
+
     <script src="../js/login_script.js"></script>
-        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

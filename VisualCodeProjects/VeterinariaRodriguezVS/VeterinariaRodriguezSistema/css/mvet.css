@@ -1,13 +1,27 @@
-
 #mvet-container {
-  max-width: 1700px;
-  margin: 20px auto;
+  max-width: 1500px;  /* <--- Ajusta aquí para achicar el contenedor */
+  margin: 30px auto;
   background-color: #fff !important; 
-  padding: 20px 60px;
+  padding: 20px 22px;
   border-radius: 15px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.15);
   box-sizing: border-box;
   color: #222;
+  transition: max-width 0.3s;
+  margin-left: 300px;
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 1200px) {
+  #mvet-container {
+    max-width: 98vw;
+    padding: 12px 2vw;
+  }
+}
+.mi-titulo-centrado {
+  text-align: center;
+  margin: 0;
+  width: 100%;
 }
 
 
@@ -18,30 +32,19 @@
   overflow-wrap: break-word;
 }
 
-
+/* Dueño */
 #mvet-container th:nth-child(1),
 #mvet-container td:nth-child(1) {
-  width: 160px;
+  width: 180px;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-
-
+/* Mascota */
 #mvet-container th:nth-child(2),
 #mvet-container td:nth-child(2) {
-  width: 160px;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-
-#mvet-container th:nth-child(3),
-#mvet-container td:nth-child(3) {
   width: 120px;
   text-align: center;
   white-space: nowrap;
@@ -49,70 +52,97 @@
   text-overflow: ellipsis;
 }
 
+/* Teléfono */
+#mvet-container th:nth-child(3),
+#mvet-container td:nth-child(3) {
+  width: 185px;            /* <-- Cambia de 110px a 185px o más */
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
+
+/* Dirección */
 #mvet-container th:nth-child(4),
 #mvet-container td:nth-child(4) {
-  width: 200px;
+  width: 230px;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-
-
+/* NHC - más compacto */
 #mvet-container th:nth-child(5),
 #mvet-container td:nth-child(5) {
-  width: 150px;
+  width: 70px;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-
+/* Estado - más compacto */
 #mvet-container th:nth-child(6),
 #mvet-container td:nth-child(6) {
-  width: 180px;
-  white-space: normal;
+  width: 110px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-
-
+/* Acción */
 #mvet-container th:nth-child(7),
 #mvet-container td:nth-child(7) {
-  width: 580px;
+  width: 550px; /* Ajusta según la cantidad de botones, puedes reducir a 300px */
   white-space: normal;
+  text-align: center;
 }
 
-
-
-
-
-
-#mvet-container .btn-group {
+.botonera-mvet {
   display: flex;
-  gap: 10px; 
-  flex-wrap: nowrap;
+  flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
+  gap: 12px;  /* Espacio entre botones, puedes subir a 16px si quieres más aire */
 }
 
-#mvet-container .btn-group .btn {
-  white-space: nowrap;
-  min-width: 11px;
-  padding-left: 10px;
-  padding-right: 10px;
-  height: 30px;
-  font-weight: 10;
+.botonera-mvet .btn {
+  margin: 0;            /* IMPORTANTE: elimina el margen por si acaso */
+  min-width: 56px;      /* Tamaño mínimo para que no se aplasten */
   font-size: 1rem;
-  line-height: 1.2;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  border-radius: 6px;
-  margin: 0;
+  border-radius: 8px;   /* Más redonditos */
+  padding: 5px 16px;
 }
 
+
+
+/* Botón menú principal fijo y estilizado */
+.btn-menu-panel {
+  position: fixed;
+  top: 36px;
+  left: 48px;
+  z-index: 1000;
+  min-width: 220px;
+  height: 62px;
+  font-size: 1.22rem;
+  font-weight: 700;
+  background: #457b9d;
+  color: #fff !important;
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 3px 14px rgba(51,134,200,0.13);
+  text-decoration: none !important;
+  margin: 0 !important;
+  transition: background 0.2s;
+  letter-spacing: 0.01em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Resto de tus estilos se mantienen igual... */
 
 
 #listaRecordatorios .btn-danger {
@@ -217,4 +247,26 @@
   max-height: 85vh;    
   overflow-y: auto;    
   border-radius: 8px;  
+}
+.btn-menu-panel {
+  position: fixed;
+  top: 36px;
+  left: 48px;
+  z-index: 1000;
+  min-width: 220px;
+  height: 62px;
+  font-size: 1.22rem;
+  font-weight: 700;
+  background: #457b9d;
+  color: #fff !important;
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 3px 14px rgba(51,134,200,0.13);
+  text-decoration: none !important;
+  margin: 0 !important;
+  transition: background 0.2s;
+  letter-spacing: 0.01em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

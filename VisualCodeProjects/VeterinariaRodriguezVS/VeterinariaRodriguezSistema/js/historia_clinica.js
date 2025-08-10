@@ -51,9 +51,8 @@ function llenarResultadosBusqueda() {
 
   const resultados = registros.filter(p => {
     const dueñoMatch = (p.dueño || '').toLowerCase().includes(nombreDuenoFiltro);
-    const telefonoMatch = (p.telefono || '').toLowerCase().includes(telefonoFiltro);
+    const telefonoMatch = (p.telefono || '').toLowerCase().includes(telefonoFiltro) ||(p.telefono2 || '').toLowerCase().includes(telefonoFiltro);
     const direccionMatch = (p.direccion || '').toLowerCase().includes(direccionFiltro);
-
     const tieneMascotas = Array.isArray(p.mascotas) && p.mascotas.some(m => {
       const nombreMascotaMatch = (m.nombre || '').toLowerCase().includes(nombreMascotaFiltro);
       const nhcMatch = (m.NHC || '').toLowerCase().includes(nhcFiltro);
@@ -78,7 +77,7 @@ function llenarResultadosBusqueda() {
         <td>${p.dueño}</td>
         <td>${m.nombre}</td>
         <td>${p.direccion || ''}</td>
-        <td>${p.telefono || ''}</td>
+        <td>${combinarTelefonos(p.telefono, p.telefono2)}</td>
         <td>${m.NHC || '-'}</td>
         <td>
           <button class="btn btn-success btn-ver" data-nhc="${m.NHC || '-'}" type="button">+</button>
@@ -116,7 +115,7 @@ function mostrarHistorial(nhc) {
   document.getElementById('nombreMascota').textContent = mascota.nombre || '';
   document.getElementById('NHC').textContent = mascota.NHC || '';
   document.getElementById('direccionPaciente').textContent = dueño.direccion || '';
-  document.getElementById('telefonoPaciente').textContent = dueño.telefono || '';
+  document.getElementById('telefonoPaciente').textContent = combinarTelefonos(dueño.telefono, dueño.telefono2);
   document.getElementById('correoPaciente').textContent = dueño.correo || '';
 
   const historialMVet = mascota.historialClinico?.atencionMVet || [];
@@ -128,7 +127,7 @@ function mostrarHistorial(nhc) {
       historialPelu.map((h, idx) => ({ ...h, _tipo: 'peluqueria', _idx: idx, NHC: mascota.NHC }))
     )
     .filter(h => h && h.fecha)
-    .sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+    .sort((a, b) => parsearFechaSeguro(b.fecha) - parsearFechaSeguro(a.fecha));
 
   if (typeof inicializarRecordatorios === "function") {
     inicializarRecordatorios();
@@ -430,6 +429,10 @@ document.getElementById("editarArchivos").addEventListener("change", function (e
   });
   event.target.value = '';
 });
+
+
+
+
 document.getElementById('formEditarHistorial').addEventListener('submit', function (e) {
   e.preventDefault();
 
@@ -469,6 +472,7 @@ document.getElementById('formEditarHistorial').addEventListener('submit', functi
   atencion.tipo = tipo;
   atencion.recordatorios = recordatoriosEdicionActuales.map(r => {
     let fechaInicio = fechaStr;
+    
     let proxima = calcularFechaProxima(fechaInicio, r.value || r.texto);
     return {
       texto: r.texto,
@@ -489,4 +493,6 @@ document.addEventListener('DOMContentLoaded', () => {
     $('#resultadoBusqueda').modal('show');
   });
 });
+
+
 

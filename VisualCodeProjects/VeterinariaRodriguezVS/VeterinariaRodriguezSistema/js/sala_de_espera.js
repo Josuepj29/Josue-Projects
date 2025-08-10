@@ -34,6 +34,7 @@ function getMascotaPorNHC(nhc) {
         dueño: dueño.dueño,
         direccion: dueño.direccion,
         telefono: dueño.telefono,
+        telefono2: dueño.telefono2,
         historialClinico: mascota.historialClinico || {}
       };
     }
@@ -55,7 +56,11 @@ function buscar() {
       if (
         (!nDueño || (dueño.dueño || '').toLowerCase().includes(nDueño)) &&
         (!nMascota || (mascota.nombre || '').toLowerCase().includes(nMascota)) &&
-        (!telefono || (dueño.telefono || '').toLowerCase().includes(telefono)) &&
+        (
+          !telefono ||
+          (dueño.telefono || '').toLowerCase().includes(telefono) ||
+          (dueño.telefono2 || '').toLowerCase().includes(telefono)
+        ) &&
         (!direccion || (dueño.direccion || '').toLowerCase().includes(direccion)) &&
         (!nhc || (mascota.NHC || '').toLowerCase().includes(nhc))
       ) {
@@ -63,6 +68,7 @@ function buscar() {
           dueño: dueño.dueño || '',
           direccion: dueño.direccion || '',
           telefono: dueño.telefono || '',
+          telefono2: dueño.telefono2 || '',
           nombre: mascota.nombre || '',
           NHC: mascota.NHC || ''
         });
@@ -87,7 +93,7 @@ function buscar() {
       <td>${r.dueño}</td>
       <td>${r.nombre}</td>
       <td>${r.direccion}</td>
-      <td>${r.telefono}</td>
+      <td>${combinarTelefonos(r.telefono, r.telefono2)}</td>
       <td>${r.NHC}</td>
       <td>
         <button class="btn btn-success btn-sm" onclick="abrirModalObservacion(
@@ -104,6 +110,7 @@ function buscar() {
 
   $('#resultadoBusqueda').modal('show');
 }
+
 
 function abrirModalObservacion(nombre, duenio, direccion, telefono, nhc, observacion = "") {
   document.getElementById("obsNombreMascota").value = nombre;
@@ -140,11 +147,14 @@ document.getElementById("formObservacion").addEventListener("submit", function (
   if (!mascota) return alert("No se encontró la mascota.");
 
   let sala = getSalaEspera();
+
   const index = sala.findIndex(m => m.NHC === nhc);
 
   if (index !== -1) {
+    // Actualizar observación si ya existe en sala
     sala[index].observacion = observacion;
   } else {
+    // Agregar nueva mascota con observación y estado
     sala.push({
       ...mascota,
       NHC: nhc,
@@ -158,6 +168,7 @@ document.getElementById("formObservacion").addEventListener("submit", function (
   $('#resultadoBusqueda').modal('hide');
   renderizarSala();
 });
+
 
 function renderizarSala() {
   const tabla = document.getElementById("tablaSalaEspera")?.querySelector("tbody");
@@ -174,7 +185,7 @@ function renderizarSala() {
       <td>${item.dueño || ''}</td>
       <td>${item.nombre || ''}</td>
       <td>${item.direccion || ''}</td>
-      <td>${item.telefono || ''}</td>
+      <td>${combinarTelefonos(item.telefono, item.telefono2)}</td>
       <td>${item.NHC || ''}</td>
       <td>
         <button class="btn btn-outline-secondary btn-sm" onclick="editarObservacion('${item.NHC}', '${(item.observacion || '').replace(/'/g, "\\'")}')">
@@ -249,13 +260,7 @@ function verHistorial(nhc) {
 
   const historial = [...historialMVet, ...historialPelu]
     .filter(h => h.fecha)
-    .sort((a, b) => {
-      const parse = str => {
-        const fecha = Date.parse(str.replace(/\s[a|p]\.m\./, ""));
-        return isNaN(fecha) ? 0 : fecha;
-      };
-      return parse(b.fecha) - parse(a.fecha);
-    });
+    .sort((a, b) => parsearFechaSeguro(b.fecha) - parsearFechaSeguro(a.fecha));
 
   try {
     localStorage.setItem("_historialCombinado_" + nhc, JSON.stringify(historial));

@@ -1,0 +1,477 @@
+/* ========== CONTENEDOR PRINCIPAL ========== */
+.container {
+  width: 100%;
+  max-width: 1000px;
+  padding: 20px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  margin: auto;
+}
+
+/* ========== TÍTULO ========== */
+h1 {
+  background: #000;
+  padding: 10px 0;
+  color: #fff;
+  text-align: center;
+  font-size: 2em;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+/* ========== BARRA SUPERIOR ========== */
+.barra-superior {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 30px 20px;
+  margin-bottom: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  gap: 24px;
+}
+.barra-superior .btn-regresar {
+  background: #457b9d !important;
+  color: #fff !important;
+  font-weight: 700;
+  font-size: 1.12rem;
+  border-radius: 14px;
+  min-width: 180px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 12px rgba(51, 134, 200, 0.11);
+  border: none;
+  text-decoration: none !important;
+  letter-spacing: 0.01em;
+  user-select: text;
+  margin: 0 !important;
+  transition: background 0.18s, color 0.18s;
+}
+
+.barra-superior .btn-regresar:hover,
+.barra-superior .btn-regresar:focus {
+  background: #27476a !important;
+  color: #fff !important;
+}
+
+.barra-superior .btn-regresar::selection,
+.barra-superior .btn-regresar *::selection {
+  color: #fff !important;
+  background: #185282 !important;
+}
+
+
+/* ========== BOTONES DE TABLAS Y ACCIONES ========== */
+.btn-blue, .btn-blue.btn-tabla {
+  background: #2196f3;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 13px 36px;
+  font-weight: 700;
+  font-size: 1.13em;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: inline-block;
+}
+.btn-blue:hover { background: #1565c0; }
+.btn-tabla {
+  font-size: 14px;
+  padding: 5px 18px;
+  border-radius: 8px;
+  margin: 2px 2px 2px 0;
+  height: 34px;
+  font-weight: 600;
+  min-width: 0;
+  border: none;
+  cursor: pointer;
+  line-height: 1.2;
+  box-shadow: 0 2px 4px rgba(33, 150, 243, 0.08);
+}
+.btn-red, .btn-red.btn-tabla {
+  background: #e53935;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 13px 36px;
+  font-weight: 700;
+  font-size: 1.13em;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: inline-block;
+}
+.btn-red:hover { background: #b71c1c; }
+.btn-blue.btn-tabla, .btn-red.btn-tabla { padding: 5px 18px; }
+
+/* ========== FORMULARIO INLINE ========== */
+.form-inline {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  margin: 0;
+}
+.form-inline input, .form-inline select {
+  padding: 13px 18px;
+  border: 1.5px solid #e1e1e1;
+  border-radius: 10px;
+  font-size: 1.09em;
+  min-width: 180px;
+  background: #f8fafd;
+  outline: none;
+  transition: border 0.18s, box-shadow 0.18s;
+  font-family: inherit;
+  color: #222;
+}
+.form-inline input:focus, .form-inline select:focus {
+  border: 1.7px solid #2196f3;
+  box-shadow: 0 0 0 2px #bbdefb70;
+  background: #fff;
+}
+.form-inline input::placeholder {
+  color: #888;
+  opacity: 1;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.btn-buscar { min-width: 120px; }
+
+/* ========== TABLAS ========== */
+#tablaCarrito, #tablaVentas {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background: #fff;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.07);
+}
+#tablaCarrito th, #tablaCarrito td,
+#tablaVentas th, #tablaVentas td {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  text-align: center;
+  vertical-align: middle;
+}
+#tablaCarrito th, #tablaVentas th {
+  background: #f4f4f4;
+  font-weight: bold;
+}
+.acciones-cell {
+  white-space: nowrap;
+}
+
+/* ========== TOTAL (alineado a la derecha) ========== */
+#totalVenta, .total-derecha {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  font-size: 1.16em;
+  margin-top: 6px;
+  margin-bottom: 0;
+  color: #222;
+}
+#totalVenta b, .total-derecha b {
+  font-weight: 700;
+  color: #2196f3;
+  margin-left: 4px;
+}
+
+/* ========== MODAL PERSONALIZADO ========== */
+.modal-custom {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  align-items: center;
+  justify-content: center;
+  padding-top: 0;
+}
+.modal-custom .modal-content {
+  background: #fff;
+  border-radius: 14px;
+  padding: 34px 32px 24px 32px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.13);
+  margin: auto;
+  animation: fadeIn .19s;
+  width: 100%;
+  max-width: 420px;
+  min-width: 320px;
+}
+.modal-custom .form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 14px;
+  width: 100%;
+}
+.modal-custom label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  font-size: 1.06em;
+  color: #181c22;
+  width: 100%;
+}
+.modal-custom .form-control {
+  width: 100%;
+  font-size: 1.09em;
+  padding: 12px 14px;
+  border-radius: 9px;
+  border: 1.5px solid #e1e1e1;
+  box-shadow: none;
+}
+.modal-custom .form-control:focus {
+  border: 1.6px solid #2196f3;
+}
+.btn-dark {
+  background: #192531 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 10px !important;
+  font-weight: 600;
+  font-size: 1.13em;
+  padding: 13px 0 !important;
+  cursor: pointer;
+}
+.modal-custom .botones-modal {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 20px;
+  width: 100%;
+}
+.modal-custom .btn-blue,
+.modal-custom .btn-dark {
+  flex: 1 1 0;
+  text-align: center;
+  margin: 0 !important;
+  font-size: 1.09em;
+  border-radius: 11px !important;
+  padding: 13px 0 !important;
+}
+
+/* ====== SELECT MEJORADO EN MODAL PAGO ====== */
+#modalPago select,
+#modalPago select:focus {
+  width: 100%;
+  padding: 11px 16px;
+  border-radius: 9px;
+  border: 1.5px solid #e1e1e1;
+  font-size: 1.08em;
+  background: #f8fafd;
+  outline: none;
+  color: #222;
+  font-family: inherit;
+  margin: 13px 0 18px 0;
+  transition: border 0.18s;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='gray' height='18' viewBox='0 0 24 24' width='18' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 22px 22px;
+  /* Lo importante */
+  line-height: 1.22;
+  box-sizing: border-box;
+  height: 44px; /* <-- fuerza el alto igual a un input */
+}
+
+
+/* ==== RESUMEN DE VENTA MEJORADO ==== */
+#resumenVenta {
+  background: #f8fafd;
+  border-radius: 9px;
+  padding: 18px 22px 12px 22px;
+  margin-bottom: 15px;
+  font-size: 1.14em;
+  color: #253042;
+  box-shadow: 0 2px 7px rgba(33,150,243,0.04);
+}
+#resumenVenta ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 10px 0;
+}
+#resumenVenta li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  margin-bottom: 6px;
+  border-bottom: 1px dotted #c6dafc;
+  padding-bottom: 3px;
+  letter-spacing: 0.01em;
+}
+#resumenVenta .nombre-articulo {
+  font-weight: 600;
+}
+#resumenVenta .res-total {
+  font-size: 1.22em;
+  color: #2196f3;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-top: 14px;
+  text-align: right;
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 900px) {
+  .barra-superior {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 18px;
+    padding: 16px 6px;
+  }
+  .form-inline {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .btn-regresar, .btn-nuevo { width: 100%; min-width: 120px; }
+}
+@media (max-width: 700px) {
+  .container {
+    padding: 8px;
+  }
+  .form-inline input, .form-inline select {
+    min-width: 80px;
+    font-size: 13px;
+  }
+  .modal-content {
+    width: 98%;
+    min-width: 0;
+    padding: 10px;
+  }
+}
+@media (max-width: 550px) {
+  .modal-custom .modal-content {
+    padding: 12px 4vw 10px 4vw;
+    min-width: 0;
+  }
+}
+
+
+/* --- Botón Menú principal igual que recordatorios/artículos --- */
+.btn-menu-panel {
+  min-width: 180px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.12rem;
+  font-weight: 700;
+  background: #457b9d;
+  color: #fff !important;
+  border: none;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(51, 134, 200, 0.11);
+  text-decoration: none !important;
+  margin: 0 !important;
+  transition: background 0.2s;
+  letter-spacing: 0.01em;
+  user-select: text; /* permite seleccionar el texto */
+}
+.btn-menu-panel:hover,
+.btn-menu-panel:focus {
+  background: #27476a;
+  color: #fff !important;
+}
+
+/* Para selección de texto en el botón, color siempre blanco */
+.btn-menu-panel::selection,
+.btn-menu-panel *::selection {
+  color: #fff !important;
+  background: #185282 !important;
+}
+
+.btn-menu-flotante {
+  position: fixed;
+  top: 36px;
+  left: 48px;
+  z-index: 1010;
+  background: #457b9d;
+  color: #fff !important;
+  border: none;
+  border-radius: 14px;
+  font-size: 1.12rem;
+  font-weight: 700;
+  padding: 13px 36px 13px 20px;
+  box-shadow: 0 2px 14px rgba(51,134,200,0.13);
+  transition: background 0.18s, box-shadow 0.18s;
+  outline: none;
+  display: inline-block;
+  letter-spacing: 0.01em;
+  user-select: text;
+}
+.btn-menu-flotante:hover,
+.btn-menu-flotante:focus {
+  background: #27476a;
+  color: #fff !important;
+}
+.btn-menu-flotante::selection,
+.btn-menu-flotante *::selection {
+  color: #fff !important;
+  background: #185282 !important;
+}
+
+/* ========== BOTÓN MENÚ PRINCIPAL FLOTANTE, IGUAL QUE RECORDATORIOS ========== */
+.btn-menu-flotante {
+  position: fixed;
+  top: 36px;
+  left: 48px;
+  z-index: 1010;
+  background: #457b9d;
+  color: #fff !important;
+  border: none;
+  border-radius: 14px;
+  font-size: 1.12rem;
+  font-weight: 700;
+  padding: 13px 36px 13px 20px;
+  box-shadow: 0 2px 14px rgba(51,134,200,0.13);
+  transition: background 0.18s, box-shadow 0.18s;
+  outline: none;
+  display: inline-block;
+  letter-spacing: 0.01em;
+  user-select: text;
+}
+.btn-menu-flotante:hover,
+.btn-menu-flotante:focus {
+  background: #27476a;
+  color: #fff !important;
+}
+.btn-menu-flotante::selection,
+.btn-menu-flotante *::selection {
+  color: #fff !important;
+  background: #185282 !important;
+}
+
+/* RESPONSIVE: Que no tape en móvil */
+@media (max-width: 600px) {
+  .btn-menu-flotante {
+    top: 12px;
+    left: 10px;
+    font-size: 1rem;
+    padding: 10px 18px 10px 11px;
+    border-radius: 11px;
+  }
+}
+
+.btn-menu-flotante,
+.btn-menu-flotante:focus,
+.btn-menu-flotante:active,
+.btn-menu-flotante:hover,
+.btn-menu-flotante:visited {
+  text-decoration: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}

@@ -2,76 +2,49 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Listado de Recordatorios</title>
-
-  <!-- Estilo base del sistema -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recordatorios</title>
+  <link rel="stylesheet" href="../css/base.css" />
   <link rel="stylesheet" href="../css/components.css" />
-  <link rel="stylesheet" href="../css/base.css"/>
   <link rel="stylesheet" href="../css/listadorecordatorios.css" />
-
-  <!-- Bootstrap 4.0 -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
-  <div id="tsparticles"></div>
-
- <div class="container mt-4 p-4 rounded" style="background:rgba(255,255,255,.95);">
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="mb-0">📅 Recordatorios Programados</h2>
-    <a href="principal.html" class="btn btn-secondary">Menú Principal</a>
-  </div>
-
-
-
-
-
-<main class="container py-4">
-  <!-- Filtro por fecha -->
-  <div class="row mb-3">
-    <div class="col-md-6">
-      <label for="fechaFiltro" class="font-weight-bold">Filtrar por fecha:</label>
-      <input type="date" id="fechaFiltro" class="form-control" />
-    </div>
-    <div class="col-md-6 d-flex align-items-end" style="gap:10px;">
-      <button class="btn btn-primary" onclick="cargarRecordatorios()">🔍 Buscar</button>
-      <button id="btnExportarCSV" class="btn btn-success">
-          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="white" class="mr-1" viewBox="1 -2 24 24"><path d="M19 2H8c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 18H8V4h11v16zM6 6v12H5c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2h1zm6.12 7.25l-1.12 1.75h-1.5l1.94-3-1.94-3h1.5l1.12 1.75 1.13-1.75h1.5l-1.95 3 1.95 3h-1.5z"/></svg>
-        Exportar a Excel
-      </button>
-    </div>
-  </div>
-  <!-- ... el resto de tu contenido ... -->
-</main>
-
-
-
-      <!-- Tabla de resultados -->
-      <div class="table-responsive">
-        <table class="table table-bordered table-striped text-center">
-          <thead class="thead-dark">
-            <tr>
-              <th>Dueño</th>
-              <th>Teléfono</th>
-              <th>Dirección</th>
-              <th>Mascota</th>
-              <th>Tipo</th>
-              <th>Aplicado</th>
-              <th>Recordatorio</th>
-            </tr>
-          </thead>
-          <tbody id="tablaRecordatorios">
-            <!-- Se llenará dinámicamente -->
-          </tbody>
-        </table>
+  <!-- Menú principal fijo a la izquierda -->
+  <a href="principal.html" class="btn-regresar btn-menu-panel">← Menú principal</a>
+  
+  <div class="container mt-5">
+    <h1 class="text-center">RECORDATORIOS</h1>
+    <!-- Filtros alineados: fecha a la izq, botones a la der -->
+    <div class="barra-filtros d-flex align-items-center justify-content-between mb-4">
+      <div class="zona-fecha">
+        <input type="date" id="fechaFiltro" class="form-control" style="max-width:210px;">
       </div>
-    </main>
+      <div class="zona-botones d-flex gap-3">
+        <button type="button" class="btn-blue" onclick="cargarRecordatorios()">Buscar</button>
+        <button type="button" class="btn-blue" id="btnExportarCSV">Exportar a Excel</button>
+      </div>
+    </div>
+    <!-- Tabla -->
+    <table class="table table-bordered mt-3">
+      <thead>
+        <tr>
+          <th>Dueño</th>
+          <th>Teléfono</th>
+          <th>Dirección</th>
+          <th>Mascota</th>
+          <th>Tipo</th>
+          <th>Aplicado</th>
+          <th>Recordatorio</th>
+        </tr>
+      </thead>
+      <tbody id="tablaRecordatorios"></tbody>
+    </table>
   </div>
 
-  <!-- Scripts -->
-   <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+  <!-- Tu JS -->
+  <script src="../js/storage-utils.js"></script>
   <script src="../js/listadorecordatorios.js"></script>
 </body>
 </html>

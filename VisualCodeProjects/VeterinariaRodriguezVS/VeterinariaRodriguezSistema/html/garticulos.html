@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestión de Artículos</title>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/garticulos.css" />
+    <!-- Bootstrap 4 solo si usas componentes Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+</head>
+<body>
+    <!-- Menú principal fijo a la izquierda -->
+    <a href="principal.html" class="btn-regresar btn-menu-panel">← Menú principal</a>
+    <div class="container mt-5">
+        <h1 class="text-center">Gestión de Artículos</h1>
+        <!-- Barra de filtros alineada -->
+        <div class="filtros-articulos d-flex align-items-center mb-4">
+            <label for="buscarCodigo" class="mb-0 mr-2">Código</label>
+            <input type="text" id="buscarCodigo" name="codigo" placeholder="Código" class="form-control mr-3" style="min-width: 200px; max-width: 250px;">
+            <label for="buscarDescripcion" class="mb-0 mr-2">Descripción</label>
+            <input type="text" id="buscarDescripcion" name="descripcion" placeholder="Descripción" class="form-control mr-3" style="min-width: 180px; max-width: 220px;">
+            <button type="button" class="btn-blue mr-2" onclick="buscarArticulos()">Buscar</button>
+            <button type="button" class="btn-blue btn-nuevo" onclick="abrirFormulario()">Nuevo</button>
+        </div>
+        <!-- Tabla de artículos -->
+        <table id="tablaArticulos" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Filas generadas dinámicamente por JS -->
+            </tbody>
+        </table>
+    </div>
+    <!-- Modal para agregar artículo -->
+    <div id="modalFormulario" class="modal-custom">
+        <div class="modal-content p-4">
+            <h2 class="text-center mb-4">Agregar Nuevo Artículo</h2>
+            <form id="formArticulo">
+                <div class="form-group">
+                    <label for="codigo">Código</label>
+                    <input type="text" class="form-control" id="codigo" name="codigo" placeholder="Código" readonly />
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Descripción" required />
+                </div>
+                <div class="form-group">
+                    <label for="precio">Precio</label>
+                    <input type="number" class="form-control" id="precio" name="precio" placeholder="Precio" step="0.01" required />
+                </div>
+                <div class="form-group">
+                    <label for="cantidad">Cantidad</label>
+                    <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="Cantidad" min="0" required />
+                </div>
+                <div class="form-group">
+                    <label for="imagenes">Imagen</label>
+                    <input type="file" id="imagenes" name="imagenes" class="form-control-file" multiple accept="image/*,video/*,application/pdf" />
+                    <div id="previewImagenes" class="preview-container"></div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-primary mr-2" onclick="agregarArticulo()">Agregar</button>
+                    <button type="button" class="btn btn-secondary" onclick="cerrarFormulario()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Scripts -->
+    <script src="../js/storage-utils.js"></script>
+    <script src="../js/historial-utils.js"></script>
+    <script src="../js/archivos-utils.js"></script>
+    <script src="../js/recordatorios.js"></script>
+    <script src="../js/garticulo.js"></script>
+</body>
+</html>

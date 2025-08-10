@@ -1,62 +1,122 @@
-/* Contenedor principal */
-.main-container {
-  background-color: rgba(255, 255, 255, 0.85); /* blanco translúcido */
-  padding: 30px;
+/* ========== CONTENEDOR PRINCIPAL ========== */
+.container {
+  width: 100%;
+  max-width: 1000px;
+  padding: 20px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  margin: auto;
+}
+
+/* ========== TÍTULO ========== */
+h1 {
+  background: #000;
+  padding: 10px 0;
+  color: #fff;
+  text-align: center;
+  font-size: 2.4em;
+  border-radius: 10px;
+  margin-bottom: 28px;
+  letter-spacing: 0.04em;
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+/* Menú principal grande y fijo */
+.btn-menu-panel {
+  position: fixed;
+  top: 36px;
+  left: 48px;
+  z-index: 1000;
+  min-width: 240px;
+  height: 62px;
+  font-size: 1.22rem;
+  border-radius: 18px;
+  padding: 16px 38px;
+  background: #457b9d;
+  color: #fff !important;
+  font-weight: 700;
+  box-shadow: 0 3px 14px rgba(51,134,200,0.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.btn-menu-panel:hover, .btn-menu-panel:focus {
+  background: #27476a;
+  color: #fff !important;
+}
+
+/* Fila de filtros (fecha a la izq, botones a la der) */
+.barra-filtros {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 26px;
+}
+.zona-fecha {
+  flex: 1 1 0;
+  max-width: 250px;
+}
+.fecha-filtro {
+  max-width: 230px;
+  min-width: 150px;
+  font-size: 1.09em;
+  height: 46px;
+  border-radius: 9px;
+}
+.zona-botones {
+  display: flex;
+  gap: 14px;
+}
+.btn-blue {
+  background: #2196f3;
+  color: #fff !important;
+  border: none;
   border-radius: 12px;
-  color: #2c3e50;
-  max-width: 950px;
-  margin: 100px auto 0 auto;
+  font-weight: 700;
+  font-size: 1.12rem;
+  padding: 14px 38px;
+  transition: background 0.2s;
+  box-shadow: 0 2px 10px rgba(33,150,243,0.07);
+  margin-left: 0 !important;
+}
+.btn-blue:hover { background: #1565c0; }
+
+@media (max-width: 700px) {
+  .btn-menu-panel {
+    min-width: 130px;
+    height: 46px;
+    font-size: 1em;
+    left: 8px;
+    top: 16px;
+    padding: 10px 16px;
+  }
+  .barra-filtros {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+  .zona-botones {
+    justify-content: flex-start;
+    gap: 8px;
+  }
+}
+.btn-menu-panel, .btn-regresar {
+  text-decoration: none !important;
 }
 
-/* Etiquetas del formulario */
-label {
-  color: #1d3557;
+#fechaFiltro {
+  font-size: 1.23rem;        /* Tamaño del texto */
+  padding: 16px 20px;        /* Más padding para hacerlo más alto y ancho */
+  border-radius: 13px;       /* Bordes redondeados */
+  min-width: 220px;          /* Ancho mínimo mayor */
+  max-width: 340px;          /* Ancho máximo */
+  margin-left: 200px;
+  height: 56px;              /* Alto forzado, opcional */
+  box-shadow: 0 2px 8px rgba(18, 18, 19, 0.1); /* Sombra suave */
+  border: 1.7px solid #bcd9f6;  /* Borde azul suave */
+  color: #36373a;            /* Color del texto */
+  background: #f8fafd;
   font-weight: 600;
-}
-
-/* Botón Buscar */
-button.btn-primary {
-  background-color: #1d3557;
-  border-color: #1d3557;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
-  color: #fff;
-}
-
-button.btn-primary:hover {
-  background-color: #457b9d;
-  border-color: #457b9d;
-}
-
-/* Botón Menú Principal */
-.btn-secondary {
-  font-weight: 500;
-  background-color: #6c757d;
-  border-color: #6c757d;
-  color: #fff;
-}
-
-.btn-secondary:hover {
-  background-color: #5a6268;
-  border-color: #5a6268;
-}
-
-/* Tabla */
-.table th {
-  background-color: #2c3e50;
-  color: #ffffff;
-  text-align: center;
-}
-
-.table td {
-  background-color: rgba(255, 255, 255, 0.9); /* blanco translúcido */
-  color: #000000;
-  vertical-align: middle;
-}
-
-/* Mensaje vacío */
-#tablaRecordatorios td[colspan] {
-  color: #6c757d;
-  font-style: italic;
-  text-align: center;
 }

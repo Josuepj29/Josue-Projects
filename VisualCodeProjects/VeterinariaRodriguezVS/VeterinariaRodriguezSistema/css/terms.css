@@ -1,0 +1,105 @@
+.container-legal {
+  max-width: 800px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 6px 28px rgba(60,90,140,0.08);
+  padding: 40px 28px 32px 28px;
+  font-family: inherit;
+}
+.legal-title {
+  text-align: center;
+  font-size: 2.1rem;
+  font-weight: 700;
+  margin-bottom: 32px;
+  color: #224477;
+  letter-spacing: 1.2px;
+}
+section {
+  margin-bottom: 28px;
+}
+section h2 {
+  font-size: 1.21rem;
+  color: #1458A6;
+  margin-bottom: 8px;
+}
+section p {
+  color: #313b51;
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+.last-update {
+  font-size: 0.98rem;
+  color: #888;
+  margin-top: 30px;
+  text-align: right;
+}
+.container-legal {
+  max-width: 800px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 6px 28px rgba(60,90,140,0.08);
+  padding: 40px 28px 32px 28px;
+  font-family: inherit;
+}
+.legal-title {
+  text-align: center;
+  font-size: 2.1rem;
+  font-weight: 700;
+  margin-bottom: 32px;
+  color: #224477;
+  letter-spacing: 1.2px;
+}
+section {
+  margin-bottom: 28px;
+}
+section h2 {
+  font-size: 1.21rem;
+  color: #1458A6;
+  margin-bottom: 8px;
+}
+section p, section ul {
+  color: #313b51;
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+section ul {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 26px;
+}
+.last-update {
+  font-size: 0.98rem;
+  color: #888;
+  margin-top: 30px;
+  text-align: right;
+}
+
+/* Botón Menú Principal igual que en tu sistema */
+.btn-menu-panel {
+  position: fixed;
+  top: 36px;
+  left: 48px;
+  z-index: 1000;
+  min-width: 220px;
+  height: 62px;
+  font-size: 1.22rem;
+  font-weight: 700;
+  background: #457b9d;
+  color: #fff !important;
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 3px 14px rgba(51,134,200,0.13);
+  text-decoration: none !important;
+  margin: 0 !important;
+  transition: background 0.2s;
+  letter-spacing: 0.01em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-menu-panel:hover, .btn-menu-panel:focus {
+  background: #27476a;
+  color: #fff !important;
+}

@@ -2,23 +2,58 @@
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MPET - Compras</title>
-  <link rel="stylesheet" href="../css/base.css" />
-  <link rel="stylesheet" href="../css/components.css" />
-  <link rel="stylesheet" href="../css/style_compras.css" />
+  <meta charset="UTF-8">
+  <title>Reporte de Facturación</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/facturacion.css">
 </head>
 
 <body>
-  <div class="container mt-5">
-    <div class="contenido-box">
+  <a href="principal.html" class="btn-regresar">← Menú principal</a>
+  <section id="contenedor-facturacion">
+    <h1>Facturación y Reporte de Ingresos</h1>
 
-      <!-- Título -->
-      <div class="titulo-box">
-        <h1 class="text-center">Facturacion</h1>
-      </div>
 
-      <!-- Botones -->
-      <div class="fila-botones" style="margin-bottom: 20px;">
-        <a href="principal.html" class="btn btn-secondary">Menú Principal</a>
+
+
+
+  <div class="filtros-fecha">
+    <label>Fecha:</label>
+    <input type="date" id="fechaDia">
+    <button id="btnHoy" type="button">Hoy</button>
+    <button id="btnDiario">Reporte del Día</button>
+</div>
+
+<div class="filtros-fecha">
+    <label>Rápidos:</label>
+    <button id="btnSemanal">Semanal</button>
+    <button id="btnMensual">Mensual</button>
+    <button id="btnAnual">Anual</button>
+</div>
+
+<div class="filtros-fecha zona-exportar">
+    <button id="btnExportarExcel">Exportar a Excel</button>
+    <button id="btnExportarPDF">Exportar a PDF</button>
+</div>
+
+<form id="formReportePeriodo" class="filtros-fecha">
+  <label for="fechaDesde">Desde:</label>
+  <input type="date" id="fechaDesde" name="desde" required>
+
+  <label for="fechaHasta">Hasta:</label>
+  <input type="date" id="fechaHasta" name="hasta" required>
+
+  <button type="submit">Reporte por Periodo</button>
+</form>
+
+
+    <section id="resultadosFacturacion"></section>
+  </section>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="../js/facturacion.js"></script>
+</body>
+
+</html>

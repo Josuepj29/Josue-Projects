@@ -1,0 +1,294 @@
+body {
+    background-size: cover;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0 0 30px 0;
+}
+
+.btn-regresar {
+    display: inline-block;
+    background: #389ee6;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 12px 28px;
+    border-radius: 12px;
+    font-size: 1.13em;
+    margin: 30px 0 0 38px;
+    transition: background 0.2s;
+    font-weight: 600;
+    box-shadow: 0 2px 12px rgba(51, 134, 200, 0.15);
+}
+.btn-regresar:hover {
+    background: #276391;
+    color: #fff !important;
+}
+
+/* ===== CARD BLANCO CON TÍTULO Y BUSCADOR ===== */
+#buscador {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 2px 18px rgba(0,0,0,0.10);
+    max-width: 1200px;
+    margin: -60px auto 0 auto;
+    padding: 32px 38px 36px 38px;
+    min-height: 165px;
+    position: relative;
+}
+#buscador h1 {
+    margin: 0 0 26px 0;
+    font-size: 2.2em;
+    font-weight: 800;
+    text-align: center;
+    color: #15181c;
+    letter-spacing: 0.02em;
+}
+
+/* ===== BARRA DE BÚSQUEDA ===== */
+#formBusqueda {
+    display: flex;
+    gap: 14px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+#formBusqueda input[type="text"],
+#formBusqueda input[type="date"] {
+    border: 1.5px solid #e1e1e1;
+    border-radius: 9px;
+    padding: 13px 17px;
+    font-size: 1.08em;
+    outline: none;
+    background: #f8fafd;
+    width: 205px;
+    min-width: 120px;
+    transition: border 0.15s;
+    font-family: inherit;
+}
+#formBusqueda input[type="text"]:focus,
+#formBusqueda input[type="date"]:focus {
+    border: 1.5px solid #389ee6;
+}
+#btnBuscar {
+    background: #168fff;
+    color: #fff;
+    border: none;
+    border-radius: 9px;
+    padding: 13px 37px;
+    font-size: 1.15em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.18s;
+    box-shadow: 0 2px 10px rgba(34,132,210,0.06);
+    font-family: inherit;
+}
+#btnBuscar:hover {
+    background: #146fd3;
+}
+/* ===== RESULTADOS EN TARJETAS ===== */
+#resultados {
+    max-width: 1120px;
+    margin: 32px auto 0 auto;
+    display: flex;
+    flex-wrap: wrap;    /* Permite que bajen a nueva fila si no caben */
+    gap: 18px;
+    justify-content: flex-start; /* Opcional: alinear a la izquierda */
+}
+.card-mascota {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    max-width: 430px;
+    margin: 0 auto;
+    padding: 16px 26px;
+    font-size: 1.09em;
+    position: relative;
+    transition: box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.card-mascota:hover {
+    box-shadow: 0 4px 18px rgba(0,0,0,0.16);
+}
+.card-mascota .btnReporte {
+    background: #62c7a4;
+    border: none;
+    color: #fff;
+    padding: 7px 14px;
+    border-radius: 8px;
+    margin-top: 12px;
+    font-size: 1em;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.18s;
+}
+.card-mascota .btnReporte:hover {
+    background: #3bb67a;
+}
+
+/* ===== MODAL PERSONALIZADO PARA REPORTES ===== */
+.modal-reporte {
+    position: fixed;
+    z-index: 99;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.33);
+    display: none;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 100px; /* Ajusta el espacio desde arriba */
+}
+.modal-reporte.active {
+    display: flex !important;
+}
+.modal-content-reporte {
+    background: #fff;
+    padding: 38px 30px 24px 30px;
+    border-radius: 18px;
+    width: 450px;
+    max-width: 96vw;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+    position: relative;
+    animation: showModal 0.25s cubic-bezier(.22,.68,.54,1.16);
+}
+@keyframes showModal {
+    from { transform: translateY(-40px) scale(0.98); opacity: 0; }
+    to   { transform: none; opacity: 1; }
+}
+.close {
+    position: absolute;
+    top: 10px; right: 16px;
+    font-size: 2em;
+    cursor: pointer;
+    color: #aaa;
+}
+.accionesModal {
+    margin-top: 22px;
+    text-align: center;
+}
+.accionesModal button {
+    margin: 0 12px;
+    background: #389ee6;
+    color: #fff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 12px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: inherit;
+}
+.accionesModal button:hover {
+    background: #317dc1;
+}
+label {
+    font-weight: 500;
+    margin-top: 9px;
+    display: block;
+}
+#formCampos input,
+#formCampos textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    border-radius: 7px;
+    border: 1px solid #c5c5c5;
+    font-family: inherit;
+    font-size: 1em;
+    background: #f4f7fb;
+    transition: border 0.18s;
+}
+#formCampos input:focus,
+#formCampos textarea:focus {
+    border: 1.5px solid #389ee6;
+}
+#formCampos textarea {
+    min-height: 56px;
+    resize: vertical;
+}
+
+/* ===== SCROLL PERSONALIZADO ===== */
+::-webkit-scrollbar {
+    width: 8px;
+    background: #e8e8e8;
+}
+::-webkit-scrollbar-thumb {
+    background: #d0d0d0;
+    border-radius: 8px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1100px) {
+    #buscador {
+        max-width: 98vw;
+        padding-left: 6vw;
+        padding-right: 6vw;
+    }
+}
+@media (max-width: 700px) {
+    .btn-regresar {
+        margin-left: 14px;
+        font-size: 1em;
+        padding: 10px 16px;
+    }
+    #buscador {
+        padding: 20px 4vw 12px 4vw;
+        min-height: 110px;
+    }
+    #formBusqueda {
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+    }
+    #formBusqueda input,
+    #btnBuscar {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+    }
+    .modal-content-reporte {
+        width: 99vw;
+        padding: 18px 7px 8px 7px;
+    }
+}
+
+.modal-reporte {
+    align-items: flex-start;
+    padding-top: 100px;
+}
+
+
+/* ==== ESTILO PARA COMBOBOX (SELECT) ==== */
+#modalReporte select,
+#modalReporte select:focus {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 9px;
+    border: 1.5px solid #e1e1e1;
+    font-size: 1.08em;
+    background: #f8fafd;
+    outline: none;
+    color: #333;
+    font-family: inherit;
+    margin: 10px 0 18px 0;
+    transition: border 0.18s;
+    appearance: none;           /* Quita la flecha nativa en la mayoría */
+    -webkit-appearance: none;   /* Quita la flecha nativa en Chrome/Safari */
+    -moz-appearance: none;      /* Quita la flecha nativa en Firefox */
+    background-image: url("data:image/svg+xml;utf8,<svg fill='gray' height='18' viewBox='0 0 24 24' width='18' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 22px 22px;
+    background-color: #f8fafd;
+    background-clip: padding-box;
+}
+
+#modalReporte select:focus {
+    border-color: #389ee6;
+}

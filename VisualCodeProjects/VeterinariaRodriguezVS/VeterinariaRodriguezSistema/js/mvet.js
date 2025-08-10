@@ -55,12 +55,12 @@ function cargarPacientes() {
     fila.innerHTML = `
       <td>${p.dueño}</td>
       <td>${p.nombre || '––'}</td>
-      <td>${safeText(p.telefono)}</td>
+      <td>${combinarTelefonos(p.telefono, p.telefono2)}</td>
       <td>${p.direccion || '––'}</td>
       <td>${p.NHC}</td>
       <td>${p.estado || '––'}</td>
       <td>
-        <div class="btn-group">
+       <div class="botonera-mvet">
           ${p.estado === "En espera" ? `
             <button class="btn btn-sm btn-info" onclick="abrirModalAtencion('${p.NHC}')">Atender</button>
             <button class="btn btn-sm btn-warning" onclick="abrirModalRecordatorios('${p.NHC}')">⏰</button>
@@ -97,20 +97,6 @@ function mostrarObservacion(NHC) {
   alert(paciente?.observacion || 'No hay observaciones registradas.');
 }
 
-function convertirFechaISO(fecha) {
-  if (!fecha) return new Date('1970-01-01');
-  if (/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(fecha)) return new Date(fecha);
-  const parts = fecha.split(", ");
-  if (parts.length < 2) return new Date('1970-01-01');
-  const [day, month, year] = parts[0].split("/").map(x => parseInt(x));
-  let [time, meridian] = parts[1].split(" ");
-  if (!time || !meridian) return new Date('1970-01-01');
-  if (time.split(":").length === 2) time += ":00";
-  let [hour, minute, second] = time.split(":").map(num => parseInt(num));
-  if (meridian === 'p.m.' && hour < 12) hour += 12;
-  else if (meridian === 'a.m.' && hour === 12) hour = 0;
-  return new Date(year, month - 1, day, hour, minute, second);
-}
 
 
 function abrirModalAtencion(NHC) {
@@ -297,7 +283,7 @@ function confirmarEnvio() {
   const hoyStr = hoy.getFullYear() + '-' +
                  String(hoy.getMonth() + 1).padStart(2, '0') + '-' +
                  String(hoy.getDate()).padStart(2, '0');
-  const fechaAplicado = hoy.toISOString();
+  const fechaAplicado = obtenerFechaHoraLocal();
 
   const recordatoriosAplicados = [];
 
@@ -321,17 +307,17 @@ function confirmarEnvio() {
   }
 
   updateMascotaByNHC(pacienteAConfirmar, (mascota) => {
-    if (!mascota.historialClinico.atencionMVet) mascota.historialClinico.atencionMVet = [];
-    mascota.historialClinico.atencionMVet.push({
-      fecha: new Date().toISOString(),
-      anamnesis: paciente?.anamnesisTmp || '',
-      tratamiento: paciente?.tratamientoTmp || '',
-      archivos: paciente?.archivosTmp || [],
-      recordatorios: recordatoriosAplicados
-    });
-    mascota.historialClinico.fechaCita = paciente?.fechaCitaTmp || null;
-    return mascota;
+  if (!mascota.historialClinico.atencionMVet) mascota.historialClinico.atencionMVet = [];
+  mascota.historialClinico.atencionMVet.push({
+     fecha: fechaAplicado,
+    anamnesis: paciente?.anamnesisTmp || '',
+    tratamiento: paciente?.tratamientoTmp || '',
+    archivos: paciente?.archivosTmp || [],
+    recordatorios: recordatoriosAplicados
   });
+  mascota.historialClinico.fechaCita = paciente?.fechaCitaTmp || null;
+  return mascota;
+});
 
   const nuevaSala = sala.filter(p => p.NHC !== pacienteAConfirmar);
   setPacientes(nuevaSala);
@@ -362,8 +348,8 @@ function abrirModalHistorialClinico(NHC) {
   const historialPelu = (mascota.historialClinico.peluqueria || []).map(h => ({ ...h, _tipo: 'peluqueria' }));
 
   const historial = [...historialMVet, ...historialPelu]
-    .filter(h => h.fecha)
-    .sort((a, b) => convertirFechaISO(b.fecha) - convertirFechaISO(a.fecha));
+  .filter(h => h.fecha)
+  .sort((a, b) => parsearFechaSeguro(b.fecha) - parsearFechaSeguro(a.fecha));
 
   try {
     localStorage.setItem("_historialCombinado_" + NHC, JSON.stringify(historial));

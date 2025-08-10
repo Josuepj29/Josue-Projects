@@ -51,3 +51,9 @@ function getHistorialClinicoByNHC(nhc) {
   const obj = getMascotaByNHC(nhc);
   return obj?.mascota?.historialClinico || null;
 }
+
+
+function combinarTelefonos(t1, t2) {
+  if (t1 && t2 && t1 !== t2) return `${t1} / ${t2}`;
+  return t1 || t2 || '';
+}

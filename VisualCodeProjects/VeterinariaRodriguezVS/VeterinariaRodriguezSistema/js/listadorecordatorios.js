@@ -45,7 +45,7 @@ function cargarRecordatorios() {
                                 if (fechaFormateada === fechaSeleccionada) {
                                     resultados.push({
                                         duenio: propietario.dueño || "-",
-                                        telefono: propietario.telefono || "-",
+                                         telefono: combinarTelefonos(propietario.telefono, propietario.telefono2),
                                         direccion: propietario.direccion || "-",
                                         mascota: mascota.nombre || "-",
                                         tipo: recordatorio.texto || "-",
@@ -87,15 +87,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const inputFecha = document.getElementById("fechaFiltro");
     const hoy = new Date().toISOString().split("T")[0];
     inputFecha.value = hoy;
+    cargarRecordatorios(); // <-- Esto soluciona tu problema
 });
 
 
 function exportarTablaAXLSX() {
     const tabla = document.getElementById("tablaRecordatorios");
+    if (!tabla || tabla.rows.length === 0) {
+        alert("No hay datos para exportar.");
+        return;
+    }
     const ws = XLSX.utils.table_to_sheet(tabla);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Recordatorios");
     XLSX.writeFile(wb, "recordatorios.xlsx");
 }
-
 document.getElementById("btnExportarCSV").addEventListener("click", exportarTablaAXLSX);
